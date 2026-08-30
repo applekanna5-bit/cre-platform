@@ -27,3 +27,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Do not mass-generate placeholder articles or SEO pages.
 - Preserve accessibility and semantic HTML.
 - Do not silently change architecture outside milestone scope.
+- Follow the content contracts in `src/content/contracts.ts` for future content metadata and sources.
+- Follow `docs/editorial-standard.md` and `docs/source-policy.md` for content work.
+- Consult `docs/content-architecture.md` and the records in `docs/adr/` before changing content architecture.

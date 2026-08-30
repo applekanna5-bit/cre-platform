@@ -43,4 +43,12 @@ The build command creates an optimized production build. After it succeeds, the 
 
 ## Current milestone
 
-M1A establishes the repository and technical foundation only: the Next.js application shell, minimal global styles and homepage, strict TypeScript, linting, and a working test environment. It intentionally excludes the future content system, calculators, integrations, and final site design.
+M1B adds architecture-only content and source contracts plus repository governance. It does not add production content, calculators, rendering infrastructure, or final product UI.
+
+## Repository standards
+
+- Content contracts: [`src/content/contracts.ts`](src/content/contracts.ts)
+- Human editorial standard: [`docs/editorial-standard.md`](docs/editorial-standard.md)
+- Source policy: [`docs/source-policy.md`](docs/source-policy.md)
+- Content architecture: [`docs/content-architecture.md`](docs/content-architecture.md)
+- Architecture decisions: [`docs/adr/`](docs/adr/)
