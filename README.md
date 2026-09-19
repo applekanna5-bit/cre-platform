@@ -43,7 +43,9 @@ The build command creates an optimized production build. After it succeeds, the 
 
 ## Current milestone
 
-M1B adds architecture-only content and source contracts plus repository governance. It does not add production content, calculators, rendering infrastructure, or final product UI.
+M2 adds a reusable design system, responsive global navigation, footer, and homepage routing shell. Navigation points to clearly labeled planned section overviews on the homepage. Content and source contracts and M1 governance remain intact; content ingestion, production articles, calculators, and search are deferred.
+
+See [`docs/design-system.md`](docs/design-system.md) for tokens, primitives, navigation configuration, accessibility behavior, and verification guidance.
 
 ## Repository standards
 

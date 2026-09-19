@@ -1,23 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-}
+@theme {
+  --color-background: #f6f7f5;
+  --color-surface: #edf0ec;
+  --color-elevated: #ffffff;
+  --color-foreground: #182b32;
+  --color-muted: #52616a;
+  --color-border: #ced6d2;
+  --color-border-strong: #788881;
+  --color-accent: #205f55;
+  --color-accent-strong: #16483f;
+  --color-on-accent: #ffffff;
+  --color-success: #24613e;
+  --color-warning: #805516;
+  --color-error: #a02d37;
+  --color-focus: #175eab;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: Arial, Helvetica, sans-serif;
+  --font-editorial: Georgia, "Times New Roman", serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-display: clamp(2.5rem, 5vw, 4.5rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.035em;
+  --spacing: 0.25rem;
+  --radius-control: 0.25rem;
+  --radius-panel: 0.375rem;
+  --radius-tag: 0.25rem;
 }
 
-html {
-  background: var(--background);
-}
+@layer base {
+  html {
+    background: var(--color-background);
+    color-scheme: light;
+    scroll-padding-block: 1.5rem;
+  }
 
-body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+  }
+
+  [id] {
+    scroll-margin-block: 1.5rem;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
 }
