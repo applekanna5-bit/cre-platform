@@ -22,6 +22,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Report files created, modified, and deleted.
 - Report test, lint, and build results.
 - Do not introduce proprietary, employer-confidential, or restricted source material into the repository.
+- Confidential, employer-restricted, client-confidential, proprietary, or otherwise unauthorized source material must never be introduced into the repository.
+- Approved or published editorial content is protected. Engineering tasks may render, style, index, link, validate, or migrate approved content, but must not substantively rewrite editorial copy unless the task explicitly authorizes editorial modification.
 - Do not assume unavailable Claude files will ever become available.
 - Use public authoritative sources and original editorial work as the foundation for future knowledge content.
 - Do not mass-generate placeholder articles or SEO pages.
