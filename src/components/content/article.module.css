@@ -1,0 +1,62 @@
+.page { padding-block: 1.75rem 4.5rem; }
+.layout { display: grid; gap: 3rem; max-width: 48rem; margin-inline: auto; }
+.article { min-width: 0; }
+.fixture { margin-bottom: 1.75rem; border-block: 1px solid var(--color-border); border-left: 3px solid var(--color-copper); padding: .75rem 1rem; color: var(--color-copper-text); font-size: .8125rem; font-weight: 600; }
+.articleHeader { border-bottom: 1px solid var(--color-border-strong); padding-bottom: 2rem; }
+.title { margin-top: 1rem; max-width: 23ch; font-family: var(--font-editorial); font-size: clamp(2.125rem, 3.6vw, 3.25rem); line-height: 1.13; letter-spacing: -.035em; text-wrap: balance; }
+.deck { max-width: 60ch; margin-top: 1.25rem; color: var(--color-muted); font-size: 1.125rem; line-height: 1.75; }
+.body { min-width: 0; font-size: 1.0625rem; }
+.body > p { max-width: 66ch; margin-block: 1.5rem; line-height: 1.85; }
+.body > p:first-child { margin-top: 2rem; }
+.body h2 { margin-block: 3rem 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border); font-family: var(--font-editorial); font-size: 1.875rem; line-height: 1.25; letter-spacing: -.02em; }
+.body h4, .body h5, .body h6 { margin-block: 1.5rem .75rem; font-weight: 600; }
+.body > h3 { margin-block: 2rem 1rem; font-family: var(--font-editorial); font-size: 1.5rem; line-height: 1.35; }
+.body > ul, .body > ol { max-width: 66ch; margin-block: 1.25rem; padding-left: 1.5rem; }
+.body > ul { list-style: disc; }
+.body > ol { list-style: decimal; }
+.body li + li { margin-top: .5rem; }
+.body > blockquote { margin-block: 1.5rem; padding-left: 1.25rem; border-left: 2px solid var(--color-copper); }
+.body > pre { overflow-x: auto; padding: 1rem; background: var(--color-surface); }
+.body p > a, .body li > a { color: var(--color-accent); text-decoration: underline; text-underline-offset: .2em; }
+.body p > a:hover, .body li > a:hover { color: var(--color-steel); }
+.body code { font-size: .9em; }
+.body :target, .article > section :target { scroll-margin-top: 2rem; }
+.formula { margin-block: 2rem; padding: 1.5rem 0; border-block: 1px solid var(--color-border-strong); font-variant-numeric: tabular-nums; }
+.formula > p:first-of-type { font-size: 1.5rem; color: var(--color-accent); }
+.formula dl > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1rem; padding-top: .75rem; border-top: 1px solid var(--color-border); }
+.calculation { margin-block: 2rem; padding: 1.5rem; background: var(--color-elevated); border-top: 2px solid var(--color-accent); font-variant-numeric: tabular-nums; }
+.calculation > p:nth-of-type(2) { color: var(--color-accent); font-size: 1.25rem; }
+.note { margin-block: 2rem; border-left: 2px solid var(--color-steel); padding: .25rem 0 .25rem 1.25rem; }
+.caution { border-color: var(--color-copper); }
+.institution { margin-block: 2rem; border-block: 1px solid var(--color-border-strong); padding-block: 1.5rem; }
+.caseStudy { margin-block: 2.5rem 1.75rem; border-top: 2px solid var(--color-copper); padding-top: 1.25rem; }
+.financialTable { min-width: 0; margin-block: 2rem; font-variant-numeric: tabular-nums; }
+.financialTable caption { font-family: var(--font-editorial); font-size: 1.25rem; }
+.financialTable tr[data-total="true"] th, .financialTable tr[data-total="true"] td { font-weight: 700; }
+.relationships { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border-strong); }
+.context { min-width: 0; border-top: 2px solid var(--color-accent); padding-top: 1.5rem; align-self: start; }
+.railLabel { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--color-accent); }
+.outline { margin-top: 1rem; border-left: 1px solid var(--color-border); }
+.outline a { display: flex; align-items: center; min-height: 2.75rem; padding: .5rem 0 .5rem 1rem; border-left: 2px solid transparent; margin-left: -1px; color: var(--color-muted); font-size: .875rem; line-height: 1.5; text-decoration: underline; text-decoration-color: var(--color-border); text-underline-offset: .2em; }
+.outline a:hover, .outline a:focus-visible { color: var(--color-accent); border-left-color: var(--color-copper); text-decoration-color: currentColor; }
+.outlineNested a { padding-left: 1.75rem; font-size: .8125rem; }
+.railRelationships { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+.railRelationships li > p:first-child { font-size: .6875rem; letter-spacing: .08em; }
+.railRelationships a { font-size: .875rem; }
+@media (min-width: 64rem) {
+  .page { padding-block: 2rem 6rem; }
+  .layout { max-width: none; grid-template-columns: minmax(0, 2.8fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); }
+  .article { max-width: 49rem; }
+  .context { border-top: 0; border-left: 1px solid var(--color-border); padding: .25rem 0 0 1.5rem; }
+}
+/* Keep enlarged text in a reading column instead of squeezing it beside the rail. */
+.page { container-type: inline-size; }
+@container (max-width: 52rem) {
+  .layout { grid-template-columns: minmax(0, 1fr); max-width: 48rem; }
+  .context { border-left: 0; border-top: 2px solid var(--color-accent); padding: 1.5rem 0 0; }
+}
+@media (max-width: 30rem) {
+  .fixture { padding-inline: .5rem; }
+  .formula dl > div { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
+  .calculation { padding: 1.25rem 1rem; }
+}

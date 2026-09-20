@@ -1,0 +1,14 @@
+[
+  {
+    "id": "fixture-methodology",
+    "title": "Synthetic methodology note for renderer verification",
+    "publisher": "Fictional Demonstration Institution",
+    "type": "editorial-research",
+    "authority": "contextual",
+    "reviewedDate": "2026-09-20",
+    "effectiveDate": "2026-09-20",
+    "updateSensitivity": "U1",
+    "synthetic": true,
+    "notes": "Synthetic development source only. No real lender, regulator, program requirement, or external authority is represented. The date exercises provenance display, not a substantive technical review."
+  }
+]

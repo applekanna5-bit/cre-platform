@@ -1,0 +1,22 @@
+{
+  "id": "fixture-noi-bridge",
+  "title": "NOI bridge: content-engine fixture",
+  "slug": "noi-development-fixture",
+  "description": "Development fixture — not publication content. A synthetic rendering exercise inspired by the scope of CRE-015, not the flagship article.",
+  "domain": "underwriting",
+  "contentType": "analysis",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": { "name": "Development fixture author (synthetic)" },
+  "propertyTypes": ["multifamily"],
+  "loanProducts": [],
+  "topics": ["noi"],
+  "relatedGlossaryTerms": ["fixture-noi"],
+  "relatedCalculators": ["fixture-loan-sizing"],
+  "relatedContent": [],
+  "sourceIds": ["fixture-methodology"],
+  "updateSensitivity": "U1",
+  "sourceClasses": ["A"],
+  "relationships": [{ "purpose": "application", "target": { "kind": "case-study", "id": "harbor-view" } }],
+  "developmentFixture": true
+}

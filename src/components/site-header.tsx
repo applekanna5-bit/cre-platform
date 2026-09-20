@@ -3,16 +3,20 @@ import { primaryNavigation } from "@/config/navigation";
 import { Container } from "@/components/ui/primitives";
 import { NavigationList } from "@/components/navigation/navigation-list";
 import { MobileNavigation } from "@/components/navigation/mobile-navigation";
+import styles from "./site-header.module.css";
 
 export function SiteHeader() {
   return (
-    <header className="border-t-4 border-t-analytical border-b border-b-border bg-elevated">
-      <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5">
-        <Link id="site-brand" href="/" aria-label="CRE Platform home" className="inline-flex min-h-11 flex-wrap items-center gap-3 rounded-control">
-          <span aria-hidden="true" className="shrink-0 font-editorial text-[2.5rem] leading-none tracking-[-0.06em] text-accent-strong">CRE</span>
-          <span className="border-l-[3px] border-copper pl-3 text-xs font-semibold uppercase leading-relaxed tracking-[0.12em]">Knowledge<br />Platform</span>
-        </Link>
-        <nav aria-label="Primary" className="hidden lg:block">
+    <header className={styles.header}>
+      <Container className={styles.inner}>
+        <div className={styles.identity}>
+          <Link id="site-brand" href="/" aria-label="CRE Commercial Real Estate Knowledge Platform home" className={styles.brand}>
+            <span aria-hidden="true" className={styles.mark}>CRE</span>
+            <span className={styles.wordmark}>Commercial Real Estate<br /><span>Knowledge Platform</span></span>
+          </Link>
+          <p className={styles.identityLine}>Concepts <span aria-hidden="true">|</span> Analysis <span aria-hidden="true">|</span> Underwriting <span aria-hidden="true">|</span> Real-world insight</p>
+        </div>
+        <nav aria-label="Primary" className={`hidden lg:block ${styles.navigation}`}>
           <NavigationList items={primaryNavigation} horizontal />
         </nav>
         <MobileNavigation><NavigationList items={primaryNavigation} /></MobileNavigation>

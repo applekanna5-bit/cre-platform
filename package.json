@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/content.mts --dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prebuild": "node scripts/content.mts",
+    "build:fixtures": "node scripts/content.mts --fixtures && next build",
+    "content:check": "node scripts/content.mts",
+    "pretest": "node scripts/content.mts --fixtures",
+    "pretest:watch": "node scripts/content.mts --fixtures"
   },
   "dependencies": {
     "next": "16.3.3",
@@ -16,6 +21,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@mdx-js/mdx": "^3.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -25,5 +31,8 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=22.18.0"
   }
 }

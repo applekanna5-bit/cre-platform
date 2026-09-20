@@ -1,0 +1,43 @@
+[
+  {
+    "id": "harbor-view",
+    "kind": "case-study",
+    "label": "Harbor View Apartments",
+    "description": "Fictional educational property. All figures are illustrative fixture data, not an actual transaction or investment recommendation.",
+    "synthetic": true,
+    "fictional": true,
+    "facts": [
+      { "label": "Property type", "value": "Multifamily" },
+      { "label": "Units", "value": "180" },
+      { "label": "T-12 EGI", "value": "$3,180,000" },
+      { "label": "T-12 operating expenses", "value": "$965,000" },
+      { "label": "T-12 NOI", "value": "$2,215,000" },
+      { "label": "Underwritten EGI", "value": "$3,190,000" },
+      { "label": "Underwritten operating expenses", "value": "$1,050,000" },
+      { "label": "Underwritten NOI", "value": "$2,140,000" },
+      { "label": "Illustrative cap rate", "value": "6.50%" },
+      { "label": "Illustrative indicated value", "value": "Approximately $32.92M" },
+      { "label": "Illustrative loan", "value": "$21.20M" },
+      { "label": "Illustrative LTV", "value": "Approximately 64.4%" },
+      { "label": "Illustrative debt yield", "value": "Approximately 10.1%" }
+    ],
+    "tables": [
+      {
+        "id": "harbor-view-noi-bridge",
+        "caption": "Simplified NOI bridge — fictional development values, USD per year",
+        "columns": [{ "key": "item", "label": "Bridge item" }, { "key": "amount", "label": "Amount (USD/year)", "numeric": true }],
+        "rows": [
+          { "label": "Reported T-12 NOI", "values": ["$2,215,000"] },
+          { "label": "Supported rental income adjustment", "values": ["+$60,000"] },
+          { "label": "Collections/concessions adjustment", "values": ["−$35,000"] },
+          { "label": "Unsupported other income", "values": ["−$15,000"] },
+          { "label": "Insurance normalization", "values": ["−$45,000"] },
+          { "label": "Real estate tax normalization", "values": ["−$30,000"] },
+          { "label": "Payroll normalization", "values": ["−$20,000"] },
+          { "label": "Repairs normalization", "values": ["+$10,000"] },
+          { "label": "Underwritten NOI", "values": ["$2,140,000"], "total": true }
+        ]
+      }
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 # CRE Platform
 
-A commercial real estate knowledge, underwriting, financial modeling, and decision-support platform. The project is currently limited to its technical foundation; content systems, calculators, and product features belong to later milestones.
+A commercial real estate knowledge, underwriting, financial modeling, and decision-support platform. M3 completes the reviewed local MDX content engine; production editorial content, calculators, and later product features remain deferred.
 
 ## Technical stack
 
@@ -14,6 +14,8 @@ A commercial real estate knowledge, underwriting, financial modeling, and decisi
 ## Local development
 
 Install dependencies and start the development server:
+
+Use Node.js 22.18 or newer (native TypeScript execution is used by content build tools).
 
 ```bash
 npm install
@@ -43,7 +45,9 @@ The build command creates an optimized production build. After it succeeds, the 
 
 ## Current milestone
 
-M2 adds a reusable design system, responsive global navigation, footer, and homepage routing shell. Navigation points to clearly labeled planned section overviews on the homepage. Content and source contracts and M1 governance remain intact; content ingestion, production articles, calculators, and search are deferred.
+M2.1 is frozen at `8180e01fadf38cf6ec602dae4b619dcf4c8390ce`. M3 completes validated local MDX, shared source/case records, rich editorial components, and an article template. The approved CRE masthead and favicon complete the site identity; the frozen homepage body and navigation behavior remain unchanged. M1B contracts remain compatible, and ADR 0005 is accepted.
+
+`npm run dev` enables the explicitly synthetic fixture at `/content/underwriting/noi-development-fixture`. `npm run build` excludes it from publication; `npm run build:fixtures` creates an opt-in local review build. The fixture is not CRE-015 or publication content. See [`docs/content-engine.md`](docs/content-engine.md) and [ADR 0005](docs/adr/0005-local-mdx-content-engine.md) for authoring, validation, source/relationship resolution, publication boundaries, and editorial protection.
 
 See [`docs/design-system.md`](docs/design-system.md) for tokens, primitives, navigation configuration, accessibility behavior, and verification guidance.
 

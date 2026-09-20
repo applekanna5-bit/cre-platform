@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local MDX compiler output (rebuilt by dev, test, and build)
+/src/content/.generated/
