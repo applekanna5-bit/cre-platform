@@ -22,12 +22,12 @@ export function Section({ className, ...props }: ComponentPropsWithoutRef<"secti
   return <section className={classes("py-10 sm:py-14", className)} {...props} />;
 }
 
-export function Eyebrow({ className, ...props }: ComponentPropsWithoutRef<"p">) {
-  return <p className={classes("text-xs font-semibold uppercase tracking-[0.16em] text-muted", className)} {...props} />;
+export function Eyebrow({ tone = "default", className, ...props }: ComponentPropsWithoutRef<"p"> & { tone?: "default" | "analytical" }) {
+  return <p className={classes("text-xs font-semibold uppercase tracking-[0.16em]", tone === "analytical" ? "text-analytical-highlight" : "text-muted", className)} {...props} />;
 }
 
-export function Surface({ className, ...props }: ComponentPropsWithoutRef<"div">) {
-  return <div className={classes("rounded-panel border border-border bg-elevated p-6", className)} {...props} />;
+export function Surface({ tone = "reading", className, ...props }: ComponentPropsWithoutRef<"div"> & { tone?: "reading" | "analytical" }) {
+  return <div className={classes("rounded-panel border p-6", tone === "analytical" ? "border-analytical-rule bg-analytical text-on-analytical" : "border-border bg-elevated", className)} {...props} />;
 }
 
 export function Badge({ className, ...props }: ComponentPropsWithoutRef<"span">) {

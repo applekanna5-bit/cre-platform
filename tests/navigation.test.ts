@@ -45,7 +45,7 @@ describe("M2 navigation contract", () => {
     expect(planned.map((item) => item.id)).toEqual(["glossary", "contributors", "about"]);
     const html = renderToStaticMarkup(createElement(NavigationList, { items: planned }));
     expect(html).not.toMatch(/<(a|button)\b/);
-    expect(html.match(/Planned/g)).toHaveLength(3);
+    expect(html.match(/Coming soon/g)).toHaveLength(3);
     for (const item of planned) expect(item).not.toHaveProperty("href");
   });
 

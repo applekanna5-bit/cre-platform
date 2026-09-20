@@ -17,7 +17,7 @@ export function NavigationList({
             </a>
           ) : (
             <span className="flex min-h-11 flex-wrap items-center gap-x-3 px-3 py-2 text-sm text-muted">
-              {item.label}<span className="text-xs">Planned</span>
+              {item.label}<span className="text-xs">Coming soon</span>
             </span>
           )}
         </li>

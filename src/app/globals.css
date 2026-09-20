@@ -1,16 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f6f7f5;
-  --color-surface: #edf0ec;
-  --color-elevated: #ffffff;
-  --color-foreground: #182b32;
-  --color-muted: #52616a;
-  --color-border: #ced6d2;
-  --color-border-strong: #788881;
-  --color-accent: #205f55;
-  --color-accent-strong: #16483f;
-  --color-on-accent: #ffffff;
+  --color-background: #f4f1ea;
+  --color-surface: #e8e3d9;
+  --color-elevated: #fcfbf8;
+  --color-foreground: #0d1b2a;
+  --color-muted: #526071;
+  --color-border: #c9c2b5;
+  --color-border-strong: #7c827f;
+  --color-accent: #24364b;
+  --color-accent-strong: #0d1b2a;
+  --color-on-accent: #fcfbf8;
+  --color-copper: #b66a32;
+  --color-copper-text: #8a4c21;
+  --color-steel: #456b88;
+  --color-analytical: #0d1b2a;
+  --color-analytical-raised: #24364b;
+  --color-on-analytical: #fcfbf8;
+  --color-analytical-muted: #bac8d6;
+  --color-analytical-rule: #4d6175;
+  --color-analytical-highlight: #dfa575;
+  --color-analytical-steel: #9abbd3;
   --color-success: #24613e;
   --color-warning: #805516;
   --color-error: #a02d37;
@@ -24,13 +34,13 @@
   --text-lg: 1.125rem;
   --text-xl: 1.25rem;
   --text-2xl: 1.5rem;
-  --text-display: clamp(2.5rem, 5vw, 4.5rem);
+  --text-display: clamp(2.5rem, 4.5vw, 4rem);
   --text-display--line-height: 1.08;
   --text-display--letter-spacing: -0.035em;
   --spacing: 0.25rem;
-  --radius-control: 0.25rem;
-  --radius-panel: 0.375rem;
-  --radius-tag: 0.25rem;
+  --radius-control: 0.125rem;
+  --radius-panel: 0.125rem;
+  --radius-tag: 0.125rem;
 }
 
 @layer base {

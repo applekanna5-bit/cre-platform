@@ -10,7 +10,7 @@ export function SiteFooter() {
           <div>
             <p className="text-lg font-semibold tracking-tight">CRE Knowledge Platform</p>
             <p className="mt-3 max-w-[30ch] text-sm text-muted">Commercial real estate knowledge, analysis, and tools.</p>
-            <p className="mt-4 text-xs text-muted">Content and tools are in preparation.</p>
+            <p className="mt-4 text-xs text-muted">Guides and tools coming soon.</p>
           </div>
           {footerNavigation.map((group) => (
             <nav key={group.id} aria-labelledby={`footer-${group.id}`}>
