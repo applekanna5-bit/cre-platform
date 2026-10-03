@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import type { ArticleMetadata, ContentCatalog } from "@/content/contracts";
 import { parseArticleMetadata, parseCases, parseSources, parseTable } from "@/content/validation";
 import { articleRoute, buildCatalog, isEditoriallyProtected, isEditorialPreview, isRenderable, resolveRelationships, sourceDependents } from "@/content/catalog";
 import { discoverContent } from "@/content/discovery";
@@ -20,12 +21,12 @@ const input = () => structuredClone(fixture.metadata);
 
 describe("CRE-015 production integration", () => {
   const production = discovered.catalog.articles.find(article => article.id === "CRE-015")!;
-  it("validates approved metadata without making the article routable", () => {
-    expect(production).toMatchObject({ status: "approved", developmentFixture: false, lastReviewedDate: "2026-10-03" });
+  it("validates published metadata and makes the article production-routable", () => {
+    expect(production).toMatchObject({ status: "published", publishedDate: "2026-10-03", developmentFixture: false, lastReviewedDate: "2026-10-03" });
     expect(isEditoriallyProtected(production.status)).toBe(true);
-    expect(isRenderable(production)).toBe(false);
-    expect(isRenderable(production, true)).toBe(false);
-    expect(loaders).not.toHaveProperty(production.id);
+    expect(isRenderable(production)).toBe(true);
+    expect(isRenderable(production, true)).toBe(true);
+    expect(loaders).toHaveProperty(production.id);
     expect(articleRoute(production)).toBe("/content/underwriting/net-operating-income-underwritten-noi");
   });
   it("resolves only public production sources and the canonical Harbor View case and tables", async () => {
@@ -50,9 +51,10 @@ describe("CRE-015 production integration", () => {
 });
 
 describe("separate approved editorial preview", () => {
-  const production = discovered.catalog.articles.find(article => article.id === "CRE-015")!;
+  const approved = { ...article, id: "test-approved-article", slug: "test-approved-article", description: "Controlled approved article for editorial preview testing.", status: "approved" as const, developmentFixture: false, publishedDate: undefined };
+  const previewCatalog = { ...discovered.catalog, articles: [...discovered.catalog.articles, approved] };
   it.each(["research", "brief", "draft", "technical-review", "editorial-review", "source-verification", "ready", "approved", "published", "needs-review", "archived"] as const)("limits preview eligibility for %s", status => {
-    const candidate = { ...production, status, publishedDate: undefined };
+    const candidate = { ...approved, status, publishedDate: undefined };
     expect(isRenderable(candidate)).toBe(status === "published");
     expect(isRenderable(candidate, true)).toBe(status === "published");
     expect(isRenderable(candidate, false, true)).toBe(status === "approved" || status === "published");
@@ -64,16 +66,21 @@ describe("separate approved editorial preview", () => {
     expect(isRenderable(article, false, true)).toBe(false);
     expect(isRenderable(article, true)).toBe(true);
     expect(isEditorialPreview(article, true)).toBe(false);
-    const preview = renderToStaticMarkup(createElement(ArticleTemplate, { article: production, catalog, editorialPreview: true }));
+    const preview = renderToStaticMarkup(createElement(ArticleTemplate, { article: approved, catalog: previewCatalog, editorialPreview: true }));
     expect(preview).toContain("Approved — editorial preview");
     expect(preview).not.toContain("Development fixture — not publication content");
-    expect(renderToStaticMarkup(createElement(ArticleTemplate, { article: production, catalog }))).not.toContain("Approved — editorial preview");
+    expect(renderToStaticMarkup(createElement(ArticleTemplate, { article: approved, catalog: previewCatalog }))).not.toContain("Approved — editorial preview");
+    const published: ArticleMetadata = { ...approved, status: "published", publishedDate: "2026-10-03" };
+    expect(renderToStaticMarkup(createElement(ArticleTemplate, { article: published, catalog: previewCatalog, editorialPreview: true }))).not.toContain("Approved — editorial preview");
     expect(renderToStaticMarkup(createElement(ArticleTemplate, { article, catalog, fixtures: true }))).not.toContain("Approved — editorial preview");
   });
   it("links approved article relationships only in the explicit editorial mode", () => {
-    const related = { ...article, relationships: [{ purpose: "deep-dive" as const, target: { kind: "article" as const, id: production.id } }], relatedGlossaryTerms: [], relatedCalculators: [] };
-    expect(resolveRelationships(related, discovered.catalog, true)[0]).not.toHaveProperty("href");
-    expect(resolveRelationships(related, discovered.catalog, false, true)[0].href).toBe(articleRoute(production));
+    const related = { ...article, relationships: [{ purpose: "deep-dive" as const, target: { kind: "article" as const, id: approved.id } }], relatedGlossaryTerms: [], relatedCalculators: [] };
+    expect(resolveRelationships(related, previewCatalog)[0]).not.toHaveProperty("href");
+    expect(resolveRelationships(related, previewCatalog, true)[0]).not.toHaveProperty("href");
+    expect(resolveRelationships(related, previewCatalog, false, true)[0].href).toBe(articleRoute(approved));
+    const publishedCatalog: ContentCatalog = { ...previewCatalog, articles: previewCatalog.articles.map((target): ArticleMetadata => target.id === approved.id ? { ...target, status: "published", publishedDate: "2026-10-03" } : target) };
+    expect(resolveRelationships(related, publishedCatalog)[0].href).toBe(articleRoute(approved));
   });
 });
 
