@@ -11,6 +11,8 @@
     "test:watch": "vitest",
     "prebuild": "node scripts/content.mts",
     "build:fixtures": "node scripts/content.mts --fixtures && next build",
+    "build:editorial-preview": "node scripts/content.mts --editorial-preview && next build",
+    "preview:editorial": "next start --hostname 127.0.0.1",
     "content:check": "node scripts/content.mts",
     "pretest": "node scripts/content.mts --fixtures",
     "pretest:watch": "node scripts/content.mts --fixtures"

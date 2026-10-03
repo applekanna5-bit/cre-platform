@@ -5,7 +5,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { parseArticleMetadata, parseCases, parseSources, parseTable } from "@/content/validation";
-import { articleRoute, buildCatalog, isEditoriallyProtected, isRenderable, resolveRelationships, sourceDependents } from "@/content/catalog";
+import { articleRoute, buildCatalog, isEditoriallyProtected, isEditorialPreview, isRenderable, resolveRelationships, sourceDependents } from "@/content/catalog";
 import { discoverContent } from "@/content/discovery";
 import { compileArticle } from "@/content/compile";
 import { articleHeadings, catalog, embeddedCases, loaders } from "@/content/.generated";
@@ -14,9 +14,68 @@ import { articleComponents } from "@/components/content/mdx-components";
 import { FinancialTable, Sources } from "@/components/content/primitives";
 
 const discovered = await discoverContent(path.resolve("content"));
-const fixture = discovered.documents[0];
-const article = discovered.catalog.articles[0];
+const fixture = discovered.documents.find(document => document.metadata.id === "fixture-noi-bridge")!;
+const article = discovered.catalog.articles.find(article => article.id === "fixture-noi-bridge")!;
 const input = () => structuredClone(fixture.metadata);
+
+describe("CRE-015 production integration", () => {
+  const production = discovered.catalog.articles.find(article => article.id === "CRE-015")!;
+  it("validates approved metadata without making the article routable", () => {
+    expect(production).toMatchObject({ status: "approved", developmentFixture: false, lastReviewedDate: "2026-10-03" });
+    expect(isEditoriallyProtected(production.status)).toBe(true);
+    expect(isRenderable(production)).toBe(false);
+    expect(isRenderable(production, true)).toBe(false);
+    expect(loaders).not.toHaveProperty(production.id);
+    expect(articleRoute(production)).toBe("/content/underwriting/net-operating-income-underwritten-noi");
+  });
+  it("resolves only public production sources and the canonical Harbor View case and tables", async () => {
+    expect(production.sources.map(source => source.id)).toEqual(["occ-cre-lending-2022", "fannie-income-analysis-203", "fannie-underwritten-ncf-203-01"]);
+    for (const source of production.sources) {
+      expect(source.synthetic).toBe(false);
+      expect(source.url).toMatch(/^https:\/\//);
+      expect(source.accessedDate).toBe("2026-10-03");
+      expect(source.reviewedDate).toBe("2026-10-03");
+    }
+    expect(sourceDependents(discovered.catalog, "fixture-methodology").map(article => article.id)).toEqual(["fixture-noi-bridge"]);
+    expect(production.relationships).toEqual([{ purpose: "application", target: { kind: "case-study", id: "harbor-view" } }]);
+    const cases = discovered.catalog.cases.filter(record => record.id === "harbor-view");
+    expect(cases).toHaveLength(1);
+    expect(cases[0]).toMatchObject({ fictional: true, synthetic: false });
+    expect(cases[0].tables.map(table => table.id)).toEqual(["harbor-view-noi-bridge", "harbor-view-performance-comparison"]);
+    const document = discovered.documents.find(document => document.metadata.id === production.id)!;
+    const compiled = await compileArticle(document.body, production, discovered.catalog, document.file);
+    expect(compiled.caseIds).toEqual(["harbor-view"]);
+    expect(compiled.headings.some(heading => heading.label === "The Three-Question Adjustment Test")).toBe(true);
+  });
+});
+
+describe("separate approved editorial preview", () => {
+  const production = discovered.catalog.articles.find(article => article.id === "CRE-015")!;
+  it.each(["research", "brief", "draft", "technical-review", "editorial-review", "source-verification", "ready", "approved", "published", "needs-review", "archived"] as const)("limits preview eligibility for %s", status => {
+    const candidate = { ...production, status, publishedDate: undefined };
+    expect(isRenderable(candidate)).toBe(status === "published");
+    expect(isRenderable(candidate, true)).toBe(status === "published");
+    expect(isRenderable(candidate, false, true)).toBe(status === "approved" || status === "published");
+    expect(isEditorialPreview(candidate, true)).toBe(status === "approved");
+    expect(isRenderable({ ...candidate, developmentFixture: true }, false, true)).toBe(false);
+    expect(isRenderable({ ...candidate, status: "needs-review", publishedDate: "2026-10-03" }, false, true)).toBe(true);
+  });
+  it("keeps fixture and approved preview semantics distinct", () => {
+    expect(isRenderable(article, false, true)).toBe(false);
+    expect(isRenderable(article, true)).toBe(true);
+    expect(isEditorialPreview(article, true)).toBe(false);
+    const preview = renderToStaticMarkup(createElement(ArticleTemplate, { article: production, catalog, editorialPreview: true }));
+    expect(preview).toContain("Approved — editorial preview");
+    expect(preview).not.toContain("Development fixture — not publication content");
+    expect(renderToStaticMarkup(createElement(ArticleTemplate, { article: production, catalog }))).not.toContain("Approved — editorial preview");
+    expect(renderToStaticMarkup(createElement(ArticleTemplate, { article, catalog, fixtures: true }))).not.toContain("Approved — editorial preview");
+  });
+  it("links approved article relationships only in the explicit editorial mode", () => {
+    const related = { ...article, relationships: [{ purpose: "deep-dive" as const, target: { kind: "article" as const, id: production.id } }], relatedGlossaryTerms: [], relatedCalculators: [] };
+    expect(resolveRelationships(related, discovered.catalog, true)[0]).not.toHaveProperty("href");
+    expect(resolveRelationships(related, discovered.catalog, false, true)[0].href).toBe(articleRoute(production));
+  });
+});
 
 describe("metadata validation and M1B compatibility", () => {
   it("resolves source IDs into the existing M1B source shape", () => {
@@ -55,10 +114,10 @@ describe("metadata validation and M1B compatibility", () => {
 describe("discovery, source registry, and knowledge graph", () => {
   const assemble = (inputs = [input()], sources = [...discovered.catalog.sources]) => buildCatalog(inputs, sources, discovered.catalog.knowledge, discovered.catalog.cases);
   it("discovers only real MDX/metadata pairs and derives the route from metadata", () => {
-    expect(discovered.documents).toHaveLength(1);
+    expect(discovered.documents).toHaveLength(2);
     expect(fixture.file).toMatch(/underwriting[\\/]noi-development-fixture.mdx$/);
     expect(articleRoute(article)).toBe("/content/underwriting/noi-development-fixture");
-    expect(discovered.catalog.articles.some(article => article.id === "CRE-015")).toBe(false);
+    expect(discovered.catalog.articles.some(article => article.id === "CRE-015")).toBe(true);
   });
   it("rejects duplicate content IDs, canonical routes, sources, and knowledge identities", () => {
     expect(() => assemble([input(), input()])).toThrow(/Duplicate content ID/);

@@ -1,0 +1,26 @@
+{
+  "id": "CRE-015",
+  "title": "Net Operating Income: From Property Financials to Underwritten NOI",
+  "slug": "net-operating-income-underwritten-noi",
+  "description": "Learn how CRE underwriters move from reported property financials to a supportable underwritten NOI through reconciliation, normalization, evidence, and judgment.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "approved",
+  "author": { "name": "CRE Knowledge Platform Editorial Team" },
+  "reviewer": { "name": "CRE Knowledge Platform Technical Review" },
+  "lastReviewedDate": "2026-10-03",
+  "propertyTypes": ["multifamily"],
+  "loanProducts": [],
+  "topics": ["noi", "underwritten-noi", "property-financials", "income-analysis", "expense-analysis", "normalization", "valuation", "credit-analysis"],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": ["occ-cre-lending-2022", "fannie-income-analysis-203", "fannie-underwritten-ncf-203-01"],
+  "updateSensitivity": "U3",
+  "sourceClasses": ["B", "C"],
+  "relationships": [
+    { "purpose": "application", "target": { "kind": "case-study", "id": "harbor-view" } }
+  ],
+  "developmentFixture": false
+}

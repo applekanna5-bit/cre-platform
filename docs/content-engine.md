@@ -31,6 +31,7 @@ Use Node 22.18 or newer and `npm install`/`npm ci`, including dev dependencies f
 - `npm run lint`: source lint (generated compiler code is excluded).
 - `npm run build`: validate everything and build publication-only routes.
 - `npm run build:fixtures`: explicit local review build including fixtures; then `npm start`.
+- `npm run build:editorial-preview`: explicit local editorial QA build including approved non-fixture articles; then `npm run preview:editorial` (bound to 127.0.0.1). Approved articles retain their canonical routes, show **Approved — editorial preview**, and render with noindex/nofollow. This mode excludes development fixtures and does not expose other unpublished states. Previously published needs-review articles retain existing M3 eligibility. Editorial preview and fixture flags cannot be combined. Keep this build local; run `npm run build` to restore publication-only output after review.
 
 Review route: `/content/underwriting/noi-development-fixture`. A normal production build must return 404 for it. The fixture build has a prominent **Development fixture — not publication content** label and noindex. Do not deploy a fixture-enabled build as a publication release. No fixture link is added to frozen primary navigation or the homepage.
 

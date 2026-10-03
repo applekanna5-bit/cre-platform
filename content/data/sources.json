@@ -10,5 +10,45 @@
     "updateSensitivity": "U1",
     "synthetic": true,
     "notes": "Synthetic development source only. No real lender, regulator, program requirement, or external authority is represented. The date exercises provenance display, not a substantive technical review."
+  },
+  {
+    "id": "occ-cre-lending-2022",
+    "title": "Commercial Real Estate Lending, Comptroller's Handbook, Version 2.0",
+    "publisher": "Office of the Comptroller of the Currency",
+    "url": "https://www.occ.treas.gov/publications-and-resources/publications/comptrollers-handbook/files/commercial-real-estate-lending/index-commercial-real-estate-lending.html",
+    "type": "regulatory",
+    "authority": "authoritative",
+    "publicationDate": "2022-03-29",
+    "accessedDate": "2026-10-03",
+    "reviewedDate": "2026-10-03",
+    "updateSensitivity": "U2",
+    "synthetic": false,
+    "notes": "Primary regulatory source for general CRE underwriting concepts, stabilized NOI, valuation/cash-flow analysis, debt yield, and the OCC convention for replacement reserves. Applies to OCC-supervised institutions; do not present it as a universal lender methodology."
+  },
+  {
+    "id": "fannie-income-analysis-203",
+    "title": "Section 203 — Income Analysis",
+    "publisher": "Fannie Mae Multifamily Guide",
+    "url": "https://mfguide.fanniemae.com/node/7526",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "accessedDate": "2026-10-03",
+    "reviewedDate": "2026-10-03",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "Current public Fannie Mae multifamily income-analysis methodology reviewed for revenue, concessions, bad debt, other income, and line-by-line stabilized operating expenses. Program-specific requirements must be reverified before future substantive updates."
+  },
+  {
+    "id": "fannie-underwritten-ncf-203-01",
+    "title": "203.01 — Underwritten Net Cash Flow (Underwritten NCF)",
+    "publisher": "Fannie Mae Multifamily Guide",
+    "url": "https://mfguide.fanniemae.com/node/7531",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "accessedDate": "2026-10-03",
+    "reviewedDate": "2026-10-03",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "Current public Fannie Mae guidance reviewed for objective measures, historical and anticipated operations, operating-statement/vacancy review, adjustment documentation, and the distinction between Underwritten NOI and Underwritten NCF. Program-specific requirements must be reverified before future substantive updates."
   }
 ]

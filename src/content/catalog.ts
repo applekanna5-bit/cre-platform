@@ -6,8 +6,11 @@ export function articleRoute(article: Pick<ArticleMetadata, "domain" | "slug">):
 export function isPublicArticle(article: ArticleMetadata): boolean {
   return !article.developmentFixture && (article.status === "published" || (article.status === "needs-review" && !!article.publishedDate));
 }
-export function isRenderable(article: ArticleMetadata, fixtures = false): boolean {
-  return isPublicArticle(article) || (fixtures && article.developmentFixture && article.status === "draft");
+export function isEditorialPreview(article: ArticleMetadata, editorialPreview = false): boolean {
+  return editorialPreview && !article.developmentFixture && article.status === "approved";
+}
+export function isRenderable(article: ArticleMetadata, fixtures = false, editorialPreview = false): boolean {
+  return isPublicArticle(article) || (fixtures && article.developmentFixture && article.status === "draft") || isEditorialPreview(article, editorialPreview);
 }
 export function isEditoriallyProtected(status: ArticleMetadata["status"]): boolean {
   return ["ready", "approved", "published", "needs-review", "archived"].includes(status);
@@ -57,12 +60,12 @@ export function buildCatalog(inputs: readonly ArticleInput[], sources: readonly 
 }
 
 export interface ResolvedRelationship extends ContentRelationship { label: string; href?: string }
-export function resolveRelationships(article: ArticleMetadata, catalog: ContentCatalog, fixtures = false): ResolvedRelationship[] {
+export function resolveRelationships(article: ArticleMetadata, catalog: ContentCatalog, fixtures = false, editorialPreview = false): ResolvedRelationship[] {
   return relationshipsFor(article).map(relation => {
     if (relation.target.kind === "article") {
       const target = catalog.articles.find(item => item.id === relation.target.id);
       if (!target) throw new Error(`Unresolved article ${relation.target.id}`);
-      return { ...relation, label: target.title, ...(isRenderable(target, fixtures) ? { href: articleRoute(target) } : {}) };
+      return { ...relation, label: target.title, ...(isRenderable(target, fixtures, editorialPreview) ? { href: articleRoute(target) } : {}) };
     }
     const target = [...catalog.knowledge, ...catalog.cases].find(item => item.kind === relation.target.kind && item.id === relation.target.id);
     if (!target) throw new Error(`Unresolved knowledge record ${relation.target.id}`);
