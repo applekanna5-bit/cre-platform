@@ -6,7 +6,8 @@
   "domain": "underwriting",
   "contentType": "guide",
   "difficulty": "intermediate",
-  "status": "approved",
+  "status": "published",
+  "publishedDate": "2026-10-04",
   "author": {
     "name": "CRE Knowledge Platform Editorial Team"
   },

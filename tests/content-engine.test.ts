@@ -74,15 +74,14 @@ describe("CRE-006 additive integration", () => {
   });
 });
 
-describe("CRE-007 approved integration", () => {
+describe("CRE-007 published integration", () => {
   const approved = discovered.catalog.articles.find(item => item.id === "CRE-007")!;
-  it("preserves frozen prose, approved lifecycle, and published relationship targets", () => {
+  it("preserves frozen prose, published lifecycle, and published relationship targets", () => {
     const document = discovered.documents.find(item => item.metadata.id === approved.id)!;
     expect(createHash("sha256").update(document.body).digest("hex")).toBe("995f7ccaf61499a215a81f95870a5dee0ed54137191111b44a8e86540d72577b");
-    expect(approved).toMatchObject({ status: "approved", developmentFixture: false, updateSensitivity: "U3" });
-    expect(approved).not.toHaveProperty("publishedDate");
-    expect(isRenderable(approved)).toBe(false);
-    expect(isRenderable(approved, true)).toBe(false);
+    expect(approved).toMatchObject({ status: "published", publishedDate: "2026-10-04", developmentFixture: false, updateSensitivity: "U3" });
+    expect(isRenderable(approved)).toBe(true);
+    expect(isRenderable(approved, true)).toBe(true);
     expect(isRenderable(approved, false, true)).toBe(true);
     expect(articleRoute(approved)).toBe("/content/underwriting/rent-roll-analysis");
     expect(approved.sources.map(source => source.id)).toEqual(["occ-cre-lending-2022", "fannie-lease-audit-401", "freddie-appraisal-checklist-2026"]);
