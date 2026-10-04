@@ -55,6 +55,217 @@
           { "label": "Operating Expenses", "values": ["$965,000", "$980,000", "$1,050,000"] },
           { "label": "NOI", "values": ["$2,215,000", "$2,320,000", "$2,140,000"], "total": true }
         ]
+      },
+      {
+        "id": "harbor-view-t12-summary",
+        "caption": "Harbor View T-12 operating results — fictional educational values, annual USD",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Annual amount (USD)",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Gross rental income",
+            "values": [
+              "$3,126,000"
+            ]
+          },
+          {
+            "label": "Physical vacancy",
+            "values": [
+              "($60,000)"
+            ]
+          },
+          {
+            "label": "Concessions",
+            "values": [
+              "($36,000)"
+            ]
+          },
+          {
+            "label": "Bad debt / collection loss",
+            "values": [
+              "($42,000)"
+            ]
+          },
+          {
+            "label": "Net rental income",
+            "values": [
+              "$2,988,000"
+            ],
+            "total": true
+          },
+          {
+            "label": "Other income",
+            "values": [
+              "$192,000"
+            ]
+          },
+          {
+            "label": "Effective gross income",
+            "values": [
+              "$3,180,000"
+            ],
+            "total": true
+          },
+          {
+            "label": "Operating expenses",
+            "values": [
+              "($965,000)"
+            ]
+          },
+          {
+            "label": "Reported NOI",
+            "values": [
+              "$2,215,000"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-nri-trends",
+        "caption": "Net rental income comparison — fictional educational values; recent periods annualized",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Annual amount (USD)",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12",
+            "values": [
+              "$2,988,000"
+            ]
+          },
+          {
+            "label": "T-6 annualized",
+            "values": [
+              "$3,008,000"
+            ]
+          },
+          {
+            "label": "T-3 annualized",
+            "values": [
+              "$3,012,000"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-noi-trends",
+        "caption": "NOI comparison — fictional educational values; recent periods annualized",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Annual amount (USD)",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12",
+            "values": [
+              "$2,215,000"
+            ]
+          },
+          {
+            "label": "T-6 annualized",
+            "values": [
+              "$2,188,000"
+            ]
+          },
+          {
+            "label": "T-3 annualized",
+            "values": [
+              "$2,120,000"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-expense-trends",
+        "caption": "Selected expense comparison — fictional educational values; recent periods annualized",
+        "columns": [
+          {
+            "key": "expense",
+            "label": "Expense"
+          },
+          {
+            "key": "t12",
+            "label": "T-12",
+            "numeric": true
+          },
+          {
+            "key": "t6",
+            "label": "T-6 annualized",
+            "numeric": true
+          },
+          {
+            "key": "t3",
+            "label": "T-3 annualized",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Real estate taxes",
+            "values": [
+              "$180K",
+              "$180K",
+              "$180K"
+            ]
+          },
+          {
+            "label": "Insurance",
+            "values": [
+              "$120K",
+              "$144K",
+              "$184K"
+            ]
+          },
+          {
+            "label": "Payroll",
+            "values": [
+              "$210K",
+              "$222K",
+              "$232K"
+            ]
+          },
+          {
+            "label": "Repairs & maintenance",
+            "values": [
+              "$145K",
+              "$170K",
+              "$220K"
+            ]
+          },
+          {
+            "label": "Utilities",
+            "values": [
+              "$180K",
+              "$180K",
+              "$180K"
+            ]
+          }
+        ]
       }
     ]
   }

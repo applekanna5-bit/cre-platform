@@ -1,0 +1,59 @@
+{
+  "id": "CRE-006",
+  "title": "T-12 Operating Statement: How CRE Underwriters Read Property Performance",
+  "slug": "t12-operating-statement",
+  "description": "Learn how CRE underwriters analyze a T-12 operating statement, identify revenue and expense trends, reconcile the rent roll, and investigate NOI.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "approved",
+  "author": {
+    "name": "CRE Knowledge Platform Editorial Team"
+  },
+  "reviewer": {
+    "name": "CRE Knowledge Platform Editorial Review"
+  },
+  "lastReviewedDate": "2026-10-04",
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "t-12",
+    "operating-statements",
+    "property-financials",
+    "net-rental-income",
+    "noi",
+    "revenue-analysis",
+    "expense-analysis"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "fannie-income-analysis-203"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "B",
+    "C"
+  ],
+  "relationships": [
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "case-study",
+        "id": "harbor-view"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    }
+  ],
+  "developmentFixture": false
+}
