@@ -101,15 +101,14 @@ describe("CRE-007 published integration", () => {
   });
 });
 
-describe("CRE-011 approved integration", () => {
+describe("CRE-011 published integration", () => {
   const approved = discovered.catalog.articles.find(item => item.id === "CRE-011")!;
-  it("preserves frozen prose, canonical sources, approved lifecycle, and routable relationships", async () => {
+  it("preserves frozen prose, canonical sources, published lifecycle, and routable relationships", async () => {
     const document = discovered.documents.find(item => item.metadata.id === approved.id)!;
     expect(createHash("sha256").update(document.body).digest("hex")).toBe("9e220e1e51b02b1ae5d3aa6053514ccc8a7a7c5d6a2ae43dc6076e9d7421ddcc");
-    expect(approved).toMatchObject({ status: "approved", developmentFixture: false, updateSensitivity: "U2" });
-    expect(approved).not.toHaveProperty("publishedDate");
-    expect(isRenderable(approved)).toBe(false);
-    expect(isRenderable(approved, true)).toBe(false);
+    expect(approved).toMatchObject({ status: "published", publishedDate: "2026-10-04", developmentFixture: false, updateSensitivity: "U2" });
+    expect(isRenderable(approved)).toBe(true);
+    expect(isRenderable(approved, true)).toBe(true);
     expect(isRenderable(approved, false, true)).toBe(true);
     expect(approved.sources.map(source => source.id)).toEqual(["occ-cre-lending-2022", "fannie-income-analysis-203"]);
     expect(discovered.catalog.sources.some(source => source.id === "fannie-other-income")).toBe(false);
