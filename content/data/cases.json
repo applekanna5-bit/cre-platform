@@ -840,6 +840,365 @@
             ]
           }
         ]
+      },
+      {
+        "id": "harbor-view-revenue-t12",
+        "caption": "Harbor View T-12 revenue — fictional educational case, USD",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "T-12",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Gross rental income",
+            "values": [
+              "$3,126,000"
+            ]
+          },
+          {
+            "label": "Physical vacancy",
+            "values": [
+              "($60,000)"
+            ]
+          },
+          {
+            "label": "Concessions",
+            "values": [
+              "($36,000)"
+            ]
+          },
+          {
+            "label": "Bad debt / collection loss",
+            "values": [
+              "($42,000)"
+            ]
+          },
+          {
+            "label": "Net Rental Income",
+            "values": [
+              "$2,988,000"
+            ],
+            "total": true
+          },
+          {
+            "label": "Other income",
+            "values": [
+              "$192,000"
+            ]
+          },
+          {
+            "label": "Effective Gross Income",
+            "values": [
+              "$3,180,000"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-revenue-trend",
+        "caption": "Harbor View recent NRI trend — fictional educational case",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "nri",
+            "label": "NRI",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12 actual",
+            "values": [
+              "$2.988M"
+            ]
+          },
+          {
+            "label": "T-6 annualized",
+            "values": [
+              "$3.008M"
+            ]
+          },
+          {
+            "label": "T-3 annualized",
+            "values": [
+              "$3.012M"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-revenue-evidence-comparison",
+        "caption": "Harbor View rental evidence comparison — not a like-for-like revenue bridge",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Amount",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12 NRI",
+            "values": [
+              "$2.988M"
+            ]
+          },
+          {
+            "label": "T-6 NRI annualized",
+            "values": [
+              "$3.008M"
+            ]
+          },
+          {
+            "label": "T-3 NRI annualized",
+            "values": [
+              "$3.012M"
+            ]
+          },
+          {
+            "label": "Current occupied contractual rent annualized",
+            "values": [
+              "$3.023M"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-revenue-evidence-boundaries",
+        "caption": "What Harbor View's summarized revenue evidence supports — and what it does not prove",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "observation",
+            "label": "Observation"
+          },
+          {
+            "key": "supports",
+            "label": "What it supports"
+          },
+          {
+            "key": "notprove",
+            "label": "What it does not prove"
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12 NRI",
+            "values": [
+              "$2.988M",
+              "Historical rental performance",
+              "Forward NRI"
+            ]
+          },
+          {
+            "label": "T-6 annualized NRI",
+            "values": [
+              "$3.008M",
+              "Recent improvement",
+              "Sustainable annual NRI by itself"
+            ]
+          },
+          {
+            "label": "T-3 annualized NRI",
+            "values": [
+              "$3.012M",
+              "Improvement persists recently",
+              "Universal underwriting run rate"
+            ]
+          },
+          {
+            "label": "Current occupied contractual rent",
+            "values": [
+              "$251,910/month",
+              "Current lease structure supports stronger rent",
+              "Collectible NRI"
+            ]
+          },
+          {
+            "label": "Recent leases",
+            "values": [
+              "Generally stronger face rents",
+              "Current leasing supports improvement",
+              "Immediate property-wide rent capture"
+            ]
+          },
+          {
+            "label": "Recent concessions",
+            "values": [
+              "Present on sampled leases",
+              "Some stronger rents carry economic leakage",
+              "Exact future concession amount"
+            ]
+          },
+          {
+            "label": "Historical collection loss",
+            "values": [
+              "Present in the T-12",
+              "Contractual rent differs from realized revenue",
+              "Exact future collection loss"
+            ]
+          },
+          {
+            "label": "Contract-to-market difference",
+            "values": [
+              "$10,940/month",
+              "Potential rental opportunity",
+              "$131,280 of immediately realizable revenue"
+            ]
+          },
+          {
+            "label": "Q2 2027 expirations",
+            "values": [
+              "55 occupied leases",
+              "Meaningful timing / execution exposure",
+              "Future vacancy"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-revenue-rental-underwriting",
+        "caption": "Harbor View rental underwriting bridge — fictional underwriting judgments",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Amount",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Historical NRI",
+            "values": [
+              "$2,988,000"
+            ]
+          },
+          {
+            "label": "Gross supported rental improvement",
+            "values": [
+              "+$60,000"
+            ]
+          },
+          {
+            "label": "Incremental concession / collection offset",
+            "values": [
+              "($35,000)"
+            ]
+          },
+          {
+            "label": "Underwritten NRI",
+            "values": [
+              "$3,013,000"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-revenue-other-income-underwriting",
+        "caption": "Harbor View other-income underwriting — fictional underwriting judgment",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Amount",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12 other income",
+            "values": [
+              "$192,000"
+            ]
+          },
+          {
+            "label": "Unsupported other income adjustment",
+            "values": [
+              "($15,000)"
+            ]
+          },
+          {
+            "label": "Underwritten other income",
+            "values": [
+              "$177,000"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-revenue-complete-bridge",
+        "caption": "Harbor View complete revenue bridge — fictional educational case",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Amount",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12 EGI",
+            "values": [
+              "$3,180,000"
+            ]
+          },
+          {
+            "label": "Gross supported rental improvement",
+            "values": [
+              "+$60,000"
+            ]
+          },
+          {
+            "label": "Incremental concession / collection offset",
+            "values": [
+              "($35,000)"
+            ]
+          },
+          {
+            "label": "Unsupported other income adjustment",
+            "values": [
+              "($15,000)"
+            ]
+          },
+          {
+            "label": "Underwritten EGI",
+            "values": [
+              "$3,190,000"
+            ],
+            "total": true
+          }
+        ]
       }
     ]
   }

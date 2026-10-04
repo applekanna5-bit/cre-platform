@@ -1,0 +1,74 @@
+{
+  "id": "CRE-011",
+  "title": "How CRE Underwriters Analyze Property Revenue: From Reported Income to Supportable Revenue",
+  "slug": "cre-revenue-underwriting",
+  "description": "Learn how CRE underwriters analyze historical revenue, rent rolls, concessions, collections and other income to determine supportable underwritten revenue.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "approved",
+  "author": {
+    "name": "CRE Knowledge Platform Editorial Team"
+  },
+  "reviewer": {
+    "name": "CRE Knowledge Platform Editorial Review"
+  },
+  "lastReviewedDate": "2026-10-04",
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "revenue-underwriting",
+    "net-rental-income",
+    "effective-gross-income",
+    "rent-roll",
+    "concessions",
+    "bad-debt",
+    "other-income",
+    "revenue-normalization"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "fannie-income-analysis-203"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "B",
+    "C"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-006"
+      }
+    },
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-007"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "case-study",
+        "id": "harbor-view"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    }
+  ],
+  "developmentFixture": false
+}
