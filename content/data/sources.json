@@ -50,5 +50,33 @@
     "updateSensitivity": "U3",
     "synthetic": false,
     "notes": "Current public Fannie Mae guidance reviewed for objective measures, historical and anticipated operations, operating-statement/vacancy review, adjustment documentation, and the distinction between Underwritten NOI and Underwritten NCF. Program-specific requirements must be reverified before future substantive updates."
+  },
+  {
+    "id": "fannie-lease-audit-401",
+    "title": "Section 401 — Lease Audit",
+    "publisher": "Fannie Mae",
+    "url": "https://mfguide.fanniemae.com/fnmf-pdf/download/4036",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "effectiveDate": "2026-05-20",
+    "accessedDate": "2026-10-04",
+    "reviewedDate": "2026-10-04",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "Current public Fannie Mae lease-audit guidance used narrowly for rent-roll-to-lease reconciliation, lease review sample requirements, and inclusion of new/recently renewed leases to verify rent trends. Verify the live repository does not already contain an equivalent canonical source before adding."
+  },
+  {
+    "id": "freddie-appraisal-checklist-2026",
+    "title": "Multifamily Underwriting Appraisal Checklist",
+    "publisher": "Freddie Mac Multifamily",
+    "url": "https://mf.freddiemac.com/docs/mf_underwriting_appraisal_checklist.pdf",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "publicationDate": "2026-02-01",
+    "accessedDate": "2026-10-04",
+    "reviewedDate": "2026-10-04",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "February 2026 public checklist used narrowly for the example that market rents by unit type should be supported by recent subject leasing, including leases commencing within 90 days of the effective date of value. Verify the live repository does not already contain an equivalent canonical source before adding."
   }
 ]

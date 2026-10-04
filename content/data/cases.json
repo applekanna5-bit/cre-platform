@@ -266,6 +266,580 @@
             ]
           }
         ]
+      },
+      {
+        "id": "harbor-view-rent-roll-inventory",
+        "caption": "Harbor View rent-roll inventory — September 30, 2026, fictional educational case",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "onebr",
+            "label": "1BR / 1BA",
+            "numeric": true
+          },
+          {
+            "key": "twobr",
+            "label": "2BR / 2BA",
+            "numeric": true
+          },
+          {
+            "key": "total",
+            "label": "Total",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Total units",
+            "values": [
+              "108",
+              "72",
+              "180"
+            ],
+            "total": true
+          },
+          {
+            "label": "Occupied",
+            "values": [
+              "103",
+              "68",
+              "171"
+            ]
+          },
+          {
+            "label": "Vacant",
+            "values": [
+              "4",
+              "3",
+              "7"
+            ]
+          },
+          {
+            "label": "Non-revenue",
+            "values": [
+              "1",
+              "1",
+              "2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-contract-market-rent",
+        "caption": "Occupied contractual rent versus illustrative market rent — fictional case, USD/month",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "occupied",
+            "label": "Occupied units",
+            "numeric": true
+          },
+          {
+            "key": "avgcontract",
+            "label": "Avg. contract rent",
+            "numeric": true
+          },
+          {
+            "key": "contract",
+            "label": "Occupied contract rent",
+            "numeric": true
+          },
+          {
+            "key": "market",
+            "label": "Illustrative market rent",
+            "numeric": true
+          },
+          {
+            "key": "markettotal",
+            "label": "Occupied at illustrative market",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "1BR / 1BA",
+            "values": [
+              "103",
+              "$1,330",
+              "$136,990",
+              "$1,390",
+              "$143,170"
+            ]
+          },
+          {
+            "label": "2BR / 2BA",
+            "values": [
+              "68",
+              "$1,690",
+              "$114,920",
+              "$1,760",
+              "$119,680"
+            ]
+          },
+          {
+            "label": "Total",
+            "values": [
+              "171",
+              "—",
+              "$251,910",
+              "—",
+              "$262,850"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-rent-roll-lease-sample",
+        "caption": "18-lease educational review sample — fictional Harbor View leases",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "type",
+            "label": "Type"
+          },
+          {
+            "key": "contract",
+            "label": "Contract rent",
+            "numeric": true
+          },
+          {
+            "key": "market",
+            "label": "Illustrative market",
+            "numeric": true
+          },
+          {
+            "key": "start",
+            "label": "Lease start"
+          },
+          {
+            "key": "expiration",
+            "label": "Lease expiration"
+          },
+          {
+            "key": "classification",
+            "label": "Classification"
+          },
+          {
+            "key": "concession",
+            "label": "Concession",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Unit 102",
+            "values": [
+              "1BR",
+              "$1,245",
+              "$1,390",
+              "01/15/26",
+              "01/14/27",
+              "Older lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 108",
+            "values": [
+              "1BR",
+              "$1,275",
+              "$1,390",
+              "02/01/26",
+              "01/31/27",
+              "Older lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 114",
+            "values": [
+              "1BR",
+              "$1,315",
+              "$1,390",
+              "03/15/26",
+              "03/14/27",
+              "Existing lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 203",
+            "values": [
+              "1BR",
+              "$1,340",
+              "$1,390",
+              "07/01/26",
+              "06/30/27",
+              "Recent renewal",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 211",
+            "values": [
+              "1BR",
+              "$1,365",
+              "$1,390",
+              "08/01/26",
+              "07/31/27",
+              "Recent renewal",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 219",
+            "values": [
+              "1BR",
+              "$1,390",
+              "$1,390",
+              "07/15/26",
+              "07/14/27",
+              "Recent new lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 304",
+            "values": [
+              "1BR",
+              "$1,395",
+              "$1,390",
+              "08/15/26",
+              "08/14/27",
+              "Recent new lease",
+              "$250"
+            ]
+          },
+          {
+            "label": "Unit 312",
+            "values": [
+              "1BR",
+              "$1,390",
+              "$1,390",
+              "09/01/26",
+              "08/31/27",
+              "Recent new lease",
+              "$500"
+            ]
+          },
+          {
+            "label": "Unit 320",
+            "values": [
+              "1BR",
+              "$1,355",
+              "$1,390",
+              "05/01/26",
+              "04/30/27",
+              "Existing lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 401",
+            "values": [
+              "2BR",
+              "$1,575",
+              "$1,760",
+              "12/01/25",
+              "11/30/26",
+              "Older lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 407",
+            "values": [
+              "2BR",
+              "$1,625",
+              "$1,760",
+              "01/01/26",
+              "12/31/26",
+              "Older lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 415",
+            "values": [
+              "2BR",
+              "$1,675",
+              "$1,760",
+              "04/01/26",
+              "03/31/27",
+              "Existing lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 502",
+            "values": [
+              "2BR",
+              "$1,710",
+              "$1,760",
+              "07/01/26",
+              "06/30/27",
+              "Recent renewal",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 508",
+            "values": [
+              "2BR",
+              "$1,745",
+              "$1,760",
+              "08/01/26",
+              "07/31/27",
+              "Recent renewal",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 514",
+            "values": [
+              "2BR",
+              "$1,760",
+              "$1,760",
+              "07/15/26",
+              "07/14/27",
+              "Recent new lease",
+              "—"
+            ]
+          },
+          {
+            "label": "Unit 603",
+            "values": [
+              "2BR",
+              "$1,775",
+              "$1,760",
+              "08/15/26",
+              "08/14/27",
+              "Recent new lease",
+              "$350"
+            ]
+          },
+          {
+            "label": "Unit 609",
+            "values": [
+              "2BR",
+              "$1,760",
+              "$1,760",
+              "09/01/26",
+              "08/31/27",
+              "Recent new lease",
+              "$750"
+            ]
+          },
+          {
+            "label": "Unit 611",
+            "values": [
+              "2BR",
+              "$1,720",
+              "$1,760",
+              "05/15/26",
+              "05/14/27",
+              "Existing lease",
+              "—"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-rent-roll-concessions",
+        "caption": "Selected recent leases with concessions — fictional educational sample",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "contract",
+            "label": "Contract rent",
+            "numeric": true
+          },
+          {
+            "key": "market",
+            "label": "Illustrative market",
+            "numeric": true
+          },
+          {
+            "key": "concession",
+            "label": "Concession",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Unit 304 — 1BR",
+            "values": [
+              "$1,395",
+              "$1,390",
+              "$250"
+            ]
+          },
+          {
+            "label": "Unit 312 — 1BR",
+            "values": [
+              "$1,390",
+              "$1,390",
+              "$500"
+            ]
+          },
+          {
+            "label": "Unit 603 — 2BR",
+            "values": [
+              "$1,775",
+              "$1,760",
+              "$350"
+            ]
+          },
+          {
+            "label": "Unit 609 — 2BR",
+            "values": [
+              "$1,760",
+              "$1,760",
+              "$750"
+            ]
+          },
+          {
+            "label": "Observed sample total",
+            "values": [
+              "—",
+              "—",
+              "$1,850"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-rent-roll-expirations",
+        "caption": "Occupied lease-expiration concentration — fictional Harbor View rent roll",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "leases",
+            "label": "Expiring leases",
+            "numeric": true
+          },
+          {
+            "key": "leasepct",
+            "label": "% occupied leases",
+            "numeric": true
+          },
+          {
+            "key": "rent",
+            "label": "Contract rent exposed",
+            "numeric": true
+          },
+          {
+            "key": "rentpct",
+            "label": "% occupied contract rent",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "Oct–Dec 2026",
+            "values": [
+              "40",
+              "23.4%",
+              "$58,030",
+              "23.0%"
+            ]
+          },
+          {
+            "label": "Jan–Mar 2027",
+            "values": [
+              "51",
+              "29.8%",
+              "$74,980",
+              "29.8%"
+            ]
+          },
+          {
+            "label": "Apr–Jun 2027",
+            "values": [
+              "55",
+              "32.2%",
+              "$82,240",
+              "32.6%"
+            ]
+          },
+          {
+            "label": "Jul–Sep 2027",
+            "values": [
+              "25",
+              "14.6%",
+              "$36,660",
+              "14.6%"
+            ]
+          },
+          {
+            "label": "Total",
+            "values": [
+              "171",
+              "100.0%",
+              "$251,910",
+              "100.0%"
+            ],
+            "total": true
+          }
+        ]
+      },
+      {
+        "id": "harbor-view-rent-roll-t12-reconciliation",
+        "caption": "Directional comparison of historical NRI and current occupied contractual rent — not a like-for-like revenue bridge",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "amount",
+            "label": "Amount",
+            "numeric": true
+          }
+        ],
+        "rows": [
+          {
+            "label": "T-12 NRI",
+            "values": [
+              "$2.988M"
+            ]
+          },
+          {
+            "label": "T-6 NRI annualized — analytical view",
+            "values": [
+              "$3.008M"
+            ]
+          },
+          {
+            "label": "T-3 NRI annualized — analytical view",
+            "values": [
+              "$3.012M"
+            ]
+          },
+          {
+            "label": "Current occupied contractual rent annualized",
+            "values": [
+              "$3.023M"
+            ]
+          }
+        ]
       }
     ]
   }

@@ -1,0 +1,67 @@
+{
+  "id": "CRE-007",
+  "title": "Rent Roll Analysis: How CRE Underwriters Read the Property Behind the Numbers",
+  "slug": "rent-roll-analysis",
+  "description": "Learn how CRE underwriters analyze a multifamily rent roll, evaluate occupancy, rents, concessions and lease expirations, and reconcile it with the T-12.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "approved",
+  "author": {
+    "name": "CRE Knowledge Platform Editorial Team"
+  },
+  "reviewer": {
+    "name": "CRE Knowledge Platform Editorial Review"
+  },
+  "lastReviewedDate": "2026-10-04",
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "rent-roll",
+    "occupancy",
+    "contract-rent",
+    "market-rent",
+    "lease-expirations",
+    "concessions",
+    "t-12-reconciliation"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "fannie-lease-audit-401",
+    "freddie-appraisal-checklist-2026"
+  ],
+  "updateSensitivity": "U3",
+  "sourceClasses": [
+    "B",
+    "C"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-006"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "case-study",
+        "id": "harbor-view"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

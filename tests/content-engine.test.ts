@@ -43,7 +43,7 @@ describe("CRE-015 production integration", () => {
     const cases = discovered.catalog.cases.filter(record => record.id === "harbor-view");
     expect(cases).toHaveLength(1);
     expect(cases[0]).toMatchObject({ fictional: true, synthetic: false });
-    expect(cases[0].tables.map(table => table.id)).toEqual(["harbor-view-noi-bridge", "harbor-view-performance-comparison", "harbor-view-t12-summary", "harbor-view-nri-trends", "harbor-view-noi-trends", "harbor-view-expense-trends"]);
+    expect(cases[0].tables.slice(0, 6).map(table => table.id)).toEqual(["harbor-view-noi-bridge", "harbor-view-performance-comparison", "harbor-view-t12-summary", "harbor-view-nri-trends", "harbor-view-noi-trends", "harbor-view-expense-trends"]);
     const document = discovered.documents.find(document => document.metadata.id === production.id)!;
     const compiled = await compileArticle(document.body, production, discovered.catalog, document.file);
     expect(compiled.caseIds).toEqual(["harbor-view"]);
@@ -71,6 +71,34 @@ describe("CRE-006 additive integration", () => {
     expect(tables.find(item => item.id === "harbor-view-expense-trends")!.rows.map(row => [row.label, ...row.values])).toEqual([
       ["Real estate taxes", "$180K", "$180K", "$180K"], ["Insurance", "$120K", "$144K", "$184K"], ["Payroll", "$210K", "$222K", "$232K"], ["Repairs & maintenance", "$145K", "$170K", "$220K"], ["Utilities", "$180K", "$180K", "$180K"]
     ]);
+  });
+});
+
+describe("CRE-007 approved integration", () => {
+  const approved = discovered.catalog.articles.find(item => item.id === "CRE-007")!;
+  it("preserves frozen prose, approved lifecycle, and published relationship targets", () => {
+    const document = discovered.documents.find(item => item.metadata.id === approved.id)!;
+    expect(createHash("sha256").update(document.body).digest("hex")).toBe("995f7ccaf61499a215a81f95870a5dee0ed54137191111b44a8e86540d72577b");
+    expect(approved).toMatchObject({ status: "approved", developmentFixture: false, updateSensitivity: "U3" });
+    expect(approved).not.toHaveProperty("publishedDate");
+    expect(isRenderable(approved)).toBe(false);
+    expect(isRenderable(approved, true)).toBe(false);
+    expect(isRenderable(approved, false, true)).toBe(true);
+    expect(articleRoute(approved)).toBe("/content/underwriting/rent-roll-analysis");
+    expect(approved.sources.map(source => source.id)).toEqual(["occ-cre-lending-2022", "fannie-lease-audit-401", "freddie-appraisal-checklist-2026"]);
+    expect(resolveRelationships(approved, discovered.catalog).filter(relation => relation.target.kind === "article").map(relation => relation.href)).toEqual(["/content/underwriting/t12-operating-statement", "/content/underwriting/net-operating-income-underwritten-noi"]);
+  });
+  it("renders the six tables including all 18 leases with matching row and column counts", () => {
+    const tables = discovered.catalog.cases.find(item => item.id === "harbor-view")!.tables.slice(6);
+    expect(tables.map(table => table.id)).toEqual(["harbor-view-rent-roll-inventory", "harbor-view-contract-market-rent", "harbor-view-rent-roll-lease-sample", "harbor-view-rent-roll-concessions", "harbor-view-rent-roll-expirations", "harbor-view-rent-roll-t12-reconciliation"]);
+    for (const table of tables) {
+      expect(table.columns[0]).toEqual({ key: "item", label: "Item" });
+      expect(table.rows.every(row => row.values.length === table.columns.length - 1)).toBe(true);
+      const rendered = renderToStaticMarkup(createElement(FinancialTable, { data: table }));
+      expect((rendered.match(/scope="col"/g) ?? []).length).toBe(table.columns.length);
+      expect((rendered.match(/scope="row"/g) ?? []).length).toBe(table.rows.length);
+    }
+    expect(tables.find(table => table.id === "harbor-view-rent-roll-lease-sample")!.rows).toHaveLength(18);
   });
 });
 
@@ -145,7 +173,7 @@ describe("metadata validation and M1B compatibility", () => {
 describe("discovery, source registry, and knowledge graph", () => {
   const assemble = (inputs = [input()], sources = [...discovered.catalog.sources]) => buildCatalog(inputs, sources, discovered.catalog.knowledge, discovered.catalog.cases);
   it("discovers only real MDX/metadata pairs and derives the route from metadata", () => {
-    expect(discovered.documents).toHaveLength(3);
+    expect(discovered.documents).toHaveLength(4);
     expect(fixture.file).toMatch(/underwriting[\\/]noi-development-fixture.mdx$/);
     expect(articleRoute(article)).toBe("/content/underwriting/noi-development-fixture");
     expect(discovered.catalog.articles.some(article => article.id === "CRE-015")).toBe(true);
