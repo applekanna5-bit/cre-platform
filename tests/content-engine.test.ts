@@ -53,13 +53,12 @@ describe("CRE-015 production integration", () => {
 
 describe("CRE-006 additive integration", () => {
   const approved = discovered.catalog.articles.find(item => item.id === "CRE-006")!;
-  it("preserves frozen prose and approved-only routing with canonical relationships", () => {
+  it("preserves frozen prose and published routing with canonical relationships", () => {
     const document = discovered.documents.find(item => item.metadata.id === approved.id)!;
     expect(createHash("sha256").update(document.body).digest("hex")).toBe("99e4e9b045058217d0a85108b7255cdcb4c4b555c7ed5512f87b1c2afc1b2dd0");
-    expect(approved).toMatchObject({ status: "approved", developmentFixture: false });
-    expect(approved).not.toHaveProperty("publishedDate");
-    expect(isRenderable(approved)).toBe(false);
-    expect(isRenderable(approved, true)).toBe(false);
+    expect(approved).toMatchObject({ status: "published", publishedDate: "2026-10-04", developmentFixture: false });
+    expect(isRenderable(approved)).toBe(true);
+    expect(isRenderable(approved, true)).toBe(true);
     expect(isRenderable(approved, false, true)).toBe(true);
     expect(approved.sources.map(source => source.id)).toEqual(["occ-cre-lending-2022", "fannie-income-analysis-203"]);
     expect(approved.relationships).toEqual([{ purpose: "application", target: { kind: "case-study", id: "harbor-view" } }, { purpose: "deep-dive", target: { kind: "article", id: "CRE-015" } }]);
