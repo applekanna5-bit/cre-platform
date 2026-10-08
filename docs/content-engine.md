@@ -51,6 +51,18 @@ Supported states: research, brief, draft, technical-review, editorial-review, so
 
 U1 means low/evergreen sensitivity, U2 moderate, U3 high/program-specific, U4 current/rapidly changing. Source classes are A evergreen, B institutional/practitioner, C program-specific. Sensitive non-fixture articles require cited sources to carry public URLs, access dates, and review dates. Validation does not establish factual accuracy or replace source review.
 
+## Publication-safe discovery
+
+`src/content/publication.ts` exports `publicArticles(catalog)` and the JSON-safe `PublicArticle` contract. Call it on validated server-side catalog data before passing discovery data to a browser, library, search index, sitemap, or structured-data adapter. It does not import generated data or create routes, UI, search, or SEO output.
+
+Eligibility delegates to `isPublicArticle`: published non-fixture articles and previously published needs-review articles are included. Research, brief, draft, review, ready, approved, archived, and all development fixtures are excluded. Preview and fixture rendering flags never widen discovery eligibility. `needsReview` allows consumers to preserve the public review notice.
+
+The explicit allowlist contains kind, stable ID, canonical relative href, title, description, domain, content type, difficulty, copied topics, optional publication/update dates, and needs-review state. Sources, author/reviewer records, relationships, case data, internal lifecycle fields, and article bodies are omitted. Results sort by canonical href using locale-independent string comparison; duplicate public routes and case-insensitive IDs fail. Input records and arrays are not mutated. Types are readonly; this is not runtime freezing.
+
+The full generated catalog remains internal delivery/editorial data, including unpublished records. Never pass it wholesale to a client component or serialize it in a public endpoint. The projection is a publication boundary for discovery, not an access-control system or an HTML sanitizer. Inputs must already satisfy repository validation; intentionally public fields remain public editorial data. Future full-text search must extract text only for eligible records. Future structured data may obtain additional reviewed public fields server-side through a separate explicit allowlist. Topics are facets, not independently routable pages; glossary, calculator, and case records do not acquire fictional routes. Keep future adapters publication-only even during local preview builds.
+
+Focused tests in `tests/publication.test.ts` cover lifecycle eligibility, preview/fixture isolation, deterministic ordering, detached arrays, duplicate identities/routes, serialized marker leakage, and the real public inventory. Existing article rendering, compilation, and editorial-preview contracts remain separate and unchanged.
+
 ## Sources and reusable data
 
 `content/data/sources.json` contains M1B source records keyed by `id`. Keep title, publisher (organization), type, authority, public URL where applicable, relevant publication/update/access/review dates, and notes. M3 adds optional effective date, U1–U4 sensitivity, and a synthetic flag. Do not duplicate provenance inside articles.
