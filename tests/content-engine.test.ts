@@ -199,7 +199,9 @@ describe("metadata validation and M1B compatibility", () => {
 describe("discovery, source registry, and knowledge graph", () => {
   const assemble = (inputs = [input()], sources = [...discovered.catalog.sources]) => buildCatalog(inputs, sources, discovered.catalog.knowledge, discovered.catalog.cases);
   it("discovers only real MDX/metadata pairs and derives the route from metadata", () => {
-    expect(discovered.documents).toHaveLength(5);
+    expect(discovered.documents.map(document => document.metadata.id).sort()).toEqual([
+      "CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "fixture-noi-bridge",
+    ]);
     expect(fixture.file).toMatch(/underwriting[\\/]noi-development-fixture.mdx$/);
     expect(articleRoute(article)).toBe("/content/underwriting/noi-development-fixture");
     expect(discovered.catalog.articles.some(article => article.id === "CRE-015")).toBe(true);

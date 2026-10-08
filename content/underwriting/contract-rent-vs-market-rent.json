@@ -1,0 +1,29 @@
+{
+  "id": "CRE-008",
+  "title": "Contract Rent vs Market Rent: What the Gap Really Means in CRE Underwriting",
+  "slug": "contract-rent-vs-market-rent",
+  "description": "Learn how CRE underwriters compare contract rent with supported market rent, evaluate lease timing and concessions, and distinguish rent potential from achievable income.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "published",
+  "publishedDate": "2026-10-08",
+  "author": { "name": "CRE Knowledge Platform Editorial Team" },
+  "reviewer": { "name": "Lanka Sudhakar" },
+  "lastReviewedDate": "2026-10-08",
+  "propertyTypes": ["multifamily"],
+  "loanProducts": [],
+  "topics": ["contract-rent", "market-rent", "rent-roll", "lease-expirations", "concessions", "effective-rent", "revenue-underwriting"],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": ["occ-cre-lending-2022", "fannie-income-analysis-203", "freddie-appraisal-checklist-2026"],
+  "updateSensitivity": "U3",
+  "sourceClasses": ["B", "C"],
+  "relationships": [
+    { "purpose": "prerequisite", "target": { "kind": "article", "id": "CRE-007" } },
+    { "purpose": "application", "target": { "kind": "case-study", "id": "harbor-view" } },
+    { "purpose": "deep-dive", "target": { "kind": "article", "id": "CRE-011" } }
+  ],
+  "developmentFixture": false
+}
