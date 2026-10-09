@@ -9,6 +9,7 @@ export type NavigationItem = {
 );
 
 export const primaryNavigation = [
+  { id: "library", label: "Library", kind: "link", href: "/library", summary: "Published CRE research and practical guides." },
   { id: "learn", label: "Learn", kind: "link", href: "/#learn", summary: "CRE foundations and concepts." },
   { id: "underwriting", label: "Underwriting", kind: "link", href: "/#underwriting", summary: "Property analysis and credit decisions." },
   { id: "property-types", label: "Property Types", kind: "link", href: "/#property-types", summary: "Knowledge organized by property type." },
@@ -28,8 +29,8 @@ export const homepagePaths = [
 }[];
 
 export const footerNavigation = [
-  { id: "knowledge", label: "Knowledge", items: primaryNavigation.slice(0, 4) },
-  { id: "practice", label: "Practice", items: primaryNavigation.slice(4) },
+  { id: "knowledge", label: "Knowledge", items: primaryNavigation.slice(0, 5) },
+  { id: "practice", label: "Practice", items: primaryNavigation.slice(5) },
   {
     id: "platform",
     label: "Platform",

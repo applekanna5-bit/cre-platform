@@ -9,9 +9,9 @@ import Home from "@/app/page";
 const markup = renderToStaticMarkup(RootLayout({ children: createElement(Home), params: Promise.resolve({}) }));
 
 describe("M2 navigation contract", () => {
-  it("exposes the seven approved primary areas in order", () => {
+  it("exposes the library followed by the seven primary areas in order", () => {
     expect(primaryNavigation.map((item) => item.label)).toEqual([
-      "Learn", "Underwriting", "Property Types", "Financing", "Modeling", "Tools", "Resources",
+      "Library", "Learn", "Underwriting", "Property Types", "Financing", "Modeling", "Tools", "Resources",
     ]);
     expect(new Set(primaryNavigation.map((item) => item.id)).size).toBe(primaryNavigation.length);
   });
@@ -22,10 +22,11 @@ describe("M2 navigation contract", () => {
     const links = [...markup.matchAll(/\shref="([^"]+)"/g)].map((match) => match[1]);
     expect(links.length).toBeGreaterThan(primaryNavigation.length);
     for (const href of links) {
-      expect(href === "/" || href.startsWith("/#") || href.startsWith("#")).toBe(true);
+      expect(href === "/" || href === "/library" || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);
       if (href.includes("#")) expect(ids).toContain(href.split("#")[1]);
     }
     for (const item of primaryNavigation) {
+      if (item.id === "library") { expect(item.href).toBe("/library"); continue; }
       expect(item.href).toBe(`/#${item.id}`);
       expect(markup).toContain(`id="${item.id}" tabindex="-1"`);
     }

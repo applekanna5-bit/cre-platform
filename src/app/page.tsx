@@ -2,6 +2,9 @@ import { homepagePaths, primaryNavigation } from "@/config/navigation";
 import { ActionLink, Badge, Container, Eyebrow, Section } from "@/components/ui/primitives";
 import { UnderwritingSnapshot } from "@/components/home/underwriting-snapshot";
 import { KnowledgePreview } from "@/components/home/knowledge-preview";
+import { catalog } from "@/content/.generated";
+import { publicArticles } from "@/content/publication";
+import { ArticleList } from "@/components/content/article-list";
 
 const pathDetails = {
   learn: { concepts: "T-12 · Rent Roll · NOI · Cap Rate", summary: "Foundation concepts and practical property analysis.", label: "Build the foundation" },
@@ -61,20 +64,27 @@ export default function Home() {
       </Container>
       <KnowledgePreview />
       <Container>
+        <Section aria-labelledby="research-heading">
+          <div className="mb-7 flex flex-wrap items-end justify-between gap-5">
+            <div><Eyebrow>Published research</Eyebrow><h2 id="research-heading" className="mt-3 font-editorial text-3xl leading-tight">Read the analysis. Build your judgment.</h2></div>
+            <ActionLink href="/library">Explore the library <span aria-hidden="true">→</span></ActionLink>
+          </div>
+          <ArticleList articles={publicArticles(catalog)} />
+        </Section>
         <Section aria-labelledby="directory-heading" className="border-t border-border">
           <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
             <div>
               <Eyebrow>Knowledge directory</Eyebrow>
               <h2 id="directory-heading" className="mt-3 font-editorial text-3xl leading-tight">Explore by area</h2>
               <p className="mt-4 max-w-[38ch] text-sm text-muted">
-                Explore the disciplines of CRE analysis. Guides and tools are coming soon.
+                Explore the disciplines of CRE analysis. Five underwriting articles are available in the library. Tools and calculators are coming soon.
               </p>
             </div>
             <div className="divide-y divide-border border-y border-border">
-              {primaryNavigation.map((item) => (
+              {primaryNavigation.filter((item) => item.id !== "library").map((item) => (
                 <section key={item.id} aria-labelledby={item.id} className="grid gap-2 py-5 sm:grid-cols-[1fr_auto] sm:gap-x-6">
                   <h3 id={item.id} tabIndex={-1} className="w-fit rounded-control text-lg font-semibold">{item.label}</h3>
-                  <Badge className="w-fit sm:row-span-2 sm:self-center">Coming soon</Badge>
+                  <Badge className="w-fit sm:row-span-2 sm:self-center">{item.id === "underwriting" ? "Available in library" : "Coming soon"}</Badge>
                   <p className="max-w-[60ch] text-sm text-muted sm:col-start-1 sm:row-start-2">{item.summary}</p>
                 </section>
               ))}
