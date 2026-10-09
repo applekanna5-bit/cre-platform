@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/primitives";
 import { NavigationList } from "@/components/navigation/navigation-list";
 import { MobileNavigation } from "@/components/navigation/mobile-navigation";
 import styles from "./site-header.module.css";
+import { SearchForm } from "@/components/search/search-form";
 
 export function SiteHeader() {
   return (
@@ -20,6 +21,7 @@ export function SiteHeader() {
           <NavigationList items={primaryNavigation} horizontal />
         </nav>
         <MobileNavigation><NavigationList items={primaryNavigation} /></MobileNavigation>
+        <SearchForm id="header-query" label="Site-wide research search" compact />
       </Container>
     </header>
   );

@@ -5,6 +5,7 @@ import { spawn } from "node:child_process";
 import { discoverContent } from "../src/content/discovery.ts";
 import { compileArticle } from "../src/content/compile.ts";
 import { isRenderable } from "../src/content/catalog.ts";
+import { articleSearchProjection } from "../src/search/projection.ts";
 
 const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const root = path.join(repository, "content");
@@ -21,8 +22,10 @@ export async function generateContent(fixtures = false, editorialPreview = false
     compiled.push({ article, ...await compileArticle(doc.body, article, catalog, doc.file) });
   }
   const visible = compiled.filter(item => isRenderable(item.article, fixtures, editorialPreview));
+  const searchDocuments = articleSearchProjection(catalog, new Map(compiled.map(item => [item.article.id, item.searchText])));
   await mkdir(output, { recursive: true });
-  const keep = new Set(["index.ts"]);
+  const keep = new Set(["index.ts", "search.ts"]);
+  await writeChanged(path.join(output, "search.ts"), `// Generated publication-only search projection. Server use only.\nimport type { SearchDocument } from "../../search/engine";\nexport const searchDocuments: readonly SearchDocument<"article">[] = ${JSON.stringify(searchDocuments, null, 2)};\n`);
   for (const item of visible) {
     keep.add(`article-${item.article.id}.js`); keep.add(`article-${item.article.id}.d.ts`);
     await writeChanged(path.join(output, `article-${item.article.id}.js`), item.code);
@@ -51,6 +54,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         try { await generateContent(true); }
         catch (error) {
           console.error(error);
+          await writeChanged(path.join(output, "search.ts"), `import type { SearchDocument } from "../../search/engine";\nthrow new Error(${JSON.stringify(String(error))});\nexport const searchDocuments: readonly SearchDocument[] = [];\n`);
           // Fail closed: invalidate the delivery entry instead of serving stale successful content.
           await writeChanged(path.join(output, "index.ts"), `import type { ArticleHeading, ContentCatalog } from "../contracts";\nimport type { ComponentType } from "react";\nimport type { MDXProps } from "mdx/types";\nthrow new Error(${JSON.stringify(String(error))});\nexport const catalog: ContentCatalog = { articles: [], sources: [], knowledge: [], cases: [] };\nexport const fixturesEnabled = false;\nexport const editorialPreviewEnabled = false;\nexport const articleHeadings: Record<string, ArticleHeading[]> = {};\nexport const embeddedCases: Record<string, string[]> = {};\nexport const loaders: Record<string, () => Promise<{ default: ComponentType<MDXProps> }>> = {};\n`);
         }

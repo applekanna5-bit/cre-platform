@@ -43,10 +43,11 @@ const componentProps: Record<string, readonly string[]> = {
   InstitutionalExample: ["sourceId"], SourceNote: ["sourceId"],
   CaseStudy: ["caseId"], FinancialTable: ["tableId"],
 };
-export interface CompiledArticle { code: string; caseIds: string[]; headings: ArticleHeading[] }
+export interface CompiledArticle { code: string; caseIds: string[]; headings: ArticleHeading[]; searchText: { headings: string[]; body: string } }
 export async function compileArticle(body: string, article: ArticleMetadata, catalog: ContentCatalog, file = article.id): Promise<CompiledArticle> {
   const caseIds: string[] = [];
   const headings: ArticleHeading[] = [];
+  const searchText = { headings: [] as string[], body: "" };
   const tableIds = new Set<string>();
   const headingIds = new Set<string>();
   let depth = 1;
@@ -104,10 +105,34 @@ export async function compileArticle(body: string, article: ArticleMetadata, cat
         node.children?.forEach(checkFragments);
       }
       checkFragments(tree);
+      // Read the validated MDX tree, never JSX source or compiled JavaScript.
+      // Registry-backed embeds and provenance are deliberately excluded: registry
+      // eligibility is not a publication boundary for search.
+      const blocks = new Set<string>();
+      const text = (node: Node): string => {
+        if (["definition", "image", "html", "code"].includes(node.type)) return "";
+        if (node.type === "text" || node.type === "inlineCode") return String(node.value ?? "");
+        if (node.name) {
+          if (["SourceNote", "CaseStudy", "FinancialTable"].includes(node.name)) return "";
+          if (["Formula", "Calculation"].includes(node.name)) {
+            const props = propsFor(node);
+            const entries = (props.variables ?? props.inputs) as Record<string, string>[];
+            return [props.formula, props.interpretation, props.result, ...entries.flatMap(entry => Object.values(entry))].filter(value => typeof value === "string").join(" ");
+          }
+        }
+        return (node.children ?? []).map(text).join(node.type === "paragraph" || node.type === "heading" ? "" : " ");
+      };
+      for (const child of tree.children ?? []) {
+        const value = text(child).replace(/\s+/g, " ").trim();
+        if (!value) continue;
+        if (child.type === "heading") searchText.headings.push(value);
+        else blocks.add(value);
+      }
+      searchText.body = [...blocks].join("\n");
     };
   }
   try {
     const output = await compile({ value: body, path: file }, { outputFormat: "program", development: false, remarkPlugins: [editorialRules] });
-    return { code: String(output), caseIds, headings };
+    return { code: String(output), caseIds, headings, searchText };
   } catch (error) { throw new Error(`${file}: ${error instanceof Error ? error.message : String(error)}`, { cause: error }); }
 }

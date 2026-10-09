@@ -4,6 +4,7 @@ import { catalog } from "@/content/.generated";
 import { publicArticles } from "@/content/publication";
 import { ArticleList } from "@/components/content/article-list";
 import { Container, Eyebrow, Section } from "@/components/ui/primitives";
+import { SearchForm } from "@/components/search/search-form";
 
 export const metadata: Metadata = {
   title: "Research Library | CRE Knowledge Platform",
@@ -19,6 +20,7 @@ export default function LibraryPage() {
         <div><Eyebrow>CRE / Research & analysis</Eyebrow><h1 id="library-title" className="mt-4 font-editorial text-display">Research library</h1></div>
         <p className="max-w-[48ch] text-lg text-muted lg:self-end">Explore practical guides to property financials and underwriting. Build the context behind the numbers and the judgment behind the decision.</p>
       </div>
+      <SearchForm id="library-query" />
     </Section>
     <Section aria-labelledby="research-heading">
       <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3"><h2 id="research-heading" className="font-editorial text-3xl">Published research</h2><p className="text-sm text-muted">{articles.length} {articles.length === 1 ? "article" : "articles"}</p></div>

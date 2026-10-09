@@ -1,0 +1,11 @@
+# Publication-safe research search
+
+Phase 3 adds `/search?q=…`, a server-rendered GET route. Header and library forms work without JavaScript. No index is sent to a client component or fetched by the browser. Results serialize only kind, identity, route, title, and description; full text remains server-side.
+
+The existing content generation command compiles and validates every document, then passes extracted text through `articleSearchProjection`. This uses the unchanged `publicArticles(catalog)` boundary in every build mode, including fixture and editorial previews. The separate ignored `.generated/search.ts` artifact contains only public article search fields. Missing compiled text fails generation; watch errors invalidate both generated entry points.
+
+Extraction reads the validated MDX syntax tree. It includes authored prose, headings, inline code, notes, institutional-example explanations, and literal educational Formula/Calculation fields. It excludes code blocks, link destinations, JSX identifiers, source references, and registry-backed CaseStudy/FinancialTable records. Search never traverses source or case registries. Identical body blocks are deduplicated.
+
+The React-independent engine accepts a generic typed document kind for future explicitly authorized projections. It normalizes Unicode using NFKD, removes combining marks, lowercases, and treats punctuation/whitespace as token boundaries. All distinct query tokens must match whole tokens somewhere in the document. Ranking compares title coverage first, then headings/topics, description, and body, with a phrase bonus within each field. Counts are presence-based; repeated evidence does not increase scores. Route and identity break ties deterministically. Queries are limited to 200 characters; repeated URL parameters fail closed to the empty state. React escapes displayed query text; no raw HTML or query-built regular expressions are used.
+
+Search is deliberately limited to published articles. It adds no search API, autocomplete, topic routes, filters, external service, or new dependency. Educational registry embeds remain readable in existing article pages, but are not independently treated as public search documents.

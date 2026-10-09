@@ -69,6 +69,8 @@ describe("M2 navigation contract", () => {
     expect(markup).not.toMatch(/<details[^>]*\sopen(?:=|\s|>)/);
     expect(markup).toContain("<summary");
     expect(markup).not.toMatch(/role="(?:menu|menuitem|dialog)"/);
-    expect(markup).not.toMatch(/<input\b|role="search"/);
+    expect(markup).toContain('role="search"');
+    expect(markup).toContain('action="/search" method="get"');
+    expect(markup).toContain('for="header-query"');
   });
 });
