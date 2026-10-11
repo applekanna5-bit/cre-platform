@@ -1,7 +1,8 @@
+import { articleMetadata } from "@/seo/metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { articleHeadings, catalog, embeddedCases, editorialPreviewEnabled, fixturesEnabled, loaders } from "@/content/.generated";
-import { isEditorialPreview, isRenderable } from "@/content/catalog";
+import { isRenderable } from "@/content/catalog";
 import { ArticleTemplate } from "@/components/content/article-template";
 import { articleComponents } from "@/components/content/mdx-components";
 
@@ -16,7 +17,7 @@ function getArticle(domain: string, slug: string) {
 }
 export async function generateMetadata({ params }: PageProps<"/content/[domain]/[slug]">): Promise<Metadata> {
   const { domain, slug } = await params; const article = getArticle(domain, slug);
-  return { title: `${article.title} | CRE Knowledge Platform`, description: article.description, ...((article.developmentFixture || isEditorialPreview(article, editorialPreviewEnabled)) ? { robots: { index: false, follow: false } } : {}) };
+  return articleMetadata(article);
 }
 export default async function ContentPage({ params }: PageProps<"/content/[domain]/[slug]">) {
   const { domain, slug } = await params; const article = getArticle(domain, slug);

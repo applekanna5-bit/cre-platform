@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/seo/metadata";
 import { homepagePaths, primaryNavigation } from "@/config/navigation";
 import { ActionLink, Badge, Container, Eyebrow, Section } from "@/components/ui/primitives";
 import { UnderwritingSnapshot } from "@/components/home/underwriting-snapshot";
@@ -11,6 +12,8 @@ const pathDetails = {
   underwriting: { concepts: "Property · Market · Sponsor · Credit", summary: "Follow the analytical path from property review to credit decision.", label: "Apply the framework" },
   tools: { concepts: "DSCR · Debt Yield · LTV · Loan Sizing", summary: "Calculators and decision-support tools for CRE analysis.", label: "Work with the numbers" },
 } as const;
+
+export const metadata = pageMetadata("home");
 
 export default function Home() {
   return (

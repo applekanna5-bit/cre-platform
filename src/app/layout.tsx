@@ -1,13 +1,9 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/seo/metadata";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "CRE Knowledge Platform",
-  description:
-    "Commercial real estate underwriting, financial modeling, lending, valuation and investment analysis.",
-};
+export const metadata = pageMetadata("layout");
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

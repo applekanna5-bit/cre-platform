@@ -1,8 +1,11 @@
+import { pageMetadata } from "@/seo/metadata";
 import Link from "next/link";
 import { searchDocuments as index } from "@/content/.generated/search";
 import { normalizeSearch, searchDocuments, searchQuery } from "@/search/engine";
 import { SearchForm } from "@/components/search/search-form";
 import { Container, Eyebrow, Section } from "@/components/ui/primitives";
+
+export const metadata = pageMetadata("search");
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string | string[] }> }) {
   const query = searchQuery((await searchParams).q);

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/seo/metadata";
 import Link from "next/link";
 import { catalog } from "@/content/.generated";
 import { publicArticles } from "@/content/publication";
@@ -6,10 +6,7 @@ import { ArticleList } from "@/components/content/article-list";
 import { Container, Eyebrow, Section } from "@/components/ui/primitives";
 import { SearchForm } from "@/components/search/search-form";
 
-export const metadata: Metadata = {
-  title: "Research Library | CRE Knowledge Platform",
-  description: "Published CRE research and practical guides to property financials, revenue analysis, and underwriting.",
-};
+export const metadata = pageMetadata("library");
 
 export default function LibraryPage() {
   const articles = publicArticles(catalog);
