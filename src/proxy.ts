@@ -37,9 +37,12 @@ export function proxy(request: NextRequest) {
       });
     }
 
-    // Public mode must not inherit private-preview headers.
-    // The SEO policy controls indexing separately.
-    return NextResponse.next();
+    // Retain noindex even when a hosting adapter bypasses next.config headers.
+    const response = NextResponse.next();
+    if (process.env.SITE_INDEXING_ENABLED === "false") {
+      response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    }
+    return response;
   }
 
   // Preserve the existing private-preview admission rules.

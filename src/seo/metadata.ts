@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import type { ArticleMetadata } from "../content/contracts";
 import { articleRoute, isPublicArticle } from "../content/catalog";
-import { readPublicationMode, resolveSeoContext } from "./context";
+import { resolveSeoContext } from "./context";
+import { fixturesEnabled, editorialPreviewEnabled } from "../content/.generated";
 
 export const siteName = "CRE Knowledge Platform";
 export const siteDescription = "Commercial real estate underwriting, financial modeling, lending, valuation and investment analysis.";
@@ -13,7 +14,7 @@ function currentContext(): SeoContext {
     SITE_ENV: process.env.SITE_ENV,
     SITE_PRODUCTION_ORIGIN: process.env.SITE_PRODUCTION_ORIGIN,
     SITE_INDEXING_ENABLED: process.env.SITE_INDEXING_ENABLED,
-  }, readPublicationMode(process.cwd()));
+  }, { fixturesEnabled, editorialPreviewEnabled });
 }
 
 function formattedTitle(title: string): string {

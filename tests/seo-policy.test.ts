@@ -4,7 +4,8 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { productionOrigin, resolveSiteConfig } from "@/config/site";
 import { indexingHeaders } from "@/seo/policy";
-import { checkBuildContext, readPublicationMode, resolveSeoContext } from "@/seo/context";
+import { resolveSeoContext } from "@/seo/context";
+import { checkBuildContext, readPublicationMode } from "@/seo/build-context";
 
 const mode = { fixturesEnabled: false, editorialPreviewEnabled: false };
 const approved = { SITE_ENV: "production", SITE_PRODUCTION_ORIGIN: "https://research.cre-publication.com", SITE_INDEXING_ENABLED: "true" };

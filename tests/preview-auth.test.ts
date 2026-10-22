@@ -198,6 +198,18 @@ describe("public production Proxy integration", () => {
     } else {
       expect(response.headers.get("x-middleware-next")).toBe("1");
       expect(response.headers.has("www-authenticate")).toBe(false);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    }
+  });
+
+  it("does not add a noindex header when indexing is explicitly enabled", () => {
+    configurePublic({ SITE_INDEXING_ENABLED: "true" });
+    const response = proxy(new NextRequest("https://thecreledger.com/"));
+    if (fixturesEnabled || editorialPreviewEnabled) {
+      expect(response.status).toBe(503);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    } else {
+      expect(response.headers.get("x-middleware-next")).toBe("1");
       expect(response.headers.has("x-robots-tag")).toBe(false);
     }
   });
