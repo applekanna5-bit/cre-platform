@@ -1,6 +1,14 @@
+import {
+  fixturesEnabled,
+  editorialPreviewEnabled,
+} from "@/content/.generated";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
-import { authorizePreview, type PreviewEnvironment } from "@/security/preview-auth";
+import {
+  authorizePreview,
+  authorizePublicProduction,
+  type PreviewEnvironment,
+} from "@/security/preview-auth";
 import { proxy } from "@/proxy";
 
 const env = { PREVIEW_ACCESS_MODE: "private", PREVIEW_AUTH_USERNAME: "local-reviewer", PREVIEW_AUTH_PASSWORD: "synthetic-offline-password-0123456789" };
@@ -78,5 +86,144 @@ describe("production Proxy admission boundary", () => {
       expect(output).not.toContain(env.PREVIEW_AUTH_USERNAME); expect(output).not.toContain(env.PREVIEW_AUTH_PASSWORD);
       expect(log).not.toHaveBeenCalled(); expect(error).not.toHaveBeenCalled();
     } finally { log.mockRestore(); error.mockRestore(); }
+  });
+});
+describe("public production authorization", () => {
+  const publicEnv = {
+    PREVIEW_ACCESS_MODE: "public",
+    SITE_ENV: "production",
+    SITE_PRODUCTION_ORIGIN: "https://thecreledger.com",
+    SITE_INDEXING_ENABLED: "false",
+  };
+
+  const publicationOnly = {
+    fixturesEnabled: false,
+    editorialPreviewEnabled: false,
+  };
+
+  it("allows valid publication-only production configuration", () => {
+    expect(
+      authorizePublicProduction(publicEnv, publicationOnly)
+    ).toBe(true);
+  });
+
+  it.each([
+    { PREVIEW_ACCESS_MODE: "private" },
+    { PREVIEW_ACCESS_MODE: undefined },
+    { SITE_ENV: "preview" },
+    { SITE_ENV: undefined },
+    { SITE_PRODUCTION_ORIGIN: undefined },
+    { SITE_PRODUCTION_ORIGIN: "http://thecreledger.com" },
+    { SITE_PRODUCTION_ORIGIN: "https://localhost" },
+    { SITE_INDEXING_ENABLED: undefined },
+    { SITE_INDEXING_ENABLED: "yes" },
+  ])("rejects invalid production settings %#", override => {
+    expect(
+      authorizePublicProduction(
+        { ...publicEnv, ...override },
+        publicationOnly
+      )
+    ).toBe(false);
+  });
+
+  it("rejects enabled test fixtures", () => {
+    expect(
+      authorizePublicProduction(publicEnv, {
+        fixturesEnabled: true,
+        editorialPreviewEnabled: false,
+      })
+    ).toBe(false);
+  });
+
+  it("rejects enabled editorial previews", () => {
+    expect(
+      authorizePublicProduction(publicEnv, {
+        fixturesEnabled: false,
+        editorialPreviewEnabled: true,
+      })
+    ).toBe(false);
+  });
+
+  it("accepts indexing enabled for valid production configuration", () => {
+    expect(
+      authorizePublicProduction(
+        { ...publicEnv, SITE_INDEXING_ENABLED: "true" },
+        publicationOnly
+      )
+    ).toBe(true);
+  });
+});
+
+describe("public production Proxy integration", () => {
+  const publicEnv = {
+    PREVIEW_ACCESS_MODE: "public",
+    SITE_ENV: "production",
+    SITE_PRODUCTION_ORIGIN: "https://thecreledger.com",
+    SITE_INDEXING_ENABLED: "false",
+  };
+
+  function configurePublic(
+    overrides: Record<string, string> = {}
+  ) {
+    for (const [key, value] of Object.entries({
+      ...publicEnv,
+      ...overrides,
+    })) {
+      vi.stubEnv(key, value);
+    }
+  }
+
+
+  it.each([
+    "/",
+    "/library",
+    "/search?q=NOI",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/_next/static/chunks/main.js",
+  ])("enforces publication safety for public requests to %s", path => {
+    configurePublic();
+
+    const response = proxy(
+      new NextRequest(`https://thecreledger.com${path}`)
+    );
+
+    // The generated catalog can be either publication-only
+    // or fixture-enabled, depending on the test/build command.
+    if (fixturesEnabled || editorialPreviewEnabled) {
+      expect(response.status).toBe(503);
+      expect(response.headers.get("x-robots-tag")).toBe(
+        "noindex, nofollow"
+      );
+    } else {
+      expect(response.headers.get("x-middleware-next")).toBe("1");
+      expect(response.headers.has("www-authenticate")).toBe(false);
+      expect(response.headers.has("x-robots-tag")).toBe(false);
+    }
+  });
+
+  it("rejects an invalid production origin", () => {
+    configurePublic({
+      SITE_PRODUCTION_ORIGIN: "http://thecreledger.com",
+    });
+
+    const response = proxy(
+      new NextRequest("https://thecreledger.com/")
+    );
+
+    expect(response.status).toBe(503);
+    expect(response.headers.get("x-robots-tag")).toBe(
+      "noindex, nofollow"
+    );
+  });
+
+  it("rejects public mode outside production", () => {
+    configurePublic({ SITE_ENV: "preview" });
+
+    const response = proxy(
+      new NextRequest("https://thecreledger.com/")
+    );
+
+    expect(response.status).toBe(503);
   });
 });

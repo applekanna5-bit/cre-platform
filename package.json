@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/content.mts --dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
@@ -32,7 +32,8 @@
     "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.11"
+    "vite": "8.2.4",
+    "vitest": "4.1.12"
   },
   "engines": {
     "node": ">=22.18.0"
