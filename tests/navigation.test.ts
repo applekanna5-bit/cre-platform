@@ -1,14 +1,34 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { footerNavigation, homepagePaths, primaryNavigation, type NavigationItem } from "@/config/navigation";
 import { NavigationList } from "@/components/navigation/navigation-list";
 import RootLayout from "@/app/layout";
 import Home from "@/app/page";
 
+// Next compiles localFont during builds; component tests only need its CSS variable class.
+vi.mock("next/font/local", () => ({ default: () => ({ variable: "local-font-test" }) }));
+
+
+vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp", () => ({ default: {
+  src: "/_next/static/media/living-ledger-multifamily.webp", width: 1536, height: 1024,
+  blurDataURL: "data:image/webp;base64,UklGRg==",
+} }));
+
 const markup = renderToStaticMarkup(RootLayout({ children: createElement(Home), params: Promise.resolve({}) }));
 
 describe("M2 navigation contract", () => {
+  it("uses the approved shared brand with an accessible home link", () => {
+    const homeLink = markup.match(/<a\b[^>]*id="site-brand"[^>]*>/)?.[0];
+    expect(homeLink).toContain('href="/"');
+    expect(homeLink).toContain('aria-label="The CRE Ledger home"');
+    for (const element of ["header", "footer"]) {
+      const shell = markup.match(new RegExp(`<${element}\\b[^>]*>[\\s\\S]*?</${element}>`))?.[0];
+      expect(shell).toContain("The CRE Ledger");
+      expect(shell).not.toContain("Knowledge Platform");
+    }
+  });
+
   it("exposes the library followed by the seven primary areas in order", () => {
     expect(primaryNavigation.map((item) => item.label)).toEqual([
       "Library", "Learn", "Underwriting", "Property Types", "Financing", "Modeling", "Tools", "Resources",
@@ -22,7 +42,7 @@ describe("M2 navigation contract", () => {
     const links = [...markup.matchAll(/\shref="([^"]+)"/g)].map((match) => match[1]);
     expect(links.length).toBeGreaterThan(primaryNavigation.length);
     for (const href of links) {
-      expect(href === "/" || href === "/library" || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);
+      expect(href === "/" || href === "/library" || href.startsWith("/search?") || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);
       if (href.includes("#")) expect(ids).toContain(href.split("#")[1]);
     }
     for (const item of primaryNavigation) {
@@ -66,7 +86,9 @@ describe("M2 navigation contract", () => {
 
   it("server-renders a closed native mobile disclosure without application menu roles", () => {
     expect(markup).toMatch(/<details\s[^>]*>/);
-    expect(markup).not.toMatch(/<details[^>]*\sopen(?:=|\s|>)/);
+    const menu = markup.match(/<details\b[^>]*>(?=<summary[^>]*aria-controls="mobile-primary-navigation")/g);
+    expect(menu).toHaveLength(1);
+    expect(menu![0]).not.toMatch(/\sopen(?:=|\s|>)/);
     expect(markup).toContain("<summary");
     expect(markup).not.toMatch(/role="(?:menu|menuitem|dialog)"/);
     expect(markup).toContain('role="search"');

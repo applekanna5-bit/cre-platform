@@ -1,0 +1,15 @@
+.menu { min-width: 0; padding-bottom: .5rem; }
+.label { margin-bottom: .5rem; color: var(--color-copper-text); font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.available { display: grid; gap: .5rem; }
+.available > li { min-width: 0; border: 1px solid var(--color-border); background: var(--color-elevated); }
+.destination { display: grid; gap: .125rem; min-height: 44px; padding: .75rem; }
+.destination strong { font-family: var(--font-editorial); font-size: 1.25rem; font-weight: 400; color: var(--color-foreground); text-decoration: underline; text-underline-offset: .2em; }
+.destination span { color: var(--color-muted); font-size: .875rem; }
+.overview { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-inline: .75rem; padding-block: .5rem; border-top: 1px solid var(--color-border); color: var(--color-accent); font-size: .875rem; text-decoration: underline; text-underline-offset: .2em; }
+.future { margin-top: .75rem; border-top: 1px solid var(--color-border); }
+.future summary { min-height: 44px; padding-block: .75rem; color: var(--color-foreground); font-weight: 600; cursor: pointer; }
+.future summary > span { display: block; color: var(--color-muted); font-size: .8125rem; font-weight: 400; }
+.future > p { margin-bottom: .75rem; color: var(--color-muted); font-size: .875rem; }
+.future > ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem; }
+.menu :is(a, summary):focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+@media (max-width: 23rem) { .future > ul { grid-template-columns: minmax(0, 1fr); } }

@@ -1,11 +1,16 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import LibraryPage from "@/app/library/page";
 import Home from "@/app/page";
 import { catalog } from "@/content/.generated";
 import { publicArticles } from "@/content/publication";
 import { ArticleList } from "@/components/content/article-list";
+
+vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp", () => ({ default: {
+  src: "/_next/static/media/living-ledger-multifamily.webp", width: 1536, height: 1024,
+  blurDataURL: "data:image/webp;base64,UklGRg==",
+} }));
 
 describe("Phase 2 public research discovery", () => {
   it("links every public article from the library and homepage, excluding nonpublic articles", () => {

@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f4f1ea;
-  --color-surface: #e8e3d9;
-  --color-elevated: #fcfbf8;
+  --color-background: #f6f3ec;
+  --color-surface: #ede8df;
+  --color-elevated: #fffdf8;
   --color-foreground: #0d1b2a;
-  --color-muted: #526071;
-  --color-border: #c9c2b5;
-  --color-border-strong: #7c827f;
+  --color-muted: #505e6c;
+  --color-border: #d4cdc0;
+  --color-border-strong: #727c85;
   --color-accent: #24364b;
   --color-accent-strong: #0d1b2a;
-  --color-on-accent: #fcfbf8;
-  --color-copper: #b66a32;
-  --color-copper-text: #8a4c21;
+  --color-on-accent: #fffdf8;
+  --color-copper: #ad714a;
+  --color-copper-text: #85502d;
   --color-steel: #456b88;
   --color-analytical: #0d1b2a;
   --color-analytical-raised: #24364b;
-  --color-on-analytical: #fcfbf8;
+  --color-on-analytical: #fffdf8;
   --color-analytical-muted: #bac8d6;
   --color-analytical-rule: #4d6175;
   --color-analytical-highlight: #dfa575;
@@ -26,10 +26,8 @@
   --color-error: #a02d37;
   --color-focus: #175eab;
 
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-editorial: Georgia, "Times New Roman", serif;
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
   --text-xl: 1.25rem;
@@ -41,6 +39,11 @@
   --radius-control: 0.125rem;
   --radius-panel: 0.125rem;
   --radius-tag: 0.125rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-source-sans, Arial), Arial, Helvetica, sans-serif;
+  --font-editorial: var(--font-source-serif, Georgia), Georgia, "Times New Roman", serif;
 }
 
 @layer base {
@@ -56,14 +59,15 @@
     flex-direction: column;
     background: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-sans);
-    line-height: 1.6;
+    font-family: var(--font-source-sans, Arial), Arial, Helvetica, sans-serif;
+    font-optical-sizing: auto;
+    line-height: 1.65;
     overflow-wrap: anywhere;
   }
 
   :focus-visible {
     outline: 3px solid var(--color-focus);
-    outline-offset: 4px;
+    outline-offset: 3px;
   }
 
   [id] {

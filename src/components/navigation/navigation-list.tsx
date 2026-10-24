@@ -8,11 +8,11 @@ export function NavigationList({
   horizontal?: boolean;
 }) {
   return (
-    <ul className={horizontal ? "flex flex-wrap items-center gap-1" : "grid gap-1"}>
+    <ul className={horizontal ? "flex flex-wrap items-center gap-x-2 xl:gap-x-5" : "grid gap-1"}>
       {items.map((item) => (
         <li key={item.id}>
           {item.kind === "link" ? (
-            <a href={item.href} className="flex min-h-11 items-center rounded-control px-3 py-2 text-sm font-medium text-foreground hover:bg-surface hover:text-accent">
+            <a href={item.href} className={`flex min-h-11 items-center rounded-control px-3 py-2 text-sm underline-offset-8 decoration-copper hover:underline hover:text-accent ${horizontal && item.id === "library" ? "font-semibold text-foreground underline" : "font-medium text-muted"}`}>
               {item.label}
             </a>
           ) : (

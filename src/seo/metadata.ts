@@ -4,7 +4,7 @@ import { articleRoute, isPublicArticle } from "../content/catalog";
 import { resolveSeoContext } from "./context";
 import { fixturesEnabled, editorialPreviewEnabled } from "../content/.generated";
 
-export const siteName = "CRE Knowledge Platform";
+export const siteName = "The CRE Ledger";
 export const siteDescription = "Commercial real estate underwriting, financial modeling, lending, valuation and investment analysis.";
 type SeoContext = ReturnType<typeof resolveSeoContext>;
 type Page = "layout" | "home" | "library" | "search";

@@ -14,6 +14,14 @@ const article = catalog.articles.find(isPublicArticle)!;
 const robots = (index: boolean, follow: boolean) => ({ index, follow, googleBot: { index, follow } });
 
 describe("publication-safe page metadata", () => {
+  it("uses The CRE Ledger consistently without changing article copy", () => {
+    expect(siteName).toBe("The CRE Ledger");
+    for (const page of ["layout", "home", "library", "search"] as const) {
+      const metadata = pageMetadata(page, production);
+      expect(metadata.title).toHaveProperty("absolute", expect.stringContaining("The CRE Ledger"));
+      expect(metadata.openGraph).toHaveProperty("siteName", "The CRE Ledger");
+    }
+  });
   it.each(["development", "staging", "preview", "production"])("keeps complete disabled safeguards in %s even with an origin", environment => {
     for (const configuredOrigin of [undefined, origin]) {
       const context = resolveSeoContext({ SITE_ENV: environment, SITE_PRODUCTION_ORIGIN: configuredOrigin }, mode);

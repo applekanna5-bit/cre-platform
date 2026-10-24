@@ -4,13 +4,13 @@ import { Container, Eyebrow } from "@/components/ui/primitives";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-border bg-surface py-10">
+    <footer className="mt-auto border-t border-border-strong bg-surface pt-10 pb-5 sm:pt-14">
       <Container>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
-            <p className="text-lg font-semibold tracking-tight">CRE Knowledge Platform</p>
-            <p className="mt-3 max-w-[30ch] text-sm text-muted">Commercial real estate knowledge, analysis, and tools.</p>
-            <p className="mt-4 text-xs text-muted">Five underwriting articles available in the library. Tools and calculators coming soon.</p>
+            <p className="font-editorial text-3xl tracking-tight text-foreground">The CRE Ledger</p>
+            <p className="mt-3 max-w-[32ch] text-sm text-muted">Commercial real estate research &amp; education.</p>
+            <p className="mt-5 max-w-[36ch] border-l-2 border-copper pl-4 text-xs leading-relaxed text-muted">Five underwriting articles available in the library. Explore the fictional property laboratory; additional tools and calculators are not yet available.</p>
           </div>
           {footerNavigation.map((group) => (
             <nav key={group.id} aria-labelledby={`footer-${group.id}`}>
@@ -19,7 +19,7 @@ export function SiteFooter() {
             </nav>
           ))}
         </div>
-        <div className="mt-8 flex flex-wrap justify-between gap-3 border-t border-border pt-5 text-xs text-muted">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-border-strong pt-4 text-xs text-muted">
           <p>Knowledge · Underwriting · Financial modeling</p>
           <a href="#main-content" className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-accent">Back to content ↑</a>
         </div>
