@@ -63,9 +63,8 @@
 .adjustShortcut { margin-bottom: 1rem; border: 1px solid var(--color-border-strong); background: var(--color-elevated); }
 .researchShortcut { margin-top: 1.5rem; }
 @media (max-width: 63.999rem) {
-  /* Cinematic hero retains the visible representative-image attribution. */
-  .compactMobile .photoArea { display: none; }
-  .compactMobile .diagramArea { border-top: 0; }
+  /* Keep the existing photograph above the conceptual model on compact screens. */
+  .compactMobile .photoArea > figure > div { aspect-ratio: 3 / 2; }
 }
 .allocationDisclosure { margin-top: 1.5rem; border-bottom: 1px solid var(--color-border); }
 .allocationDisclosure summary { min-height: 44px; padding-block: .75rem; font-weight: 600; cursor: pointer; }
