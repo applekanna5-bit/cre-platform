@@ -52,7 +52,7 @@ describe("publication-safe page metadata", () => {
   });
   it("preserves public titles and descriptions and projects only safe social fields", () => {
     const published = catalog.articles.filter(isPublicArticle);
-    expect(published).toHaveLength(5);
+    expect(published).toHaveLength(8);
     for (const item of published) {
       const metadata = articleMetadata(item, production);
       expect(metadata.title).toEqual({ absolute: `${item.title} | ${siteName}` });

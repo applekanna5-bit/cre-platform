@@ -78,5 +78,16 @@
     "updateSensitivity": "U3",
     "synthetic": false,
     "notes": "February 2026 public checklist used narrowly for the example that market rents by unit type should be supported by recent subject leasing, including leases commencing within 90 days of the effective date of value. Verify the live repository does not already contain an equivalent canonical source before adding."
+  },
+  {
+    "id": "boe-income-stream-lesson7",
+    "title": "Lesson 7 — Processing the Income Stream (The Income Approach to Value)",
+    "publisher": "California State Board of Equalization",
+    "url": "https://www.boe.ca.gov/info/iav/lesson7.htm",
+    "type": "government",
+    "authority": "supporting",
+    "accessedDate": "2026-10-24",
+    "updateSensitivity": "U2",
+    "notes": "Appraisal-training terminology only; do not import California assessment-specific property-tax or capitalization conventions as universal CRE lending rules."
   }
 ]

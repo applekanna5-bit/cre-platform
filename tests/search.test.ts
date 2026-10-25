@@ -18,9 +18,9 @@ const doc = (id: string, fields: Partial<SearchDocument> = {}): SearchDocument =
 const ids = (query: unknown) => searchDocuments(index, query).map(item => item.id);
 
 describe("publication-only search projection", () => {
-  it("contains exactly the five public articles even in fixture compilation mode", async () => {
+  it("contains exactly the eight public articles even in fixture compilation mode", async () => {
     expect(index.map(item => item.id)).toEqual(publicArticles(catalog).map(item => item.id));
-    expect(index).toHaveLength(5);
+    expect(index).toHaveLength(8);
     const generated = await readFile("src/content/.generated/search.ts", "utf8");
     expect(generated).not.toMatch(/fixture-noi-bridge|sourceIds|sourceClasses|"reviewer"|"loaders"|"sources"|caseId|tableId/);
     for (const privateArticle of catalog.articles.filter(item => !publicArticles(catalog).some(publicItem => publicItem.id === item.id))) {

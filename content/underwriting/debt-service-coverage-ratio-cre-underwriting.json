@@ -1,0 +1,62 @@
+{
+  "id": "CRE-025",
+  "title": "Debt Service Coverage Ratio (DSCR) in Commercial Real Estate Underwriting",
+  "slug": "debt-service-coverage-ratio-cre-underwriting",
+  "description": "Calculate matched-period debt-service coverage, distinguish NOI from a stated NCF convention, and test income, amortization and loan-sizing assumptions.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "published",
+  "publishedDate": "2026-10-25",
+  "reviewer": { "name": "The CRE Ledger Editorial Team" },
+  "lastReviewedDate": "2026-10-24",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "dscr",
+    "annual-debt-service",
+    "underwritten-ncf",
+    "amortization",
+    "loan-sizing"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "A",
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    },
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "phase2a-gpr-egi"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-018"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

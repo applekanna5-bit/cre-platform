@@ -200,7 +200,7 @@ describe("discovery, source registry, and knowledge graph", () => {
   const assemble = (inputs = [input()], sources = [...discovered.catalog.sources]) => buildCatalog(inputs, sources, discovered.catalog.knowledge, discovered.catalog.cases);
   it("discovers only real MDX/metadata pairs and derives the route from metadata", () => {
     expect(discovered.documents.map(document => document.metadata.id).sort()).toEqual([
-      "CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "fixture-noi-bridge",
+      "CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "fixture-noi-bridge", "phase2a-gpr-egi",
     ]);
     expect(fixture.file).toMatch(/underwriting[\\/]noi-development-fixture.mdx$/);
     expect(articleRoute(article)).toBe("/content/underwriting/noi-development-fixture");

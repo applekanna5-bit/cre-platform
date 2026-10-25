@@ -1,0 +1,83 @@
+Two loans secured by the same apartment property can show different coverage even when the property earns exactly the same income. A longer repayment schedule or an interest-only period can reduce scheduled payments without improving operations. Conversely, a lower coverage ratio can reflect faster principal repayment rather than weaker property performance.
+
+Debt service coverage ratio, or DSCR, compares a defined property cash-flow measure with defined debt service for the same period. Read both definitions before comparing the resulting multiples. This article develops that comparison using fictional Cedar Court; it does not determine whether a lender would approve its loan.
+
+## What DSCR measures
+
+<Formula formula="DSCR = defined annual property cash flow ÷ defined annual debt service" variables={[{symbol: "Annual property cash flow", meaning: "USD per year, using the applicable NOI or underwritten NCF convention"}, {symbol: "Annual debt service", meaning: "USD per year for the same debt obligations and measurement period"}, {symbol: "DSCR", meaning: "Dimensionless coverage multiple, conventionally shown with x"}]} interpretation="USD/year divided by USD/year cancels to a multiple. A 1.00x result means the defined numerator exactly equals the defined debt-service requirement; it does not prove that every cash need is funded." />
+
+A ratio below 1.00x identifies a shortfall relative to that defined payment requirement. A ratio above 1.00x indicates arithmetic headroom, not guaranteed payment capacity or a distributable equity return. Annual totals can also hide monthly timing mismatches.
+
+The OCC handbook describes DSCR using annual NOI and debt service, discusses variation with amortization and income volatility, and notes that covenant definitions can differ from underwriting analysis. This is supervisory guidance in its stated jurisdiction, not a universal product term.
+
+<SourceNote sourceId="occ-cre-lending-2022" />
+
+## NOI versus underwritten NCF
+
+A label is not a cash-flow definition. The earlier NOI article explains why a reserve can be inside one framework's NOI and below another framework's NOI. The OCC handbook includes replacement reserves in its NOI convention. Do not deduct them twice.
+
+For Cedar Court only, carry forward the cap-rate example's **pre-reserve NOI of $1,045,800/year**, derived from the GPR/EGI article's revenue bridge. Assume a separate **$30,000/year replacement reserve**, which produces a defined **underwritten net cash flow (NCF) of $1,015,800/year**. Here, underwritten means selected for this fictional analytical case, not accepted by a lender. No other below-NOI adjustment is assumed.
+
+<Calculation inputs={[{label: "Stated pre-reserve NOI", value: "$1,045,800/year"}, {label: "Assumed replacement reserve", value: "$30,000/year"}]} formula="Illustrative underwritten NCF = $1,045,800 − $30,000" result="$1,015,800/year" interpretation="This explicit convention is not an assertion of the complete Fannie Mae, Freddie Mac or other lender definition of NCF. A real framework may require different adjustments and supporting evidence." />
+
+Using NOI in one comparison and NCF in another changes the question. Neither numerator should silently replace the one required by the relevant credit analysis or loan document. No agency-specific NCF formula or threshold is supplied here; use the current applicable loan and program documentation for any lender-specific calculation.
+
+## Define annual debt service
+
+For this example, annual debt service is the sum of scheduled principal and interest payments for the first full twelve months. Exclude origination fees and tax/insurance escrow deposits from that assumed denominator; operating taxes and insurance are already included in the expense assumptions. For an actual loan, reconcile the agreement's definitions and the treatment of other debt, fees, payment timing and any stressed interest-rate assumption.
+
+Cedar Court is assumed to have a **$10,000,000 loan**, a **6.00% fixed nominal annual interest rate**, monthly payments in arrears, and **30-year amortization**. The illustrative loan term is five years. Amortization determines the installment; the five-year maturity still leaves a balance requiring a separate repayment or refinancing analysis. A recurring annual coverage ratio is not proof that the balloon can be repaid.
+
+<Formula formula="Monthly payment = L × i ÷ [1 − (1 + i)^(−n)]; annual debt service = 12 × monthly payment" variables={[{symbol: "L", meaning: "10,000,000 USD original principal"}, {symbol: "i", meaning: "0.06 / 12 = 0.005 per month"}, {symbol: "n", meaning: "360 monthly amortization payments, not the 60-month loan term"}]} interpretation="Assumes a positive fixed rate and level monthly principal-and-interest payments, without payment holidays, fees or alternative day-count adjustments. Use unrounded amounts for intermediate calculations." />
+
+The monthly payment is approximately **$59,955.05**. Twelve unrounded payments give **$719,460.63/year** of debt service. A servicer's cent-rounding can change the annual sum by a few cents; the figures here are an educational schedule, not a payoff statement.
+
+## Calculate the fictional multifamily coverage
+
+The complete property bridge is 100 units × $1,500/unit/month × 12 months = $1,800,000/year of potential rental income. Subtract $90,000 vacancy, $18,000 concessions and $9,000 credit loss, then add $60,000 of already-net other income. EGI is **$1,743,000/year**. The assumed $697,200/year of operating expenses leaves pre-reserve NOI of $1,045,800/year. Deducting the separate reserve gives $1,015,800/year of NCF.
+
+<Calculation inputs={[{label: "Defined annual NCF", value: "$1,015,800/year"}, {label: "Annual amortizing debt service", value: "$719,460.63/year, displayed rounded"}]} formula="DSCR = $1,015,800 ÷ $719,460.63" result="1.41x, rounded to two decimal places" interpretation="Approximately $1.41 of this defined NCF for each $1.00 of scheduled annual debt service. This is an illustration, not a required or approved coverage level." />
+
+The same debt service against pre-reserve NOI gives approximately **1.45x**. The difference from 1.41x is entirely the chosen reserve convention; no apartment was leased or payment reduced. Use the unrounded payment schedule for sensitivities and sizing, and round only the displayed result.
+
+## Change one assumption at a time
+
+Hold debt service unchanged and reduce the defined NCF by 10%, from $1,015,800 to **$914,220/year**. Coverage falls to approximately **1.27x**. This is a 10% shock to the completed numerator, not a claim that a 10% rent or EGI decline produces the same cash-flow change. Expense behavior would have to be modeled separately.
+
+Hold NCF unchanged and raise annual debt service by 10%, to approximately **$791,406.69/year**. Coverage falls to approximately **1.28x**. This isolates a payment shock; it is not the same as raising a 6% mortgage rate to 6.6%, because an amortizing payment must be recalculated from the loan schedule.
+
+Apply both shocks and coverage is approximately **1.16x**. Recalculate the combined ratio rather than subtracting rounded changes. None of these outcomes is a lender acceptance test.
+
+## Interest-only versus amortizing payments
+
+If the same loan instead pays interest only for the entire comparison year, assume twelve monthly interest payments at 0.06 / 12 on an unchanged $10,000,000 principal. Annual interest is **$600,000**, and the defined NCF coverage becomes **1.69x**. The property produces no extra income; scheduled principal repayment has been removed from that year's denominator.
+
+Do not treat 1.69x as directly comparable evidence of stronger property operations than the amortizing 1.41x. Review what happens after the interest-only period, whether underwriting uses an amortizing or stressed schedule, and how the outstanding principal will be repaid. The OCC discusses repayment-capacity analysis using amortizing assumptions for interest-only structures; that is not presented here as a Fannie Mae or Freddie Mac product rule.
+
+<SourceNote sourceId="occ-cre-lending-2022" />
+
+## Why lender definitions and thresholds differ
+
+Differences may reflect property cash-flow risk, debt structure, the measurement period, numerator conventions and the purpose of the test. Underwriting coverage, contractual covenant compliance and a broker's quoted ratio should not be assumed identical. Request the definition and calculation worksheet before comparing them.
+
+This article gives no current minimum DSCR for any named lender. A number used in an example is not a policy threshold, safe harbor or approval guarantee. An analyst must verify the current applicable documentation before assessing eligibility or compliance.
+
+## Connect DSCR to debt yield and loan sizing
+
+Debt yield compares a stated NOI with a loan balance rather than with periodic principal-and-interest payments. Using the explicitly pre-reserve NOI here gives $1,045,800 ÷ $10,000,000 = **10.458%**, or **10.46%** rounded. The reserve convention still needs to be matched to the intended test. Changing amortization without changing that NOI or the loan balance changes DSCR but not this debt-yield calculation.
+
+For a sizing illustration only, select **1.25x as an arbitrary educational target**, not an actual lender minimum. Maximum annual debt service under that one constraint is $1,015,800 ÷ 1.25 = **$812,640/year**. At the same fixed rate and amortization, the annual payment per dollar of original principal is approximately 0.071946063. Dividing $812,640 by that annual mortgage constant gives an illustrative **$11,295,128 loan ceiling**, rounded.
+
+This is only an algebraic coverage limit. Its numerator already deducts the assumed $30,000 annual replacement reserve; the calculation does not test additional reserve or escrow requirements, other binding loan limits, fees, valuation support, eligibility or credit judgment. A real sizing analysis must reconcile all applicable constraints; this article does not establish an approved loan amount or an appraisal. Loan term and refinancing risk remain relevant even when the annual ratio calculates.
+
+## Common analytical mistakes and limitations
+
+- Mixing a monthly payment with annual cash flow, or dividing by interest alone while calling the result amortizing coverage.
+- Subtracting debt service before calculating NOI and then using that reduced amount as the numerator again.
+- Deducting a reserve twice, or omitting a reserve required by the selected cash-flow definition.
+- Treating a five-year term as 60-payment full amortization when the installment actually uses 360 payments.
+- Assuming every change in revenue produces the same percentage change in NCF.
+- Comparing historical coverage with stressed underwriting coverage without explaining changed inputs.
+- Inferring refinance capacity or a guaranteed repayment outcome from one annual ratio.
+
+All Cedar Court amounts and loan terms are fictional. The published NOI guide explains why the numerator's convention must be stated. No current market terms, agency eligibility rule or lender threshold is represented as verified. The illustration does not establish an approved loan amount, appraisal or investment-return forecast.

@@ -1,0 +1,62 @@
+{
+  "id": "phase2a-gpr-egi",
+  "title": "Gross Potential Income vs. Effective Gross Income in CRE Underwriting",
+  "slug": "gross-potential-income-effective-gross-income",
+  "description": "Distinguish total potential income, rental-only GPR and effective income, then reconcile a fictional multifamily rental-to-EGI bridge without inventing potential other income.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "foundational",
+  "status": "published",
+  "publishedDate": "2026-10-25",
+  "reviewer": { "name": "The CRE Ledger Editorial Team" },
+  "lastReviewedDate": "2026-10-24",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "gross-potential-rent",
+    "effective-gross-income",
+    "revenue-bridge",
+    "economic-vacancy"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "boe-income-stream-lesson7"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "A",
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-011"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-008"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-007"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

@@ -42,8 +42,8 @@ This registry defines the canonical 48 launch assets for the Commercial Real Est
 | CRE-015 | Net Operating Income: From Property Financials to Underwritten NOI | Flagship | F→I | A/B | P0 | 3 | Yes |
 | CRE-016 | Historical vs Underwritten vs Stabilized NOI | Deep Dive | P/I | B | P0 | 3 | No |
 | CRE-017 | How Underwriters Normalize Property Financials | Deep Dive | P/I | B | P0 | 3 | No |
-| CRE-018 | Capitalization Rate in Commercial Real Estate | Deep Guide | F/P | A | P0 | 4 | No |
-| CRE-019 | How NOI and Cap Rate Determine Property Value | Practitioner Guide | P | A/B | P0 | 4 | No |
+| CRE-018 | Capitalization Rate and Property Valuation — Fundamentals | Deep Guide | F/P | A | P0 | 4 | No |
+| CRE-019 | Market-Derived Capitalization Rates and Valuation Sensitivity | Practitioner Guide | P | A/B | P0 | 4 | No |
 | CRE-020 | Commercial Real Estate Valuation: The Three Approaches | Hub | F/P | A | P1 | 4 | No |
 | CRE-021 | Income Capitalization Approach to CRE Valuation | Deep Guide | P | A/B | P1 | 4 | No |
 | CRE-022 | How Commercial Real Estate Loans Work | Pillar Guide | F/P | A/B | P0 | 5 | No |
@@ -90,3 +90,9 @@ Calculators must connect to educational content; they are not isolated SEO pages
 
 ## Initial glossary track
 NOI; Cap Rate; DSCR; Debt Yield; LTV; LTC; IRR; Equity Multiple; Cash-on-Cash; Loan Constant; Amortization; Interest Only; Balloon; T-12; Rent Roll; Market Rent; Contract Rent; Loss to Lease; Economic Occupancy; Replacement Reserve; CapEx; Sponsor; Guarantor; Recourse; Nonrecourse.
+
+## Approved Phase 2D boundary: CRE-018 / CRE-019
+
+CRE-018 covers direct capitalization fundamentals, explicitly assumed stabilized NOI, cap-rate mathematics, an illustrative property value, interpretation and limitations.
+
+CRE-019 is reserved for market-derived cap-rate evidence, comparable transactions, cap-rate selection methodology, valuation sensitivity and advanced valuation judgment. This is a planned curriculum reservation, not a created or published article. No current market-rate evidence or appraisal conclusion is implied.

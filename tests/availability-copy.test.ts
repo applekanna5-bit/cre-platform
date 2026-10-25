@@ -17,10 +17,10 @@ describe("published underwriting availability", () => {
   it("reports actual published research and meaningful legacy destinations without inventing availability", () => {
     const html = renderToStaticMarkup(createElement(Home));
     const articles = publicArticles(catalog);
-    expect(articles).toHaveLength(5);
-    expect(articles.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015"]);
+    expect(articles).toHaveLength(8);
+    expect(articles.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "phase2a-gpr-egi"]);
     expect(new Set(articles.map(article => article.domain))).toEqual(new Set(["underwriting"]));
-    expect(html).toContain("5 published articles");
+    expect(html).toContain("8 published articles");
     expect(html).toContain('href="/library"');
     const ids = [...html.matchAll(/ id="([^"]+)"/g)].map(match => match[1]);
     for (const item of primaryNavigation.filter(item => item.id !== "library")) {
@@ -29,7 +29,7 @@ describe("published underwriting availability", () => {
       expect(section).toBeDefined();
       expect(section).not.toMatch(/hidden|sr-only/);
       if (item.id === "underwriting") {
-        expect(section).toContain("5 published articles in the research library");
+        expect(section).toContain("8 published articles in the research library");
         expect(section).toContain('href="#knowledge-underwriting"');
       } else if (item.id === "learn") {
         expect(section).toContain("published underwriting reading journey");
@@ -50,7 +50,7 @@ describe("published underwriting availability", () => {
 
   it("describes available research in the footer and retains planned destinations", () => {
     const html = renderToStaticMarkup(createElement(SiteFooter));
-    expect(html).toContain("Five underwriting articles available in the library. Explore the fictional property laboratory; additional tools and calculators are not yet available.");
+    expect(html).toContain("8 published articles available in the library. Explore the fictional property laboratory; additional tools and calculators are not yet available.");
     expect(html).not.toContain("Guides and tools coming soon.");
     expect(html).toContain('href="/library"');
     expect(html.match(/Coming soon/g)).toHaveLength(3);

@@ -15,7 +15,7 @@ vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifam
 describe("Phase 2 public research discovery", () => {
   it("links every public article from the library and homepage, excluding nonpublic articles", () => {
     const articles = publicArticles(catalog);
-    expect(articles).toHaveLength(5);
+    expect(articles).toHaveLength(8);
     for (const Page of [LibraryPage, Home]) {
       const html = renderToStaticMarkup(createElement(Page));
       for (const article of articles) expect(html).toContain(`href="${article.href}"`);

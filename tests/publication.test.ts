@@ -58,7 +58,7 @@ describe("publication-safe discovery", () => {
 
   it("projects the real public inventory without manufacturing knowledge routes", () => {
     const output = publicArticles(catalog);
-    expect(output.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015"]);
+    expect(output.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "phase2a-gpr-egi"]);
     expect(new Set(output.map(article => article.href)).size).toBe(output.length);
     expect(output.every(article => article.kind === "article" && article.href === `/content/${article.domain}/${catalog.articles.find(item => item.id === article.id)!.slug}`)).toBe(true);
     expect(JSON.stringify(output)).not.toContain("fixture-noi-bridge");

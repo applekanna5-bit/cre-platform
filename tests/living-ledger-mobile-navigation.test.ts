@@ -16,7 +16,7 @@ describe("4D.1 cinematic mobile research navigation", () => {
   it("prioritizes published research and preserves all eight original destinations exactly once", () => {
     const html = renderToStaticMarkup(createElement(MobileLearningNavigation, { catalog }));
     expect(html).toContain('aria-label="Available research destinations"');
-    expect(html).toContain("5 published articles");
+    expect(html).toContain("8 published articles");
     expect(html).toContain('href="/#knowledge-underwriting"');
     expect(html.indexOf('href="/library"')).toBeLessThan(html.indexOf('href="/#knowledge-underwriting"'));
     expect(html.indexOf('href="/#knowledge-underwriting"')).toBeLessThan(html.indexOf("Explore more CRE areas"));

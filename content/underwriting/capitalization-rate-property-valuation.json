@@ -1,0 +1,54 @@
+{
+  "id": "CRE-018",
+  "title": "Capitalization Rate and Property Valuation — Fundamentals",
+  "slug": "capitalization-rate-property-valuation",
+  "description": "Understand direct capitalization, stated stabilized NOI, cap-rate mathematics and the limits of an illustrative multifamily property-value calculation.",
+  "domain": "underwriting",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "published",
+  "publishedDate": "2026-10-25",
+  "reviewer": { "name": "The CRE Ledger Editorial Team" },
+  "lastReviewedDate": "2026-10-24",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "capitalization-rate",
+    "direct-capitalization",
+    "valuation",
+    "noi-conventions"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "A",
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    },
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "phase2a-gpr-egi"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

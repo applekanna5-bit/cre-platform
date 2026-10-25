@@ -124,7 +124,7 @@ describe.skipIf(process.env.CRE_STANDALONE_TEST !== "1")("standalone production 
       expect(html).toContain("Understand Property Financials.");
       expect(html).toContain("$18,654,545");
       for (const id of ["learn", "underwriting", "property-types", "financing", "modeling", "tools", "resources"]) expect(html).toContain(`id="${id}"`);
-      const allowed = new Set(["t12-operating-statement", "rent-roll-analysis", "contract-rent-vs-market-rent", "cre-revenue-underwriting", "net-operating-income-underwritten-noi"].map(slug => "/content/underwriting/" + slug));
+      const allowed = new Set(["t12-operating-statement", "rent-roll-analysis", "contract-rent-vs-market-rent", "cre-revenue-underwriting", "net-operating-income-underwritten-noi", "gross-potential-income-effective-gross-income", "capitalization-rate-property-valuation", "debt-service-coverage-ratio-cre-underwriting"].map(slug => "/content/underwriting/" + slug));
       for (const match of html.matchAll(/href="(\/content\/[^"]+)"/g)) expect(allowed.has(match[1])).toBe(true);
     }
   });
