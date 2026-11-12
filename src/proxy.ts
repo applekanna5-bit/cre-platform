@@ -1,15 +1,30 @@
+import { articleRoute, isPublicArticle } from "./content/catalog";
+import { assertSeoDeliveryContext, seoDelivery } from "./seo/public-pages";
+import { resolveSeoContext } from "./seo/context";
+import { assertTestOnlyMode } from "./content/test-only-date";
 import { NextResponse, type NextRequest } from "next/server";
 import {
   authorizePreview,
   authorizePublicProduction,
 } from "./security/preview-auth";
 import {
+  catalog,
+  testOnlyDatePreviewEnabled,
   fixturesEnabled,
   editorialPreviewEnabled,
 } from "./content/.generated/index";
 
 // No matcher: admission checks apply to pages, assets and APIs.
 export function proxy(request: NextRequest) {
+  let simulation: string | null;
+  try {
+    const context = resolveSeoContext({ SITE_ENV: process.env.SITE_ENV, SITE_PRODUCTION_ORIGIN: process.env.SITE_PRODUCTION_ORIGIN, SITE_INDEXING_ENABLED: process.env.SITE_INDEXING_ENABLED }, { fixturesEnabled, editorialPreviewEnabled });
+    assertSeoDeliveryContext(context, seoDelivery(process.env, testOnlyDatePreviewEnabled));
+    simulation = assertTestOnlyMode(process.env, process.cwd(), testOnlyDatePreviewEnabled, process.env.NODE_ENV === "development" ? "phase-development-server" : "production-runtime");
+    if (simulation && (!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(request.headers.get("host") ?? "") || !["127.0.0.1", "localhost"].includes(request.nextUrl.hostname))) throw new Error("Local test only");
+  } catch {
+    return new NextResponse("Access denied.", { status: 503, headers: { "Cache-Control": "private, no-store", "X-Robots-Tag": "noindex, nofollow" } });
+  }
   const accessMode = process.env.PREVIEW_ACCESS_MODE;
 
   if (accessMode === "public") {
@@ -42,6 +57,18 @@ export function proxy(request: NextRequest) {
     if (process.env.SITE_INDEXING_ENABLED === "false") {
       response.headers.set("X-Robots-Tag", "noindex, nofollow");
     }
+    if (process.env.SITE_INDEXING_ENABLED === "true") {
+      const pathname = request.nextUrl.pathname;
+      const publicPage = pathname === "/" || pathname === "/library" ||
+        catalog.articles.some(article => isPublicArticle(article) && articleRoute(article) === pathname);
+      const infrastructure = pathname.startsWith("/_next/static/") ||
+        ["/icon.svg", "/robots.txt", "/sitemap.xml"].includes(pathname);
+      if (pathname === "/search") response.headers.set("X-Robots-Tag", "noindex, follow");
+      else if (!publicPage && !infrastructure) return new NextResponse("Not found.", {
+        status: 404, headers: { "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "private, no-store" },
+      });
+      else if (infrastructure) response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    }
     return response;
   }
 
@@ -63,6 +90,7 @@ export function proxy(request: NextRequest) {
         });
 
   response.headers.set("Cache-Control", "private, no-store");
+  if (simulation) response.headers.set("X-CRE-Test-Only-Publication-Date", simulation);
   response.headers.set("Pragma", "no-cache");
   response.headers.set("Expires", "0");
   response.headers.set("X-Robots-Tag", "noindex, nofollow");

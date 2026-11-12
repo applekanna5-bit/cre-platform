@@ -8,7 +8,7 @@ export function articleComponents(article: ArticleMetadata, catalog: ContentCata
   return {
     Formula, Calculation, ConventionNote, PractitionerNote, Warning,
     InstitutionalExample: ({ sourceId, children }: { sourceId: string; children: ReactNode }) => <InstitutionalExample source={source(sourceId)}>{children}</InstitutionalExample>,
-    SourceNote: ({ sourceId }: { sourceId: string }) => <SourceNote source={source(sourceId)} />,
+    SourceNote: ({ sourceId, children }: { sourceId: string; children?: ReactNode }) => <SourceNote source={source(sourceId)}>{children}</SourceNote>,
     CaseStudy: ({ caseId }: { caseId: string }) => {
       const record = catalog.cases.find(item => item.id === caseId); if (!record) throw new Error(`Unknown case ${caseId}`);
       return <CaseStudy record={record} />;

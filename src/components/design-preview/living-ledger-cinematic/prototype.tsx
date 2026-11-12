@@ -11,7 +11,7 @@ export function CinematicLedgerPrototype({ presentation = "preview" }: { present
     {presentation === "preview" && <p className={styles.notice}>Local design study / 4C — The Living Ledger</p>}
     <section className={styles.hero} aria-labelledby="cinematic-title">
       <figure className={styles.photography}>
-        <Image src={architecture}
+        <Image src={architecture} unoptimized
           alt="Contemporary multifamily architecture with glass balconies, pale stone facades, wood accents, and sunlit landscaped grounds."
           sizes="100vw" placeholder="blur" loading="eager" fetchPriority="high"
           className={styles.image} />

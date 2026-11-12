@@ -15,7 +15,7 @@ export function ArticleContext({ headings, relationships, hasSources }: {
     ...(relationships.length ? [{ id: "article-relationships", label: "Connect the concepts", depth: 2 }] : []),
   ];
   if (!outline.length) return null;
-  return <aside className={styles.context} aria-label="Article guide">
+  return <aside className={styles.context} aria-label="Article guide" tabIndex={0}>
     <nav aria-labelledby="article-outline">
       <h2 id="article-outline" className={styles.railLabel}>On this page</h2>
       <ol className={styles.outline}>

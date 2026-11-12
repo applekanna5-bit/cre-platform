@@ -39,7 +39,9 @@ describe("M2 navigation contract", () => {
   it("uses real homepage targets for every rendered link, including skip and footer links", () => {
     const ids = [...markup.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
     expect(new Set(ids).size).toBe(ids.length);
-    const links = [...markup.matchAll(/\shref="([^"]+)"/g)].map((match) => match[1]);
+    const links = [...markup.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)].map((match) => match[1]);
+    const imagePreloads = [...markup.matchAll(/<link\b[^>]*rel="preload"[^>]*as="image"[^>]*href="([^"]+)"/g)].map((match) => match[1]);
+    expect(imagePreloads).toContain("/_next/static/media/living-ledger-multifamily.webp");
     expect(links.length).toBeGreaterThan(primaryNavigation.length);
     for (const href of links) {
       expect(href === "/" || href === "/library" || href.startsWith("/search?") || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);

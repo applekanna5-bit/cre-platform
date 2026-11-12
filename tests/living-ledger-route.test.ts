@@ -70,7 +70,8 @@ describe("local-only Living Ledger route", () => {
     expect(html).toContain("Representative AI-generated architecture");
     expect(html).toContain("<img");
     expect(html).toContain("glass balconies");
-    expect(html).toContain('sizes="');
+    expect(html).toContain('src="/_next/static/media/living-ledger-multifamily.webp"');
+    expect(html).not.toMatch(/srcSet=|srcset=|\/_next\/image/);
     expect(html).toContain('width="1536"');
     expect(html).toContain('height="1024"');
     expect(html).toContain('loading="eager"');

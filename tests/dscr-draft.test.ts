@@ -26,7 +26,7 @@ const principal = 10000000, rate = .06 / 12, months = 360;
 const payment = principal * rate / (1 - Math.pow(1 + rate, -months));
 const debtService = payment * 12;
 describe("DSCR publication candidate", () => {
-  it("includes the three approved articles in the eight-article public projection", () => {
+  it("includes the three approved articles in the nine-article public projection", () => {
     expect(catalog.articles.filter(a=>publicationIds.includes(a.id))).toHaveLength(3);
     for (const a of catalog.articles.filter(a=>publicationIds.includes(a.id))) {
       expect(a.status).toBe("published"); expect(a.developmentFixture).toBe(false); expect(a.publishedDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);

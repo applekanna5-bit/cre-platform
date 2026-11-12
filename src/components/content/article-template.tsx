@@ -5,14 +5,21 @@ import { isEditorialPreview, resolveRelationships } from "@/content/catalog";
 import { Container, Eyebrow } from "@/components/ui/primitives";
 import { RelationshipNavigation, Sources } from "./primitives";
 import { ArticleContext } from "./article-context";
+import { BackToTop } from "./back-to-top";
 import styles from "./article.module.css";
 
 const domainNames = { learn: "Learn / CRE Fundamentals", underwriting: "Underwriting", "property-types": "Property Types", financing: "Financing", agency: "Agency Lending", modeling: "Financial Modeling", resources: "Resources", insights: "Insights" };
 const difficultyNames = { foundational: "Foundation", intermediate: "Practitioner", advanced: "Institutional" };
-export function ArticleTemplate({ article, catalog, headings = [], embeddedCases = [], fixtures = false, editorialPreview = false, children }: { article: ArticleMetadata; catalog: ContentCatalog; headings?: readonly ArticleHeading[]; embeddedCases?: readonly string[]; fixtures?: boolean; editorialPreview?: boolean; children?: ReactNode }) {
+export function ArticleTemplate({ article, catalog, headings = [], embeddedCases = [], fixtures = false, editorialPreview = false, breadcrumbs, children }: { article: ArticleMetadata; catalog: ContentCatalog; headings?: readonly ArticleHeading[]; embeddedCases?: readonly string[]; fixtures?: boolean; editorialPreview?: boolean; breadcrumbs?: readonly { name: string; path: string }[]; children?: ReactNode }) {
   const relationships = resolveRelationships(article, catalog, fixtures, editorialPreview).map(relation => relation.target.kind === "case-study" && embeddedCases.includes(relation.target.id) ? { ...relation, href: `#case-${relation.target.id}` } : relation);
   return <Container className={styles.page}>
-      <nav aria-label="Article context" className="mb-6 flex flex-wrap items-center gap-3 text-sm text-muted"><Link href="/" className="inline-flex min-h-11 items-center text-accent underline underline-offset-4">Home</Link><span aria-hidden="true">/</span><span>{domainNames[article.domain]}</span></nav>
+      {breadcrumbs ? <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-3 text-sm text-muted">
+        {breadcrumbs.map((item, index) => <span key={item.path} className="inline-flex items-center gap-3">
+          {index > 0 && <span aria-hidden="true">/</span>}
+          {index === breadcrumbs.length - 1 ? <span aria-current="page">{item.name}</span> :
+            <Link href={item.path} className="inline-flex min-h-11 items-center text-accent underline underline-offset-4">{item.name}</Link>}
+        </span>)}
+      </nav> : <nav aria-label="Article context" className="mb-6 flex flex-wrap items-center gap-3 text-sm text-muted"><Link href="/" className="inline-flex min-h-11 items-center text-accent underline underline-offset-4">Home</Link><span aria-hidden="true">/</span><span>{domainNames[article.domain]}</span></nav>}
     <div className={styles.layout}>
       <article aria-labelledby="article-title" className={styles.article}>
         {article.developmentFixture && <p className={styles.fixture}>Development fixture — not publication content</p>}
@@ -35,5 +42,6 @@ export function ArticleTemplate({ article, catalog, headings = [], embeddedCases
       </article>
       <ArticleContext headings={headings} relationships={relationships} hasSources={article.sources.length > 0} />
     </div>
+    <BackToTop />
   </Container>;
 }

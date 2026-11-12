@@ -1,3 +1,4 @@
+import { randomBytes } from "node:crypto";
 import {
   fixturesEnabled,
   editorialPreviewEnabled,
@@ -11,7 +12,7 @@ import {
 } from "@/security/preview-auth";
 import { proxy } from "@/proxy";
 
-const env = { PREVIEW_ACCESS_MODE: "private", PREVIEW_AUTH_USERNAME: "local-reviewer", PREVIEW_AUTH_PASSWORD: "synthetic-offline-password-0123456789" };
+const env = { PREVIEW_ACCESS_MODE: "private", PREVIEW_AUTH_USERNAME: "local-reviewer", PREVIEW_AUTH_PASSWORD: randomBytes(32).toString("hex") };
 const basic = (username = env.PREVIEW_AUTH_USERNAME, password = env.PREVIEW_AUTH_PASSWORD) => `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
 afterEach(() => vi.unstubAllEnvs());
 function configure() { for (const [key, value] of Object.entries(env)) vi.stubEnv(key, value); }
@@ -203,7 +204,7 @@ describe("public production Proxy integration", () => {
   });
 
   it("does not add a noindex header when indexing is explicitly enabled", () => {
-    configurePublic({ SITE_INDEXING_ENABLED: "true" });
+    configurePublic({ SITE_INDEXING_ENABLED: "true", NODE_ENV: "production" });
     const response = proxy(new NextRequest("https://thecreledger.com/"));
     if (fixturesEnabled || editorialPreviewEnabled) {
       expect(response.status).toBe(503);

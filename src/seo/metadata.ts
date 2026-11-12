@@ -2,20 +2,25 @@ import type { Metadata } from "next";
 import type { ArticleMetadata } from "../content/contracts";
 import { articleRoute, isPublicArticle } from "../content/catalog";
 import { resolveSeoContext } from "./context";
-import { fixturesEnabled, editorialPreviewEnabled } from "../content/.generated";
+import { assertSeoDeliveryContext, canonicalUrl, seoDelivery } from "./public-pages";
+import { fixturesEnabled, editorialPreviewEnabled, testOnlyDatePreviewEnabled } from "../content/.generated";
 
 export const siteName = "The CRE Ledger";
 export const siteDescription = "Commercial real estate underwriting, financial modeling, lending, valuation and investment analysis.";
 type SeoContext = ReturnType<typeof resolveSeoContext>;
 type Page = "layout" | "home" | "library" | "search";
 
-function currentContext(): SeoContext {
-  return resolveSeoContext({
+export function currentContext(): SeoContext {
+  const context = resolveSeoContext({
     SITE_ENV: process.env.SITE_ENV,
     SITE_PRODUCTION_ORIGIN: process.env.SITE_PRODUCTION_ORIGIN,
     SITE_INDEXING_ENABLED: process.env.SITE_INDEXING_ENABLED,
   }, { fixturesEnabled, editorialPreviewEnabled });
+  assertSeoDeliveryContext(context, currentDelivery());
+  return context;
 }
+
+export function currentDelivery() { return seoDelivery(process.env, testOnlyDatePreviewEnabled); }
 
 function formattedTitle(title: string): string {
   const suffix = ` | ${siteName}`;
@@ -33,7 +38,7 @@ function constructMetadata(context: SeoContext, title: string, description: stri
   const follow = allowed;
   const index = allowed && !options.search;
   const canonical = index && options.path && context.policy.publicOrigin
-    ? new URL(options.path, context.policy.publicOrigin).href : undefined;
+    ? canonicalUrl(context, options.path) : undefined;
   const fullTitle = formattedTitle(title);
   return {
     title: { absolute: fullTitle },

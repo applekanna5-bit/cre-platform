@@ -1,3 +1,4 @@
+import { testOnlyDate } from "./test-only-date.ts";
 import { articleRoute, isPublicArticle } from "./catalog.ts";
 import type { ArticleMetadata, ContentCatalog } from "./contracts.ts";
 
@@ -21,6 +22,7 @@ export interface PublicArticle {
 export function publicArticles(catalog: Pick<ContentCatalog, "articles">): readonly PublicArticle[] {
   const ids = new Set<string>();
   const routes = new Set<string>();
+  testOnlyDate(process.env, process.cwd());
   return catalog.articles.filter(isPublicArticle).map((article): PublicArticle => {
     const href = articleRoute(article);
     const identity = article.id.toLowerCase();

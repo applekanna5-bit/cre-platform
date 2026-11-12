@@ -7,7 +7,7 @@ import styles from "./living-ledger.module.css";
 export function PropertyVisual({ image, loading = "eager" }: { image?: ReactNode; loading?: "eager" | "lazy" }) {
   return <figure className={styles.heroVisual}>
     <div className={styles.propertyFrame}>{image ?? <Image
-      src={multifamily}
+      src={multifamily} unoptimized
       alt="Contemporary multifamily apartment building with pale stone facades, glass balconies, wood accents, and landscaped grounds in warm sunlight."
       sizes="(min-width: 1280px) 540px, (min-width: 1024px) 45vw, calc(100vw - 66px)"
       placeholder="blur"

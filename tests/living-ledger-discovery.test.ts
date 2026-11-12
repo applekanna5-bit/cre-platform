@@ -9,11 +9,11 @@ import { LearningDiscovery } from "@/components/design-preview/living-ledger-cin
 const render = (articles: readonly ArticleMetadata[]) => renderToStaticMarkup(createElement(LearningDiscovery, { catalog: { articles } }));
 
 describe("Milestone 4D publication-safe learning discovery", () => {
-  it("derives the one available category and all eight authorized research destinations", () => {
+  it("derives the one available category and all eight published research destinations", () => {
     const html = render(catalog.articles);
     const published = publicArticles(catalog);
     expect(published).toHaveLength(8);
-    expect(html).toContain("8 published articles");
+    expect(html).toContain(`${published.length} published articles`);
     expect(html).toContain('href="#knowledge-underwriting"');
     expect(html).toContain('id="knowledge-underwriting"');
     expect(html.match(/class="[^"]*category[^"]*"/g)).toHaveLength(1);
@@ -48,7 +48,7 @@ describe("Milestone 4D publication-safe learning discovery", () => {
     const preferred = catalog.articles.find(article => article.id === "CRE-015")!;
     const hidden: ArticleMetadata = { ...preferred, status, publishedDate: undefined, title: "PRIVATE_EDITORIAL_MARKER", description: "PRIVATE_DESCRIPTION", topics: ["PRIVATE_TOPIC"] };
     const html = render(catalog.articles.filter(article => article.id !== preferred.id).concat(hidden));
-    expect(html).toContain("7 published articles");
+    expect(html).toContain(`${publicArticles(catalog).length - 1} published articles`);
     expect(html).not.toContain("PRIVATE_");
     expect(html).not.toContain('href="/content/underwriting/net-operating-income-underwritten-noi"');
     expect(html).not.toContain("<dt>Valuation</dt>");

@@ -1,3 +1,5 @@
+import { articleBreadcrumbs, articleStructuredData, breadcrumbStructuredData, serializeStructuredData } from "@/seo/structured-data";
+import { currentContext, currentDelivery } from "@/seo/metadata";
 import { articleMetadata } from "@/seo/metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -22,5 +24,11 @@ export async function generateMetadata({ params }: PageProps<"/content/[domain]/
 export default async function ContentPage({ params }: PageProps<"/content/[domain]/[slug]">) {
   const { domain, slug } = await params; const article = getArticle(domain, slug);
   const { default: Body } = await loaders[article.id]();
-  return <ArticleTemplate headings={articleHeadings[article.id]} article={article} catalog={catalog} embeddedCases={embeddedCases[article.id]} fixtures={fixturesEnabled} editorialPreview={editorialPreviewEnabled}><Body components={articleComponents(article, catalog)} /></ArticleTemplate>;
+  const context = currentContext(), delivery = currentDelivery();
+  const articleSchema = articleStructuredData(article, context, delivery);
+  const breadcrumbSchema = breadcrumbStructuredData(article, context, delivery);
+  return <>
+    {articleSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeStructuredData(articleSchema) }} />}
+    {breadcrumbSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeStructuredData(breadcrumbSchema) }} />}
+    <ArticleTemplate breadcrumbs={articleSchema ? articleBreadcrumbs(article) : undefined} headings={articleHeadings[article.id]} article={article} catalog={catalog} embeddedCases={embeddedCases[article.id]} fixtures={fixturesEnabled} editorialPreview={editorialPreviewEnabled}><Body components={articleComponents(article, catalog)} /></ArticleTemplate></>;
 }

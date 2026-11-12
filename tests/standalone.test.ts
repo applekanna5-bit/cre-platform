@@ -1,173 +1,204 @@
-import { spawn, type ChildProcess } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { spawn, spawnSync, type ChildProcess } from "node:child_process";
+import { cpSync, existsSync, mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { createServer } from "node:net";
+import { tmpdir } from "node:os";
 import path from "node:path";
-import { performance } from "node:perf_hooks";
+import { randomBytes } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { productionArticlePaths, sha256, verifyRelease } from "../scripts/release-start.mts";
 
-// Opt in after a publication-only production build. Never build inside the test.
-describe.skipIf(process.env.CRE_STANDALONE_TEST !== "1")("standalone production regression", () => {
-  const root = path.resolve(".next/standalone");
-  let server: ChildProcess | undefined;
-  let origin: string;
-  let logs = "";
-
-  async function stopServer() {
-    const child = server;
-    if (!child?.pid || child.exitCode !== null || child.signalCode !== null) return;
+describe.skipIf(process.env.CRE_STANDALONE_TEST !== "1")("assembled standalone private-eight acceptance", () => {
+  let root: string, temp: string, origin: string, child: ChildProcess | undefined;
+  let env: NodeJS.ProcessEnv, authorization: string, logs = "", digest: string;
+  const fetchLocal = (route: string, headers: Record<string, string> = {}, method = "GET") =>
+    fetch(origin + route, { method, redirect: "manual", headers: { authorization, ...headers }, signal: AbortSignal.timeout(5000) });
+  async function navigation(route: string, headers: Record<string, string>) {
+    let response = await fetchLocal(route, headers);
+    if (response.status === 307) {
+      const location = response.headers.get("location");
+      expect(location).toBeTruthy();
+      const target = new URL(location!, origin);
+      expect(target.origin).toBe(origin);
+      expect(target.pathname).toBe(route);
+      expect(target.searchParams.has("_rsc")).toBe(true);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+      response = await fetchLocal(target.pathname + target.search, headers);
+    }
+    return response;
+  }
+  async function stop() {
+    if (!child || child.exitCode !== null || child.signalCode !== null) return;
+    const active = child;
     await new Promise<void>(resolve => {
-      const forceKill = setTimeout(() => child.kill("SIGKILL"), 1000);
-      child.once("exit", () => { clearTimeout(forceKill); resolve(); });
-      child.kill();
+      const timer = setTimeout(() => active.kill("SIGKILL"), 2000);
+      active.once("exit", () => { clearTimeout(timer); resolve(); }); active.kill();
     });
   }
-
   beforeAll(async () => {
+    if (!process.env.CRE_RELEASE_PACKAGE) throw new Error("Explicit assembled package is required; build outside tests");
+    const source = path.resolve(process.env.CRE_RELEASE_PACKAGE);
+    digest = sha256(readFileSync(path.join(source, "release-manifest.json")));
+    verifyRelease(source, digest);
+    temp = mkdtempSync(path.join(tmpdir(), "cre-standalone-acceptance-"));
+    root = path.join(temp, "relocated-package");
+    cpSync(source, root, { recursive: true });
     expect(existsSync(path.join(root, "src/content/.generated/index.ts"))).toBe(false);
-    expect(existsSync(path.join(root, "server.js"))).toBe(true);
-    const manifest = JSON.parse(readFileSync(path.join(root, ".next/routes-manifest.json"), "utf8"));
-    expect(manifest.headers).toContainEqual(expect.objectContaining({
-      source: "/:path*",
-      headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
-    }));
     const listener = createServer();
     await new Promise<void>(resolve => listener.listen(0, "127.0.0.1", resolve));
-    const address = listener.address();
-    if (!address || typeof address === "string") throw new Error("No loopback port");
+    const address = listener.address(); if (!address || typeof address === "string") throw new Error("No port");
     const port = address.port;
-    await new Promise<void>((resolve, reject) => listener.close(error => error ? reject(error) : resolve()));
-    origin = `http://127.0.0.1:${port}`;
-    const startupStarted = performance.now();
-    server = spawn(process.execPath, ["server.js"], {
-      cwd: root,
-      env: { ...process.env, NODE_ENV: "production", HOSTNAME: "127.0.0.1", PORT: String(port),
-        PREVIEW_ACCESS_MODE: "public", SITE_ENV: "production",
-        SITE_PRODUCTION_ORIGIN: "https://thecreledger.com", SITE_INDEXING_ENABLED: "false" },
-      stdio: ["ignore", "pipe", "pipe"],
-      windowsHide: true,
-    });
-    const child = server;
-    const receive = (chunk: Buffer) => { logs += chunk.toString(); };
-    let startupError: Error | undefined;
-    const onError = (error: Error) => { startupError = error; };
-    const onExit = (code: number | null, signal: NodeJS.Signals | null) => {
-      startupError = new Error(`Standalone exited during startup (code ${code}, signal ${signal})`);
-    };
-    child.stdout!.on("data", receive);
-    child.stderr!.on("data", receive);
-    child.once("error", onError);
-    child.once("exit", onExit);
-    const deadline = startupStarted + 15000;
-    let attempts = 0;
-    let lastProbe = "No probe completed";
-    try {
-      const expectedIcon = readFileSync(path.join(root, ".next/server/app/icon.svg.body"));
-      while (performance.now() < deadline) {
-        if (startupError) throw startupError;
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), Math.min(1000, deadline - performance.now()));
-        attempts++;
-        try {
-          // This exercises initialized handlers and Proxy without warming the homepage.
-          const response = await fetch(origin + "/icon.svg", {
-            signal: controller.signal, redirect: "manual", headers: { connection: "close" },
-          });
-          const body = Buffer.from(await response.arrayBuffer());
-          if (response.status !== 200 || response.headers.get("content-type")?.split(";")[0] !== "image/svg+xml" ||
-              response.headers.get("x-robots-tag") !== "noindex, nofollow" || !body.equals(expectedIcon)) {
-            throw new Error(`Unexpected readiness response: HTTP ${response.status}, type ${response.headers.get("content-type")}, robots ${response.headers.get("x-robots-tag")}, ${body.length} bytes`);
-          }
-          if (startupError) throw startupError;
-          if (performance.now() >= deadline) break;
-          console.info(`Standalone HTTP ready in ${Math.round(performance.now() - startupStarted)}ms (${attempts} probes; /icon.svg)`);
-          return;
-        } catch (error) {
-          if (startupError) throw startupError;
-          const code = (error as { cause?: NodeJS.ErrnoException }).cause?.code;
-          // Only transport failures or bounded probe timeouts are retryable, not HTTP/application errors.
-          if (!controller.signal.aborted && !["ECONNREFUSED", "ECONNRESET", "EPIPE", "ETIMEDOUT", "UND_ERR_SOCKET"].includes(code ?? "")) throw error;
-          lastProbe = controller.signal.aborted ? "Probe exceeded its bounded timeout" : `Transport error: ${code}`;
-        } finally {
-          clearTimeout(timeout);
-          controller.abort();
-        }
-        const remaining = deadline - performance.now();
-        if (remaining > 0) await delay(Math.min(100, remaining));
-      }
-      throw new Error(`Standalone HTTP readiness timed out after 15000ms (${attempts} probes; ${lastProbe})`);
-    } catch (error) {
-      await stopServer();
-      throw new Error(`Standalone HTTP readiness failed: ${String(error)}\n${logs}`, { cause: error });
-    } finally {
-      child.off("error", onError);
-      child.off("exit", onExit);
+    await new Promise<void>(resolve => listener.close(() => resolve()));
+    origin = "http://127.0.0.1:" + port;
+    const username = "local-" + randomBytes(8).toString("hex"), password = randomBytes(32).toString("hex");
+    authorization = "Basic " + Buffer.from(username + ":" + password).toString("base64");
+    const manifest = verifyRelease(root, digest), site = JSON.parse(manifest.snapshot).context.site;
+    env = { ...process.env, NODE_ENV: "production", SITE_ENV: site.environment,
+      SITE_INDEXING_ENABLED: "false", PREVIEW_ACCESS_MODE: "private", SITE_PRODUCTION_ORIGIN: site.productionOrigin ?? undefined,
+      CRE_TEST_ONLY_PUBLICATION_DATE: undefined, CRE_RELEASE_MANIFEST_SHA256: digest,
+      PREVIEW_AUTH_USERNAME: username, PREVIEW_AUTH_PASSWORD: password, HOSTNAME: "127.0.0.1", PORT: String(port) };
+    child = spawn(process.execPath, ["release-start.cjs"], { cwd: root, env, windowsHide: true, stdio: ["ignore", "pipe", "pipe"] });
+    child.stdout!.on("data", b => { logs += String(b); }); child.stderr!.on("data", b => { logs += String(b); });
+    let ready = false;
+    for (let attempt = 0; attempt < 120; attempt++) {
+      if (child.exitCode !== null) throw new Error("Guarded standalone exited before readiness");
+      try { const r = await fetchLocal("/icon.svg"); if (r.status === 200) { ready = true; break; } } catch { /* bounded startup polling */ }
+      await delay(100);
     }
-  }, 20000);
-
-  afterAll(stopServer);
-
-  it.each(["/", "/library", "/content/underwriting/contract-rent-vs-market-rent", "/search", "/search?q=NOI"])("serves %s without generated source files and retains noindex", async route => {
-    const response = await fetch(origin + route);
-    expect(response.status).toBe(200);
-    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-    const html = await response.text();
-    expect(html).toContain('<meta name="robots" content="noindex, nofollow"');
-    expect(html).toContain('<meta name="googlebot" content="noindex, nofollow"');
-    expect(html).not.toContain("Development fixture — not publication content");
-    expect(html).toContain("Available research destinations");
-    expect(html).toContain('href="/#knowledge-underwriting"');
-    expect(html).toContain("The CRE Ledger");
-    expect(html).not.toContain("Local design study / 4C");
-    if (route === "/") {
-      expect(html).toContain('id="cinematic-title"');
-      expect(html).toContain("Understand Property Financials.");
-      expect(html).toContain("$18,654,545");
-      for (const id of ["learn", "underwriting", "property-types", "financing", "modeling", "tools", "resources"]) expect(html).toContain(`id="${id}"`);
-      const allowed = new Set(["t12-operating-statement", "rent-roll-analysis", "contract-rent-vs-market-rent", "cre-revenue-underwriting", "net-operating-income-underwritten-noi", "gross-potential-income-effective-gross-income", "capitalization-rate-property-valuation", "debt-service-coverage-ratio-cre-underwriting"].map(slug => "/content/underwriting/" + slug));
-      for (const match of html.matchAll(/href="(\/content\/[^"]+)"/g)) expect(allowed.has(match[1])).toBe(true);
+    if (!ready) throw new Error("Guarded standalone failed readiness");
+  }, 45000);
+  afterAll(async () => {
+    await stop();
+    if (temp) {
+      if (path.dirname(temp) !== path.resolve(tmpdir()) || !path.basename(temp).startsWith("cre-standalone-acceptance-")) throw new Error("Unsafe cleanup");
+      rmSync(temp, { recursive: true, force: true });
     }
-  });
-
-  it("returns deterministic published search results and excludes fixtures", async () => {
-    const links = async () => {
-      const response = await fetch(origin + "/search?q=rent%20roll");
-      expect(response.status).toBe(200);
+  }, 45000);
+  it("serves exactly eight article routes with noindex and no canonical/schema leakage", async () => {
+    const manifest = verifyRelease(root, digest);
+    expect(manifest.articlePaths).toEqual(productionArticlePaths);
+    for (const route of ["/", "/library", "/search", "/search?q=operating", ...productionArticlePaths]) {
+      const response = await fetchLocal(route); expect(response.status, route).toBe(200);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+      expect(response.headers.get("cache-control")).toContain("no-store");
       const html = await response.text();
+      expect(html).toContain('name="robots" content="noindex, nofollow"');
+      expect(html).not.toMatch(/rel="canonical"|application\/ld\+json|TEST-ONLY:/);
+      expect(html).not.toContain("/content/underwriting/how-to-analyze-cre-operating-expenses");
+      expect(html).not.toContain("/content/underwriting/capital-expenditures-vs-operating-expenses");
       expect(html).not.toContain("noi-development-fixture");
-      return [...html.matchAll(/href="(\/content\/[^\"]+)"/g)].map(match => match[1]);
-    };
-    const first = await links();
-    expect(first[0]).toBe("/content/underwriting/rent-roll-analysis");
-    expect(await links()).toEqual(first);
-  });
-
-  it("denies the fixture and keeps error responses noindex", async () => {
-    const response = await fetch(origin + "/content/underwriting/noi-development-fixture");
-    expect(response.status).toBe(404);
-    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-    expect(await response.text()).not.toContain("Development fixture — not publication content");
-  });
-
-  describe.each(["/design-preview/living-ledger", "/design-preview/living-ledger-cinematic"])("production isolation: %s", route => {
-    it.each<Record<string, string>>([
-      {},
-      { rsc: "1" },
-      { "next-router-prefetch": "1" },
-      { rsc: "1", "next-router-prefetch": "1" },
-    ])("blocks the local prototype in production, including navigation requests %#", async headers => {
-      for (const suffix of ["", "?preview=true"]) {
-        const response = await fetch(origin + route + suffix, { headers });
-        expect(response.status).toBe(404);
-        expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-        const body = await response.text();
-        expect(body).not.toContain("One property. Four assumptions.");
-        expect(body).not.toContain("assumption-monthlyRent");
-        expect(body).not.toContain("income-chart-title");
-        expect(body).not.toContain("cinematic-title");
-        expect(body).not.toContain("CRE knowledge explorer");
-        expect(body).not.toContain("learning-progression-title");
+      if (route === "/library") {
+        const paths = [...html.matchAll(/href="(\/content\/[^"]+)"/g)].map(m => m[1]);
+        expect([...new Set(paths)].sort()).toEqual(productionArticlePaths);
       }
-    });
+    }
   });
+  it.each(["how-to-analyze-cre-operating-expenses", "capital-expenditures-vs-operating-expenses", "noi-development-fixture"])("keeps %s nonpublic across navigation variants", async slug => {
+    for (const headers of [{}, { rsc: "1" }, { "next-router-prefetch": "1" }]) {
+      const r = await navigation("/content/underwriting/" + slug, headers as Record<string, string>);
+      expect(r.status).toBe(404); expect(r.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    }
+  });
+  it("keeps editorial/design/private unknown routes unavailable", async () => {
+    for (const route of ["/design-preview/living-ledger", "/design-preview/living-ledger-cinematic", "/editorial", "/unknown-release-route"]) {
+      for (const headers of [{}, { rsc: "1", "next-router-prefetch": "1" }]) {
+        const r = await navigation(route, headers as Record<string, string>); expect(r.status, route).toBe(404);
+        expect(r.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+      }
+    }
+  });
+  it("serves authenticated robots and empty XML sitemap", async () => {
+    const robots = await fetchLocal("/robots.txt"); expect(robots.status).toBe(200);
+    const text = await robots.text(); expect(text).toContain("Allow: /"); expect(text).not.toContain("Sitemap:");
+    const sitemap = await fetchLocal("/sitemap.xml"); expect(sitemap.status).toBe(200);
+    expect(sitemap.headers.get("content-type")).toContain("xml"); expect(await sitemap.text()).not.toContain("<loc>");
+  });
+  it("serves all shipped static assets with exact bytes, MIME and private authentication", async () => {
+    const manifest = verifyRelease(root, digest);
+    const assets = Object.keys(manifest.files).filter(p => p.startsWith(".next/static/") || p.startsWith("public/"));
+    expect(assets.some(p => p.endsWith(".css"))).toBe(true);
+    expect(assets.some(p => /\.woff2?$/.test(p))).toBe(true);
+    for (const asset of assets) {
+      const url = asset.startsWith("public/") ? "/" + asset.slice(7) : "/_next/static/" + asset.slice(13);
+      const response = await fetchLocal(url); expect(response.status, url).toBe(200);
+      const bytes = Buffer.from(await response.arrayBuffer()); expect(bytes.length).toBeGreaterThan(0);
+      expect(sha256(bytes), url).toBe(manifest.files[asset]);
+      expect(response.headers.get("content-type"), url).not.toContain("text/html");
+      const anon = await fetchLocal(url, { authorization: "" }); expect(anon.status, url).toBe(401);
+      expect(anon.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    }
+  });
+  it("denies bad credentials across pages/metadata/RSC and supports authenticated HEAD", async () => {
+    for (const route of ["/", "/library", "/search?q=NOI", productionArticlePaths[0], "/robots.txt", "/sitemap.xml", "/icon.svg"]) {
+      for (const auth of ["", "Basic invalid", "Basic " + Buffer.from("bad:" + "x".repeat(40)).toString("base64"), authorization + ", " + authorization]) {
+        const r = await fetchLocal(route, { authorization: auth, rsc: "1" });
+        expect(r.status, route).toBe(401); expect(r.headers.get("cache-control")).toContain("no-store");
+        expect(await r.text()).not.toContain(env.PREVIEW_AUTH_PASSWORD);
+      }
+      expect((await fetchLocal(route, {}, "HEAD")).status).toBe(200);
+    }
+    expect(logs).not.toContain(env.PREVIEW_AUTH_PASSWORD);
+    expect(logs).not.toContain(authorization);
+  });
+  it("normalizes slash with manual redirects and does not derive canonicals from Host/query", async () => {
+    const r = await fetchLocal("/library/?tracking=1"); expect(r.status).toBe(308);
+    expect(r.headers.get("location")).toBe("/library?tracking=1");
+    const poisoned = await fetchLocal("/library?tracking=1", { host: "untrusted.invalid" });
+    expect(poisoned.status).toBe(200); expect(await poisoned.text()).not.toContain('rel="canonical"');
+  });
+  it.each([
+    { CRE_TEST_ONLY_PUBLICATION_DATE: "" }, { SITE_ENV: "preview" }, { PREVIEW_ACCESS_MODE: "public" },
+    { SITE_PRODUCTION_ORIGIN: "https://thecreledger.com" }, { SITE_INDEXING_ENABLED: undefined },
+    { NODE_ENV: "development" as const }, { CRE_RELEASE_MANIFEST_SHA256: "0".repeat(64) }, { PREVIEW_AUTH_PASSWORD: undefined },
+  ])("rejects unsafe startup before listening %#", change => {
+    const result = spawnSync(process.execPath, ["release-start.cjs"], { cwd: root, env: { ...env, ...change },
+      windowsHide: true, encoding: "utf8", timeout: 10000 });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("Release startup rejected");
+    expect(result.stdout).not.toContain("Ready");
+    expect(result.stderr).not.toContain(env.PREVIEW_AUTH_PASSWORD);
+  });
+  it("restores a local corrupted package and rechecks actual HTTP (not host rollback)", async () => {
+    await stop();
+    const restored = path.join(temp, "recovery-package");
+    cpSync(root, restored, { recursive: true });
+    const manifest = verifyRelease(restored, digest);
+    const asset = Object.keys(manifest.files).find(p => p.startsWith(".next/static/") && p.endsWith(".css"))!;
+    const saved = readFileSync(path.join(restored, asset));
+    writeFileSync(path.join(restored, asset), "corrupt-B");
+    expect(() => verifyRelease(restored, digest)).toThrow("digest");
+    const rejected = spawnSync(process.execPath, ["release-start.cjs"], { cwd: restored, env,
+      windowsHide: true, encoding: "utf8", timeout: 10000 });
+    expect(rejected.status).toBe(1); expect(rejected.stderr).toContain("Release startup rejected");
+    writeFileSync(path.join(restored, asset), saved);
+    expect(verifyRelease(restored, digest).buildId).toBe(manifest.buildId);
+    // Context tampering is likewise rejected before startup, then restored exactly.
+    const contextPath = path.join(restored, ".next/cache/cre-seo-context.json");
+    const context = readFileSync(contextPath);
+    writeFileSync(contextPath, "{}");
+    const badContext = spawnSync(process.execPath, ["release-start.cjs"], { cwd: restored, env,
+      windowsHide: true, encoding: "utf8", timeout: 10000 });
+    expect(badContext.status).toBe(1);
+    writeFileSync(contextPath, context);
+    verifyRelease(restored, digest);
+    child = spawn(process.execPath, ["release-start.cjs"], { cwd: restored, env, windowsHide: true, stdio: ["ignore", "pipe", "pipe"] });
+    child.stdout!.on("data", b => { logs += String(b); }); child.stderr!.on("data", b => { logs += String(b); });
+    let ready = false;
+    for (let i = 0; i < 120; i++) {
+      if (child.exitCode !== null) throw new Error("Restored package startup failed");
+      try { if ((await fetchLocal("/icon.svg")).status === 200) { ready = true; break; } } catch { /* bounded retry */ }
+      await delay(100);
+    }
+    expect(ready).toBe(true);
+    for (const route of productionArticlePaths) {
+      const response = await fetchLocal(route); expect(response.status).toBe(200);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    }
+    const response = await fetchLocal("/_next/static/" + asset.slice(13));
+    expect(response.status).toBe(200); expect(sha256(Buffer.from(await response.arrayBuffer()))).toBe(manifest.files[asset]);
+    expect((await fetchLocal("/library", { authorization: "" })).status).toBe(401);
+    expect((await fetchLocal("/content/underwriting/how-to-analyze-cre-operating-expenses")).status).toBe(404);
+    expect((await fetchLocal("/content/underwriting/capital-expenditures-vs-operating-expenses")).status).toBe(404);
+    expect(await (await fetchLocal("/sitemap.xml")).text()).not.toContain("<loc>");
+  }, 30000);
 });

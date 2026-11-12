@@ -28,7 +28,14 @@ describe("cinematic public homepage", () => {
     expect(html).toContain("Build Your CRE Underwriting Knowledge");
     expect(html).toContain("Continue Your CRE Research");
     expect(html).not.toMatch(/Local design study|4C ?|Platform preview/);
-    expect(html).toContain('sizes="100vw"');
+    const images = html.match(/<img\b[^>]*>/g) ?? [];
+    expect(images).toHaveLength(2);
+    for (const image of images) {
+      expect(image).toContain('src="/_next/static/media/living-ledger-multifamily.webp"');
+      expect(image).toContain('width="1536"');
+      expect(image).toContain('height="1024"');
+      expect(image).not.toMatch(/srcSet=|srcset=|\/_next\/image/);
+    }
     expect(html).toContain('fetchPriority="high"');
     expect(html).toContain("Representative AI-generated architecture");
     expect(html).toContain("Not the fictional 100-unit example");

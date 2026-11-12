@@ -5,7 +5,7 @@ function classes(...values: (string | undefined)[]) {
 }
 
 const widths = {
-  wide: "max-w-7xl",
+  wide: "max-w-[var(--page-container-width,80rem)]",
   content: "max-w-5xl",
   reading: "max-w-[68ch]",
 };

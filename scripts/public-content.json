@@ -1,0 +1,21 @@
+{
+  "content/data/cases.json": "d3eacd484e8b712bd56c9cf51b8bf1ff2ccdbd13e196618cd08694c1e02f4183",
+  "content/data/knowledge.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "content/data/sources.json": "4a2b0db7fb693858c69fe67f96dea49642fd89aaad4243ab102c4000db4728e1",
+  "content/underwriting/capitalization-rate-property-valuation.json": "b63ec624fea79c1633bc782419d5fee69e36191aa01782d2b634071918e2b6ee",
+  "content/underwriting/capitalization-rate-property-valuation.mdx": "b63d8d9c1b04a8887bf5d669e3e2758bc63f527a0e569fbf36ab2824f22869f1",
+  "content/underwriting/contract-rent-vs-market-rent.json": "a4c4edac1d2b1156afc89ed3f28278db73d300cddbb18a3da1209fe14b652c84",
+  "content/underwriting/contract-rent-vs-market-rent.mdx": "83a8a46eccc06190ae430202d145e004a76fbed0f0994364063fd985b3a9d00c",
+  "content/underwriting/cre-revenue-underwriting.json": "10d933468f62e0329510670b9150793e7fa069bede0498bd085d9e5055c287b3",
+  "content/underwriting/cre-revenue-underwriting.mdx": "9e220e1e51b02b1ae5d3aa6053514ccc8a7a7c5d6a2ae43dc6076e9d7421ddcc",
+  "content/underwriting/debt-service-coverage-ratio-cre-underwriting.json": "67de1bb6eb2cb3787a6b6461021783e9077706f41263bf378222552adbc5f754",
+  "content/underwriting/debt-service-coverage-ratio-cre-underwriting.mdx": "232b1f0f5a187340aa6342d6f46ea4bc3f59165ed5ded5f9cf74efb68e851577",
+  "content/underwriting/gross-potential-rent-effective-gross-income.json": "19fa8e10c438cbb9006806fb96a8cd8802c0d70db8fbb5349d83e4ac56c40e9b",
+  "content/underwriting/gross-potential-rent-effective-gross-income.mdx": "dc1a51fdea80ebf471662fb73faccb9208e893bf67c0137d6cc7440e5bdad752",
+  "content/underwriting/net-operating-income-underwritten-noi.json": "1bf84004abe6f1bc726bc7d5873b5a7bca9c844dc3a95999f58115211d894a61",
+  "content/underwriting/net-operating-income-underwritten-noi.mdx": "19033267a382edec4e69f329ba1e5956584f00a14e458966189d58918decf56e",
+  "content/underwriting/rent-roll-analysis.json": "a809c7c2f8235e35c9924180258ef9bc7d069b17e61f5ab7ab7153c865d9393c",
+  "content/underwriting/rent-roll-analysis.mdx": "995f7ccaf61499a215a81f95870a5dee0ed54137191111b44a8e86540d72577b",
+  "content/underwriting/t12-operating-statement.json": "eb262ddf5c4fa83c2470a9246f48f08e9d185d3bafcf39ad1b2d686570fd4b9c",
+  "content/underwriting/t12-operating-statement.mdx": "99e4e9b045058217d0a85108b7255cdcb4c4b555c7ed5512f87b1c2afc1b2dd0"
+}

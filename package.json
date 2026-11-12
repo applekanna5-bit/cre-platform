@@ -10,12 +10,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prebuild": "node scripts/content.mts",
-    "build:fixtures": "node scripts/content.mts --fixtures && next build",
-    "build:editorial-preview": "node scripts/content.mts --editorial-preview && next build",
-    "preview:editorial": "next start --hostname 127.0.0.1",
     "content:check": "node scripts/content.mts",
-    "pretest": "node scripts/content.mts --fixtures",
-    "pretest:watch": "node scripts/content.mts --fixtures"
+    "pretest": "node scripts/content.mts",
+    "pretest:watch": "node scripts/content.mts",
+    "release:build": "node scripts/release-package.mts build",
+    "release:package": "node scripts/release-package.mts assemble",
+    "release:verify": "node scripts/release-package.mts verify",
+    "test:release": "node scripts/release-package.mts test"
   },
   "dependencies": {
     "next": "16.4.2",
@@ -36,6 +37,6 @@
     "vitest": "4.1.12"
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": "24.x"
   }
 }

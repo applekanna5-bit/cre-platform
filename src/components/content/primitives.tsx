@@ -61,8 +61,10 @@ export function FinancialTable({ data }: { data: FinancialTableData }) {
     </div>
   </div>;
 }
-export function SourceNote({ source }: { source: ContentSource }) {
-  return <p className="my-4 text-sm text-muted">Source note: <a className="inline-block min-h-11 py-2 font-medium text-accent underline underline-offset-4 hover:text-steel" href={`#source-${source.id}`}>{source.title}</a>{source.synthetic && " (synthetic)"}</p>;
+export function SourceNote({ source, children }: { source: ContentSource; children?: ReactNode }) {
+  const citation = <p className="my-4 text-sm text-muted">Source note: <a className="inline-block min-h-11 py-2 font-medium text-accent underline underline-offset-4 hover:text-steel" href={`#source-${source.id}`}>{source.title}</a>{source.synthetic && " (synthetic)"}</p>;
+  if (children === undefined || children === null) return citation;
+  return <div className="my-4 text-sm text-muted">{children}{citation}</div>;
 }
 export function Sources({ sources }: { sources: readonly ContentSource[] }) {
   if (!sources.length) return null;
