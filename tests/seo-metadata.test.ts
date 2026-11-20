@@ -16,7 +16,7 @@ const robots = (index: boolean, follow: boolean) => ({ index, follow, googleBot:
 describe("publication-safe page metadata", () => {
   it("uses The CRE Ledger consistently without changing article copy", () => {
     expect(siteName).toBe("The CRE Ledger");
-    for (const page of ["layout", "home", "library", "search"] as const) {
+    for (const page of ["layout", "home", "library", "search", "about", "editorial-standards"] as const) {
       const metadata = pageMetadata(page, production);
       expect(metadata.title).toHaveProperty("absolute", expect.stringContaining("The CRE Ledger"));
       expect(metadata.openGraph).toHaveProperty("siteName", "The CRE Ledger");
@@ -25,7 +25,7 @@ describe("publication-safe page metadata", () => {
   it.each(["development", "staging", "preview", "production"])("keeps complete disabled safeguards in %s even with an origin", environment => {
     for (const configuredOrigin of [undefined, origin]) {
       const context = resolveSeoContext({ SITE_ENV: environment, SITE_PRODUCTION_ORIGIN: configuredOrigin }, mode);
-      for (const metadata of [pageMetadata("layout", context), pageMetadata("home", context), pageMetadata("library", context), pageMetadata("search", context), articleMetadata(article, context)]) {
+      for (const metadata of [pageMetadata("layout", context), pageMetadata("home", context), pageMetadata("library", context), pageMetadata("search", context), pageMetadata("about", context), pageMetadata("editorial-standards", context), articleMetadata(article, context)]) {
         expect(metadata.robots).toEqual(robots(false, false));
         expect(metadata.alternates).toBeUndefined();
         expect(metadata.openGraph).not.toHaveProperty("url");
@@ -99,6 +99,8 @@ describe("publication-safe page metadata", () => {
       const context = resolveSeoContext({}, preview);
       expect(articleMetadata(article, context).robots).toEqual(robots(false, false));
       expect(pageMetadata("search", context).robots).toEqual(robots(false, false));
+      expect(pageMetadata("about", context).robots).toEqual(robots(false, false));
+      expect(pageMetadata("editorial-standards", context).robots).toEqual(robots(false, false));
     }
   });
 });

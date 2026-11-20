@@ -51,7 +51,7 @@
     "reviewedDate": "2026-10-04",
     "updateSensitivity": "U3",
     "synthetic": false,
-    "notes": "Current public Fannie Mae lease-audit guidance used narrowly for rent-roll-to-lease reconciliation, lease review sample requirements, and inclusion of new/recently renewed leases to verify rent trends. Verify the live repository does not already contain an equivalent canonical source before adding."
+    "notes": "Current public Fannie Mae lease-audit guidance used narrowly for rent-roll-to-lease reconciliation, lease review sample requirements, and inclusion of new/recently renewed leases to verify rent trends."
   },
   {
     "id": "freddie-appraisal-checklist-2026",
@@ -65,7 +65,7 @@
     "reviewedDate": "2026-10-04",
     "updateSensitivity": "U3",
     "synthetic": false,
-    "notes": "February 2026 public checklist used narrowly for the example that market rents by unit type should be supported by recent subject leasing, including leases commencing within 90 days of the effective date of value. Verify the live repository does not already contain an equivalent canonical source before adding."
+    "notes": "February 2026 public checklist used narrowly for the example that market rents by unit type should be supported by recent subject leasing, including leases commencing within 90 days of the effective date of value."
   },
   {
     "id": "boe-income-stream-lesson7",

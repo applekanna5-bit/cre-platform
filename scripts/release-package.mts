@@ -9,6 +9,7 @@ import type { ReleaseManifest } from "./release-start.mts";
 import { discoverContent } from "../src/content/discovery.ts";
 import { projectDeliveryCatalog } from "../src/content/delivery.ts";
 import { isPublicArticle } from "../src/content/catalog.ts";
+import { copyPackageContents } from "./release-copy.mts";
 
 const root = realpathSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."));
 const runtimeSources = ["scripts/release-start.mts", "src/seo/build-context.ts", "src/seo/context.ts",
@@ -94,7 +95,7 @@ async function assemble(destination: string) {
   api.artifactFiles(path.join(root, ".next/standalone"));
   api.artifactFiles(path.join(root, ".next/static"));
   if (existsSync(path.join(root, "public"))) api.artifactFiles(path.join(root, "public"));
-  cpSync(path.join(root, ".next/standalone"), destination, { recursive: true, force: false, errorOnExist: true });
+  copyPackageContents(path.join(root, ".next/standalone"), destination);
   cpSync(path.join(root, ".next/static"), path.join(destination, ".next/static"), { recursive: true, force: false, errorOnExist: true });
   if (existsSync(path.join(root, "public"))) cpSync(path.join(root, "public"), path.join(destination, "public"), { recursive: true, force: false, errorOnExist: true });
   mkdirSync(path.join(destination, ".next/cache"), { recursive: true });

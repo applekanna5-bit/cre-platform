@@ -60,6 +60,7 @@ export function proxy(request: NextRequest) {
     if (process.env.SITE_INDEXING_ENABLED === "true") {
       const pathname = request.nextUrl.pathname;
       const publicPage = pathname === "/" || pathname === "/library" ||
+        pathname === "/about" || pathname === "/editorial-standards" ||
         catalog.articles.some(article => isPublicArticle(article) && articleRoute(article) === pathname);
       const infrastructure = pathname.startsWith("/_next/static/") ||
         ["/icon.svg", "/robots.txt", "/sitemap.xml"].includes(pathname);

@@ -53,6 +53,6 @@ describe("published underwriting availability", () => {
     expect(html).toContain("8 published articles available in the library. Explore the fictional property laboratory; additional tools and calculators are not yet available.");
     expect(html).not.toContain("Guides and tools coming soon.");
     expect(html).toContain('href="/library"');
-    expect(html.match(/Coming soon/g)).toHaveLength(3);
+    expect(html.match(/Coming soon/g)).toHaveLength(2);
   });
 });

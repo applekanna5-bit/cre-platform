@@ -8,7 +8,7 @@ import { fixturesEnabled, editorialPreviewEnabled, testOnlyDatePreviewEnabled } 
 export const siteName = "The CRE Ledger";
 export const siteDescription = "Commercial real estate underwriting, financial modeling, lending, valuation and investment analysis.";
 type SeoContext = ReturnType<typeof resolveSeoContext>;
-type Page = "layout" | "home" | "library" | "search";
+type Page = "layout" | "home" | "library" | "search" | "about" | "editorial-standards";
 
 export function currentContext(): SeoContext {
   const context = resolveSeoContext({
@@ -57,6 +57,10 @@ function constructMetadata(context: SeoContext, title: string, description: stri
 
 export function pageMetadata(page: Page, context: SeoContext = currentContext()): Metadata {
   switch (page) {
+    case "about": return constructMetadata(context, "About The CRE Ledger",
+      "Independent education in commercial real estate underwriting, property financial analysis and the reasoning behind the numbers.", { path: "/about" });
+    case "editorial-standards": return constructMetadata(context, "Editorial Standards",
+      "The CRE Ledger’s standards for sources, financial calculations, illustrative examples, editorial responsibility and substantive corrections.", { path: "/editorial-standards" });
     case "layout": return constructMetadata(context, siteName, siteDescription);
     case "home": return constructMetadata(context, siteName, siteDescription, { path: "/" });
     case "library": return constructMetadata(context, "Research Library",

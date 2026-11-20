@@ -37,7 +37,8 @@ export const footerNavigation = [
     items: [
       { id: "glossary", label: "Glossary", kind: "planned" },
       { id: "contributors", label: "Contributors", kind: "planned" },
-      { id: "about", label: "About & editorial", kind: "planned" },
+      { id: "about", label: "About", kind: "link", href: "/about" },
+      { id: "editorial-standards", label: "Editorial Standards", kind: "link", href: "/editorial-standards" },
     ],
   },
 ] as const satisfies readonly {

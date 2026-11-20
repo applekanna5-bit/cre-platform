@@ -203,9 +203,9 @@ describe("public production Proxy integration", () => {
     }
   });
 
-  it("does not add a noindex header when indexing is explicitly enabled", () => {
+  it.each(["/", "/about", "/editorial-standards"])("admits approved public route %s when indexing is explicitly enabled", path => {
     configurePublic({ SITE_INDEXING_ENABLED: "true", NODE_ENV: "production" });
-    const response = proxy(new NextRequest("https://thecreledger.com/"));
+    const response = proxy(new NextRequest(`https://thecreledger.com${path}`));
     if (fixturesEnabled || editorialPreviewEnabled) {
       expect(response.status).toBe(503);
       expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");

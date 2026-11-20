@@ -44,7 +44,7 @@ describe("M2 navigation contract", () => {
     expect(imagePreloads).toContain("/_next/static/media/living-ledger-multifamily.webp");
     expect(links.length).toBeGreaterThan(primaryNavigation.length);
     for (const href of links) {
-      expect(href === "/" || href === "/library" || href.startsWith("/search?") || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);
+      expect(href === "/" || href === "/library" || href === "/about" || href === "/editorial-standards" || href.startsWith("/search?") || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);
       if (href.includes("#")) expect(ids).toContain(href.split("#")[1]);
     }
     for (const item of primaryNavigation) {
@@ -56,7 +56,11 @@ describe("M2 navigation contract", () => {
 
   it("reuses primary destinations in the footer and resolves each homepage path", () => {
     const footerItems: readonly NavigationItem[] = footerNavigation.flatMap((group) => [...group.items]);
-    expect(footerItems.filter((item) => item.kind === "link")).toEqual([...primaryNavigation]);
+    expect(footerItems.filter((item) => item.kind === "link").slice(0, primaryNavigation.length)).toEqual([...primaryNavigation]);
+    expect(footerItems.filter((item) => item.kind === "link").slice(primaryNavigation.length)).toEqual([
+      { id: "about", label: "About", kind: "link", href: "/about" },
+      { id: "editorial-standards", label: "Editorial Standards", kind: "link", href: "/editorial-standards" },
+    ]);
     for (const path of homepagePaths) {
       expect(primaryNavigation.some((item) => item.id === path.sectionId)).toBe(true);
     }
@@ -65,10 +69,10 @@ describe("M2 navigation contract", () => {
 
   it("renders unavailable destinations as labeled text, never links or disabled controls", () => {
     const planned: NavigationItem[] = footerNavigation.flatMap((group) => [...group.items]).filter((item) => item.kind === "planned");
-    expect(planned.map((item) => item.id)).toEqual(["glossary", "contributors", "about"]);
+    expect(planned.map((item) => item.id)).toEqual(["glossary", "contributors"]);
     const html = renderToStaticMarkup(createElement(NavigationList, { items: planned }));
     expect(html).not.toMatch(/<(a|button)\b/);
-    expect(html.match(/Coming soon/g)).toHaveLength(3);
+    expect(html.match(/Coming soon/g)).toHaveLength(2);
     for (const item of planned) expect(item).not.toHaveProperty("href");
   });
 

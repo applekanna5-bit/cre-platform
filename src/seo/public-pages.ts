@@ -38,7 +38,7 @@ export function publicSeoPages(catalog: Pick<ContentCatalog, "articles">, contex
   if (!context.policy.indexingAllowed) return [];
   // The canonical predicate excludes local discovery's approved-preview exception.
   const articles = publicArticles({ articles: catalog.articles.filter(isPublicArticle) });
-  return ["/", "/library", ...articles.map(article => article.href)].map(route => ({ url: canonicalUrl(context, route)! }));
+  return ["/", "/library", "/about", "/editorial-standards", ...articles.map(article => article.href)].map(route => ({ url: canonicalUrl(context, route)! }));
 }
 export function seoRobots(context: SeoContext, delivery: SeoDelivery): MetadataRoute.Robots {
   assertSeoDeliveryContext(context, delivery);
