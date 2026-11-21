@@ -1,4 +1,4 @@
-/** Presentation navigation only; this is not the content taxonomy or a route registry. */
+/** Presentation navigation, independent of the content taxonomy. */
 export type NavigationItem = {
   readonly id: string;
   readonly label: string;
@@ -9,40 +9,24 @@ export type NavigationItem = {
 );
 
 export const primaryNavigation = [
-  { id: "library", label: "Library", kind: "link", href: "/library", summary: "Published CRE research and practical guides." },
-  { id: "learn", label: "Learn", kind: "link", href: "/#learn", summary: "CRE foundations and concepts." },
-  { id: "underwriting", label: "Underwriting", kind: "link", href: "/#underwriting", summary: "Property analysis and credit decisions." },
-  { id: "property-types", label: "Property Types", kind: "link", href: "/#property-types", summary: "Knowledge organized by property type." },
-  { id: "financing", label: "Financing", kind: "link", href: "/#financing", summary: "CRE debt and lending." },
-  { id: "modeling", label: "Modeling", kind: "link", href: "/#modeling", summary: "Financial modeling and pro formas." },
-  { id: "tools", label: "Tools", kind: "link", href: "/#tools", summary: "Calculators and decision-support tools." },
-  { id: "resources", label: "Resources", kind: "link", href: "/#resources", summary: "Reference material and practical resources." },
-] as const satisfies readonly (NavigationItem & { readonly summary: string })[];
-
-export const homepagePaths = [
-  { sectionId: "learn", label: "Learn CRE" },
-  { sectionId: "underwriting", label: "Underwrite a Deal" },
-  { sectionId: "tools", label: "Use CRE Tools" },
-] as const satisfies readonly {
-  sectionId: (typeof primaryNavigation)[number]["id"];
-  label: string;
-}[];
+  { id: "loan-lifecycle", label: "Loan Lifecycle", kind: "link", href: "/loan-lifecycle" },
+  { id: "underwriting", label: "Underwriting", kind: "link", href: "/specializations#underwriting" },
+  { id: "property-types", label: "Property Types", kind: "link", href: "/specializations#property-types" },
+  { id: "financing-markets", label: "Financing & Markets", kind: "link", href: "/specializations#financing-markets" },
+  { id: "servicing", label: "Servicing", kind: "link", href: "/specializations#servicing" },
+  { id: "library", label: "Library", kind: "link", href: "/library" },
+] as const satisfies readonly NavigationItem[];
 
 export const footerNavigation = [
-  { id: "knowledge", label: "Knowledge", items: primaryNavigation.slice(0, 5) },
-  { id: "practice", label: "Practice", items: primaryNavigation.slice(5) },
+  { id: "knowledge", label: "Knowledge", items: primaryNavigation.slice(0, 3) },
+  { id: "practice", label: "Practice", items: primaryNavigation.slice(3) },
   {
     id: "platform",
-    label: "Platform",
+    label: "The CRE Ledger",
     items: [
-      { id: "glossary", label: "Glossary", kind: "planned" },
-      { id: "contributors", label: "Contributors", kind: "planned" },
       { id: "about", label: "About", kind: "link", href: "/about" },
       { id: "editorial-standards", label: "Editorial Standards", kind: "link", href: "/editorial-standards" },
+      { id: "feedback", label: "Professional Feedback", kind: "link", href: "/feedback" },
     ],
   },
-] as const satisfies readonly {
-  id: string;
-  label: string;
-  items: readonly NavigationItem[];
-}[];
+] as const satisfies readonly { id: string; label: string; items: readonly NavigationItem[] }[];

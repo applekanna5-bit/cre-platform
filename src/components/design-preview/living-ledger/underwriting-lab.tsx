@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState, type ReactNode } from "react";
+import { Fragment, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
 import { BuildingDiagram } from "./building-diagram";
 import { VisualComposition } from "./visual-composition";
 import { calculateIllustration, compareToBaseline, INITIAL_ASSUMPTIONS, INPUTS, parseDraft, UNITS, type DraftAssumptions, type AssumptionKey } from "./model";
@@ -17,7 +17,7 @@ const driverLessons: Record<AssumptionKey, string> = {
   capRatePercent: "Cap rate translates NOI into value. A higher cap rate lowers value for the same NOI; it does not change income.",
 };
 const compactMoney = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 2 }).format(value);
-const initialDraft = (): DraftAssumptions => ({
+export const initialDraft = (): DraftAssumptions => ({
   monthlyRent: String(INITIAL_ASSUMPTIONS.monthlyRent), vacancyPercent: String(INITIAL_ASSUMPTIONS.vacancyPercent),
   expensePercent: String(INITIAL_ASSUMPTIONS.expensePercent), capRatePercent: String(INITIAL_ASSUMPTIONS.capRatePercent),
 });
@@ -37,6 +37,16 @@ export function CurrencyText({ formatted }: { formatted: string }) {
 
 export function UnderwritingLab({ photography, compactMobile = false }: { photography?: ReactNode; compactMobile?: boolean } = {}) {
   const [draft, setDraft] = useState(initialDraft);
+  return <UnderwritingModel draft={draft} setDraft={setDraft} photography={photography} compactMobile={compactMobile} />;
+}
+
+export function UnderwritingModel({ draft, setDraft, photography, compactMobile = false, complete = false }: {
+  draft: DraftAssumptions;
+  setDraft: Dispatch<SetStateAction<DraftAssumptions>>;
+  photography?: ReactNode;
+  compactMobile?: boolean;
+  complete?: boolean;
+}) {
   const { values, errors } = parseDraft(draft);
   const result = values ? calculateIllustration(values) : null;
   const comparison = values ? compareToBaseline(values) : null;
@@ -49,16 +59,17 @@ export function UnderwritingLab({ photography, compactMobile = false }: { photog
   ] : [];
   const circumference = 2 * Math.PI * 64;
   let offset = 0;
+  const building = <BuildingDiagram assumptions={values} result={result} renderCurrency={formatted => <CurrencyText formatted={formatted} />} />;
 
-  return <section id="property-lab" aria-labelledby="lab-title" className={`${styles.lab}${compactMobile ? ` ${styles.compactLab}` : ""}`}>
+  return <section id="property-lab" aria-labelledby="lab-title" className={`${styles.lab}${compactMobile ? ` ${styles.compactLab}` : ""}${complete ? ` ${styles.completeLab}` : ""}`}>
     <noscript><p className={styles.caveat}>JavaScript is required to recalculate this illustration. The initial example, formulas, and research links remain readable.</p></noscript>
     <div className={styles.labHeading}>
-      <div><p className={styles.eyebrow}>01 / Illustrative Underwriting Model</p><h2 id="lab-title">One property. Four assumptions.</h2><p>A fictional 100-unit multifamily property. Change an assumption and follow its effect.</p></div>
-      <span className={styles.studyTag}>Fictional / Educational only</span>
+      <div>{!complete && <p className={styles.eyebrow}>01 / Illustrative Underwriting Model</p>}<h2 id="lab-title">{complete ? "Complete Multifamily Underwriting Model" : "One property. Four assumptions."}</h2><p>A fictional 100-unit multifamily property. Change an assumption and follow its effect.</p></div>
+      {!complete && <span className={styles.studyTag}>Fictional / Educational only</span>}
     </div>
     <div className={styles.mobileReadout} aria-hidden="true"><span>Annual NOI<strong>{result ? compactMoney(result.noi) : "—"}</strong></span><span>Illustrative value<strong>{result ? compactMoney(result.propertyValue) : "—"}</strong></span></div>
     {compactMobile && <a href="#assumption-monthlyRent" className={styles.adjustShortcut}>Adjust assumptions <span aria-hidden="true">↓</span></a>}
-    <VisualComposition photography={photography} compactMobile={compactMobile} diagram={<BuildingDiagram assumptions={values} result={result} renderCurrency={formatted => <CurrencyText formatted={formatted} />} />} />
+    {!complete && <VisualComposition photography={photography} compactMobile={compactMobile} diagram={building} />}
     <div className={styles.labGrid}>
       <div className={styles.controls}>
         <fieldset>
@@ -128,6 +139,7 @@ export function UnderwritingLab({ photography, compactMobile = false }: { photog
         <p role="status" aria-live="polite" aria-atomic="true" className={styles.srOnly}>{result && comparison ? `Updated illustration. Annual NOI ${money(result.noi)}. Property value ${money(result.propertyValue)}. Change from baseline ${signedMoney(comparison.dollarChange)}, ${signedPercent(comparison.percentChange)} percent.` : "Calculation unavailable. Check the assumption errors."}</p>
       </div>
     </div>
+    {complete && <div className={styles.completeDiagram}>{building}</div>}
     <section className={styles.drivers} aria-labelledby="drivers-title">
       <div><p className={styles.eyebrow}>Read the change</p><h3 id="drivers-title">How Assumptions Affect Illustrative Value</h3><p>Each effect below changes one assumption from the original baseline, holding the other three fixed. Effects interact; do not add these dollar changes together.</p></div>
       <ul>{INPUTS.map(input => {

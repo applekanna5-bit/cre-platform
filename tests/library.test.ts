@@ -2,7 +2,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import LibraryPage from "@/app/library/page";
-import Home from "@/app/page";
+import SpecializationsPage from "@/app/specializations/page";
 import { catalog } from "@/content/.generated";
 import { publicArticles } from "@/content/publication";
 import { ArticleList } from "@/components/content/article-list";
@@ -13,10 +13,10 @@ vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifam
 } }));
 
 describe("Phase 2 public research discovery", () => {
-  it("links every public article from the library and homepage, excluding nonpublic articles", () => {
+  it("links every public article from the library and specializations, excluding nonpublic articles", () => {
     const articles = publicArticles(catalog);
     expect(articles).toHaveLength(8);
-    for (const Page of [LibraryPage, Home]) {
+    for (const Page of [LibraryPage, SpecializationsPage]) {
       const html = renderToStaticMarkup(createElement(Page));
       for (const article of articles) expect(html).toContain(`href="${article.href}"`);
       for (const article of catalog.articles.filter(item => !articles.some(publicItem => publicItem.id === item.id))) {

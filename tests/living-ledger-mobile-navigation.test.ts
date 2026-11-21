@@ -13,14 +13,14 @@ beforeEach(() => vi.mocked(usePathname).mockReturnValue("/"));
 afterEach(() => vi.unstubAllEnvs());
 
 describe("4D.1 cinematic mobile research navigation", () => {
-  it("prioritizes published research and preserves all eight original destinations exactly once", () => {
+  it("prioritizes published research and links all six section destinations exactly once", () => {
     const html = renderToStaticMarkup(createElement(MobileLearningNavigation, { catalog }));
     expect(html).toContain('aria-label="Available research destinations"');
     expect(html).toContain("8 published articles");
     expect(html).toContain('href="/#knowledge-underwriting"');
-    expect(html.indexOf('href="/library"')).toBeLessThan(html.indexOf('href="/#knowledge-underwriting"'));
+    expect(html.indexOf('href="/library"')).toBeLessThan(html.indexOf("Explore more CRE areas"));
     expect(html.indexOf('href="/#knowledge-underwriting"')).toBeLessThan(html.indexOf("Explore more CRE areas"));
-    expect(html).toContain("6 category overviews");
+    expect(html).toContain("4 category overviews");
     for (const item of primaryNavigation) expect(html.split(`href="${item.href}"`)).toHaveLength(2);
     expect(html).not.toContain("Coming soon");
     expect(html).not.toContain("<form");
@@ -35,7 +35,7 @@ describe("4D.1 cinematic mobile research navigation", () => {
     const html = renderToStaticMarkup(createElement(MobileLearningNavigation, { catalog: { articles: hidden } }));
     expect(html).not.toContain("published articles");
     expect(html).not.toContain('href="/#knowledge-underwriting"');
-    expect(html).toContain("7 category overviews");
+    expect(html).toContain("5 category overviews");
     for (const item of primaryNavigation) expect(html).toContain(`href="${item.href}"`);
   });
 
@@ -57,23 +57,23 @@ describe("4D.1 cinematic mobile research navigation", () => {
     expect(html).not.toMatch(/role="(?:menu|menuitem|dialog)"/);
   });
 
-  it.each(["test", "production"])("serves public curated navigation without preview-only destinations in %s", mode => {
+  it.each(["test", "production"])("serves public navigation without preview-only destinations in %s", mode => {
     vi.stubEnv("NODE_ENV", mode);
     vi.mocked(usePathname).mockReturnValue("/design-preview/living-ledger-cinematic");
     const html = renderToStaticMarkup(createElement(SiteHeader));
-    expect(html).toContain("Available research destinations");
-    expect(html).toContain('href="/#knowledge-underwriting"');
+    expect(html).not.toContain("Available research destinations");
+    expect(html).toContain('href="/specializations#underwriting"');
     expect(html).not.toContain('href="#knowledge-underwriting"');
     expect(html).not.toContain('href="/design-preview/');
-    expect(html).toContain("Explore more CRE areas");
+    expect(html).not.toContain("Explore more CRE areas");
     expect(html.match(/<form\b/g)).toHaveLength(1);
   });
 
-  it.each(["/", "/library", "/search", "/content/underwriting/rent-roll-analysis"])("uses the public homepage anchors from %s in development", path => {
+  it.each(["/", "/library", "/search", "/content/underwriting/rent-roll-analysis"])("uses the public destinations from %s in development", path => {
     vi.stubEnv("NODE_ENV", "development");
     vi.mocked(usePathname).mockReturnValue(path);
     const html = renderToStaticMarkup(createElement(SiteHeader));
-    expect(html).toContain('href="/#knowledge-underwriting"');
+    expect(html).toContain('href="/specializations#underwriting"');
     expect(html).not.toContain('href="#knowledge-underwriting"');
     expect(html.match(/id="mobile-primary-navigation"/g)).toHaveLength(1);
     expect(html.match(/<form\b/g)).toHaveLength(1);

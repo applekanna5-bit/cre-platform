@@ -23,6 +23,8 @@
 .propertyFrame img { width: 100%; height: 100%; object-fit: cover; }
 .heroVisual figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; padding-top: .75rem; color: var(--color-muted); font-size: .8125rem; }
 .lab { border-top: 2px solid var(--color-copper); padding-top: 2rem; scroll-margin-top: 1rem; }
+.completeLab .labHeading h2 { font-family: var(--font-editorial); }
+.completeDiagram { max-width: 48rem; margin: 2rem auto; border: 1px solid var(--color-border); }
 .labHeading { display: flex; flex-wrap: wrap; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
 .labHeading h2, .sectionHeading h2, .research h2 { margin-top: .75rem; font-size: clamp(1.875rem, 3vw, 2.75rem); line-height: 1.2; }
 .labHeading > div > p:last-child, .sectionHeading > p:last-child, .research > div > p { margin-top: .75rem; max-width: 65ch; color: var(--color-muted); }

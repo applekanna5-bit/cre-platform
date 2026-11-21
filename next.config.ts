@@ -19,5 +19,8 @@ export default function nextConfig(phase: string): NextConfig {
   assertSeoDeliveryContext(context, delivery);
   if (phase === PHASE_PRODUCTION_BUILD) checkBuildContext(root, "build", context, delivery);
   if (phase === PHASE_PRODUCTION_SERVER) checkBuildContext(root, "start", context, delivery);
-  return { ...(simulation ? { distDir: ".next-test-only-date" } : { output: "standalone" as const }), headers: async () => indexingHeaders(context.policy) };
+  return {
+    ...(simulation ? { distDir: ".next-test-only-date" } : { output: "standalone" as const }),
+    headers: async () => indexingHeaders(context.policy),
+  };
 }
