@@ -1,84 +1,46 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import Home from "@/app/page";
-import { UnderwritingSnapshot } from "@/components/home/underwriting-snapshot";
-import { primaryNavigation } from "@/config/navigation";
 import { catalog } from "@/content/.generated";
 import { publicArticles } from "@/content/publication";
 
-
-vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp", () => ({ default: {
-  src: "/_next/static/media/living-ledger-multifamily.webp", width: 1536, height: 1024,
-  blurDataURL: "data:image/webp;base64,UklGRg==",
-} }));
-
-describe("cinematic public homepage", () => {
+describe("WP02 homepage", () => {
   const html = renderToStaticMarkup(createElement(Home));
-  it("reuses the cinematic hero and one complete laboratory without development labels", () => {
+
+  it("renders the approved sections in order", () => {
+    const titles = [
+      "Commercial Real Estate, Explained from Origination to Resolution.",
+      "Start Here", "CRE Loan Lifecycle", "Professional Specializations", "Multifamily Underwriting Preview",
+      "Featured Reading", "Complete Multifamily Underwriting Model",
+    ];
     expect(html.match(/<h1\b/g)).toHaveLength(1);
-    expect(html).toContain("Understand Property Financials.");
-    expect(html).toContain("Analyze Income and Value.");
-    expect(html).toContain("CRE Financial Analysis, Explained");
-    expect(html).toContain("Explore the Underwriting Model");
-    expect(html).toContain("interactive property income model");
-    expect(html).toContain("01 / Illustrative Underwriting Model");
-    expect(html).toContain("Rent Determines Gross Potential Rental Income.");
-    expect(html).toContain("How Assumptions Affect Illustrative Value");
-    expect(html).toContain("Build Your CRE Underwriting Knowledge");
-    expect(html).toContain("Continue Your CRE Research");
-    expect(html).not.toMatch(/Local design study|4C ?|Platform preview/);
-    const images = html.match(/<img\b[^>]*>/g) ?? [];
-    expect(images).toHaveLength(2);
-    for (const image of images) {
-      expect(image).toContain('src="/_next/static/media/living-ledger-multifamily.webp"');
-      expect(image).toContain('width="1536"');
-      expect(image).toContain('height="1024"');
-      expect(image).not.toMatch(/srcSet=|srcset=|\/_next\/image/);
-    }
-    expect(html).toContain('fetchPriority="high"');
-    expect(html).toContain("Representative AI-generated architecture");
-    expect(html).toContain("Not the fictional 100-unit example");
+    expect(html).toContain("Learn how to read a property’s financials");
+    const positions = titles.map(title => html.indexOf(`>${title}</`));
+    expect(positions.every(position => position >= 0)).toBe(true);
+    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    expect(html).not.toMatch(/laboratory|Local design study|Platform preview/i);
+  });
+
+  it("renders the same verified baseline in both views and preserves the full controls", () => {
+    expect(html).toMatch(/id="preview-value"[^>]*>\$18,654,545/);
+    expect(html).toMatch(/id="illustrative-value"[^>]*><span[^>]*><span[^>]*>\$18,654,545/);
     expect(html.match(/type="range"/g)).toHaveLength(4);
-    expect(html.match(/type="number"/g)).toHaveLength(4);
+    expect(html.match(/type="number"/g)).toHaveLength(5);
     expect(html.match(/type="radio"/g)).toHaveLength(3);
-    expect(html).toContain("Reset to baseline");
-    expect(html).toContain("$18,654,545");
-    expect(html).toContain("It is not Fannie Mae, Freddie Mac, or lender underwriting");
-    expect(html).not.toContain('<form');
+    expect(html.match(/Reset to baseline/g)).toHaveLength(2);
+    expect(html).not.toContain("64.8%");
+    expect(html).not.toContain("1.43×");
   });
-  it("keeps every legacy area visible and provides real research and laboratory destinations", () => {
-    for (const item of primaryNavigation.filter(item => item.id !== "library")) {
-      expect(html).toContain(`id="${item.id}" tabindex="-1"`);
-      expect(html).toContain(`aria-labelledby="${item.id}"`);
-    }
-    expect(html).toContain('href="/library"');
-    expect(html).toContain('href="/search?q=NOI"');
-    for (const target of ["property-lab", "assumption-monthlyRent", "knowledge-underwriting", "learning-progression-title"]) expect(html).toContain(`id="${target}"`);
-  });
-  it("links the actual published catalog and excludes unpublished research", () => {
-    for (const article of publicArticles(catalog)) {
-      expect(html).toContain(`href="${article.href}"`);
-      expect(html).toContain(article.title.replaceAll("&", "&amp;"));
-    }
+
+  it("links featured articles only through their published canonical paths", () => {
     const allowed = new Set(publicArticles(catalog).map(article => article.href));
-    for (const match of html.matchAll(/href="(\/content\/[^"]+)"/g)) expect(allowed.has(match[1])).toBe(true);
-    expect(html).not.toContain("noi-development-fixture");
-    expect(html).not.toContain("Development fixture");
-    expect(html).toContain("Discover. Understand. Apply.");
-  });
-  it("labels the fictional demonstration and provides semantic metric relationships", () => {
-    const snapshot = renderToStaticMarkup(createElement(UnderwritingSnapshot));
-    expect(snapshot).toContain("Harbor View Apartments");
-    expect(snapshot).toContain("180 units");
-    expect(snapshot).toMatch(/<caption[^>]*>Illustrative underwriting snapshot<\/caption>/);
-    for (const [metric, value] of [["Underwritten NOI", "$2.14M"], ["Indicated Value", "$32.9M"], ["LTV", "64.8%"], ["DSCR", "1.43×"], ["Debt Yield", "10.1%"]]) {
-      expect(snapshot).toContain(`>${metric}</th>`);
-      expect(snapshot).toContain(`>${value}</td>`);
-    }
-    expect(snapshot.match(/scope="row"/g)).toHaveLength(5);
-    expect(snapshot).toContain("Fictional property and figures");
-    expect(snapshot).toContain("Not an actual transaction or investment recommendation.");
-    expect(snapshot).not.toMatch(/<(input|button|form)\b/);
+    const links = [...html.matchAll(/href="(\/content\/[^"]+)"/g)].map(match => match[1]);
+    expect(links).toHaveLength(4);
+    expect(links.every(link => allowed.has(link))).toBe(true);
+    expect(html).toContain('href="/library"');
+    expect(html).toContain('href="#start-reading"');
+    expect(html).toContain('href="/content/underwriting/gross-potential-income-effective-gross-income"');
+    expect(html).toContain('href="#property-lab"');
   });
 });

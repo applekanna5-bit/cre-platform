@@ -24,8 +24,8 @@ export function SiteHeader() {
           <NavigationList items={primaryNavigation} horizontal />
         </nav>
         {process.env.NODE_ENV === "development"
-          ? <PreviewMobileNavigation standard={<NavigationList items={primaryNavigation} />} cinematic={<MobileLearningNavigation catalog={catalog} preview />} publicNavigation={<MobileLearningNavigation catalog={catalog} />} />
-          : <MobileNavigation><MobileLearningNavigation catalog={catalog} /></MobileNavigation>}
+          ? <PreviewMobileNavigation standard={<NavigationList items={primaryNavigation} />} cinematic={<MobileLearningNavigation catalog={catalog} preview />} publicNavigation={<NavigationList items={primaryNavigation} />} />
+          : <MobileNavigation><NavigationList items={primaryNavigation} /></MobileNavigation>}
       </Container>
     </header>
   );

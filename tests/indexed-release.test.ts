@@ -84,18 +84,18 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
     }
     expect(titles.size).toBe(8); expect(descriptions.size).toBe(8);
   });
-  it("advertises exactly twelve canonical sitemap URLs and public robots", async () => {
+  it("advertises exactly fourteen canonical sitemap URLs and public robots", async () => {
     const robots = await get("/robots.txt"); expect(robots.status).toBe(200);
     const text = await robots.text(); expect(text).toContain("Allow: /"); expect(text).toContain("Sitemap: " + canonicalOrigin + "/sitemap.xml");
     expect(text).not.toContain("Disallow: /");
     const sitemap = await get("/sitemap.xml"); expect(sitemap.status).toBe(200);
     expect(sitemap.headers.get("content-type")).toContain("xml");
     const xml = await sitemap.text(), urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]).sort();
-    expect(urls).toEqual(["/", "/library", "/about", "/editorial-standards", ...productionArticlePaths].map(p => canonicalOrigin + p).sort());
+    expect(urls).toEqual(["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", ...productionArticlePaths].map(p => canonicalOrigin + p).sort());
     expect(xml).not.toMatch(/<lastmod>|<priority>|<changefreq>|CRE-012|CRE-013|search|TEST-ONLY:/);
   });
   it("keeps home and Library indexable, and search noindex without canonical/schema", async () => {
-    for (const route of ["/", "/library"]) {
+    for (const route of ["/", "/library", "/loan-lifecycle", "/specializations"]) {
       const r = await get(route); expect(r.status).toBe(200); expect(r.headers.get("x-robots-tag")).toBeNull();
       const html = await r.text(); expect(html).toContain('rel="canonical" href="' + canonicalOrigin + route + '"');
       if (route === "/library") expect([...new Set([...html.matchAll(/href="(\/content\/[^"]+)"/g)].map(m => m[1]))].sort()).toEqual(productionArticlePaths);

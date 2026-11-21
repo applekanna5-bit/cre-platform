@@ -16,7 +16,7 @@ export function BuildingDiagram({ assumptions, result, renderCurrency }: { assum
     : mode === "Vacancy"
       ? `${assumptions.vacancyPercent}% financial vacancy: ${money(result.vacancyAllowance)} unearned rent; ${money(result.effectiveRentalIncome)} effective income. ${view.highlightedUnits} of 100 conceptual markers highlighted, rounded to the nearest whole marker. Not a rent roll or actual occupancy.`
       : `${assumptions.expensePercent}% of ${money(result.effectiveRentalIncome)} effective income = ${money(result.operatingExpenses)} annual operating expenses; ${money(result.noi)} illustrative NOI. No apartment-level expense allocation.`
-    : "Enter valid assumptions in the laboratory. Financial overlays are unavailable.";
+    : "Enter valid assumptions in the model. Financial overlays are unavailable.";
 
   return <section className={styles.diagram} aria-labelledby={`${id}-heading`} data-building-mode={mode}>
     <p className={styles.eyebrow}>Conceptual model / 100 fictional units</p>

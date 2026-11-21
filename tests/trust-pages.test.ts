@@ -34,12 +34,11 @@ describe("editorial trust pages", () => {
     expect(html).not.toMatch(/contact us|submit a correction|independently verified|reviewed quarterly/i);
   });
 
-  it("renders only the approved new footer destinations and preserves Coming soon items", () => {
+  it("preserves the approved trust destinations in the footer", () => {
     const html = renderToStaticMarkup(SiteFooter());
     expect(html).toContain('href="/about"');
     expect(html).toContain('href="/editorial-standards"');
     expect(html).not.toMatch(/About &amp; editorial|href="\/contact|mailto:/);
-    expect(html.match(/Coming soon/g)).toHaveLength(2);
   });
 
   it.each(["about", "editorial-standards"] as const)("uses approved production canonical and preserves disabled safeguards for %s", page => {

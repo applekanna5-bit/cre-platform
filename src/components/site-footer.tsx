@@ -6,7 +6,7 @@ import { Container, Eyebrow } from "@/components/ui/primitives";
 
 export function SiteFooter() {
   const articleCount = publicArticles(catalog).length;
-  const availability = `${articleCount} published ${articleCount === 1 ? "article" : "articles"} available in the library. Explore the fictional property laboratory; additional tools and calculators are not yet available.`;
+  const availability = `${articleCount} published ${articleCount === 1 ? "article" : "articles"} available in the library.`;
   return (
     <footer className="mt-auto border-t border-border-strong bg-surface pt-10 pb-5 sm:pt-14">
       <Container>

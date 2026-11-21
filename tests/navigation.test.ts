@@ -1,8 +1,8 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
-import { footerNavigation, homepagePaths, primaryNavigation, type NavigationItem } from "@/config/navigation";
-import { NavigationList } from "@/components/navigation/navigation-list";
+import { footerNavigation, primaryNavigation } from "@/config/navigation";
+import { lifecycle, specializations } from "@/config/learning";
 import RootLayout from "@/app/layout";
 import Home from "@/app/page";
 
@@ -17,7 +17,7 @@ vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifam
 
 const markup = renderToStaticMarkup(RootLayout({ children: createElement(Home), params: Promise.resolve({}) }));
 
-describe("M2 navigation contract", () => {
+describe("WP02 navigation contract", () => {
   it("uses the approved shared brand with an accessible home link", () => {
     const homeLink = markup.match(/<a\b[^>]*id="site-brand"[^>]*>/)?.[0];
     expect(homeLink).toContain('href="/"');
@@ -29,9 +29,9 @@ describe("M2 navigation contract", () => {
     }
   });
 
-  it("exposes the library followed by the seven primary areas in order", () => {
+  it("exposes the six approved primary categories in order", () => {
     expect(primaryNavigation.map((item) => item.label)).toEqual([
-      "Library", "Learn", "Underwriting", "Property Types", "Financing", "Modeling", "Tools", "Resources",
+      "Loan Lifecycle", "Underwriting", "Property Types", "Financing & Markets", "Servicing", "Library",
     ]);
     expect(new Set(primaryNavigation.map((item) => item.id)).size).toBe(primaryNavigation.length);
   });
@@ -40,42 +40,25 @@ describe("M2 navigation contract", () => {
     const ids = [...markup.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
     expect(new Set(ids).size).toBe(ids.length);
     const links = [...markup.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)].map((match) => match[1]);
-    const imagePreloads = [...markup.matchAll(/<link\b[^>]*rel="preload"[^>]*as="image"[^>]*href="([^"]+)"/g)].map((match) => match[1]);
-    expect(imagePreloads).toContain("/_next/static/media/living-ledger-multifamily.webp");
+    for (const hash of ["learn", "underwriting", "property-types", "financing", "modeling", "tools", "resources"]) expect(ids).toContain(hash);
     expect(links.length).toBeGreaterThan(primaryNavigation.length);
     for (const href of links) {
-      expect(href === "/" || href === "/library" || href === "/about" || href === "/editorial-standards" || href.startsWith("/search?") || href.startsWith("/content/") || href.startsWith("/#") || href.startsWith("#")).toBe(true);
-      if (href.includes("#")) expect(ids).toContain(href.split("#")[1]);
-    }
-    for (const item of primaryNavigation) {
-      if (item.id === "library") { expect(item.href).toBe("/library"); continue; }
-      expect(item.href).toBe(`/#${item.id}`);
-      expect(markup).toContain(`id="${item.id}" tabindex="-1"`);
+      const [route, hash] = href.split("#");
+      if (!hash) continue;
+      if (!route) expect(ids).toContain(hash);
+      else if (route === "/loan-lifecycle") expect(lifecycle.map(topic => topic.id)).toContain(hash);
+      else if (route === "/specializations") expect(specializations.map(topic => topic.id)).toContain(hash);
+      else throw new Error(`Unexpected anchor destination ${href}`);
     }
   });
 
-  it("reuses primary destinations in the footer and resolves each homepage path", () => {
-    const footerItems: readonly NavigationItem[] = footerNavigation.flatMap((group) => [...group.items]);
-    expect(footerItems.filter((item) => item.kind === "link").slice(0, primaryNavigation.length)).toEqual([...primaryNavigation]);
-    expect(footerItems.filter((item) => item.kind === "link").slice(primaryNavigation.length)).toEqual([
-      { id: "about", label: "About", kind: "link", href: "/about" },
-      { id: "editorial-standards", label: "Editorial Standards", kind: "link", href: "/editorial-standards" },
+  it("shares the same primary links in desktop and mobile menus and preserves footer trust links", () => {
+    const header = markup.match(/<header\b[^>]*>[\s\S]*?<\/header>/)?.[0] ?? "";
+    for (const item of primaryNavigation) expect(header.split(`href="${item.href}"`)).toHaveLength(3);
+    expect(footerNavigation.flatMap(group => group.items.map(item => item.href))).toEqual([
+      ...primaryNavigation.map(item => item.href), "/about", "/editorial-standards",
     ]);
-    for (const path of homepagePaths) {
-      expect(primaryNavigation.some((item) => item.id === path.sectionId)).toBe(true);
-    }
-    expect(homepagePaths.map((path) => path.sectionId)).toEqual(["learn", "underwriting", "tools"]);
   });
-
-  it("renders unavailable destinations as labeled text, never links or disabled controls", () => {
-    const planned: NavigationItem[] = footerNavigation.flatMap((group) => [...group.items]).filter((item) => item.kind === "planned");
-    expect(planned.map((item) => item.id)).toEqual(["glossary", "contributors"]);
-    const html = renderToStaticMarkup(createElement(NavigationList, { items: planned }));
-    expect(html).not.toMatch(/<(a|button)\b/);
-    expect(html.match(/Coming soon/g)).toHaveLength(2);
-    for (const item of planned) expect(item).not.toHaveProperty("href");
-  });
-
   it("provides one main landmark, one h1, ordered heading levels, and valid ARIA references", () => {
     expect(markup.match(/<main\b/g)).toHaveLength(1);
     expect(markup.match(/<header\b/g)).toHaveLength(1);
