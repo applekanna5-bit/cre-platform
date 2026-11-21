@@ -42,7 +42,7 @@ export async function readBoundedJson(request: Request): Promise<unknown> {
   }
 }
 
-export function submissionStore(db: Database, secret: Buffer) {
+export function submissionStore(db: Database, secret: Buffer, rateScope: "feedback" | "owner-auth" = "feedback") {
   if (secret.length < 32) throw new Error("Feedback requires a high-entropy HMAC key");
   const digest = (scope: string, value: string) => createHmac("sha256", secret).update(scope + "\0" + value).digest("hex");
 
@@ -50,9 +50,10 @@ export function submissionStore(db: Database, secret: Buffer) {
     rateLimit(ip: string, now: number) {
       const start = Math.floor(now / 1000 / windowSeconds) * windowSeconds;
       return db.transaction(async sql => {
+        const scope = rateScope === "feedback" ? "rate" : "owner-auth-rate";
         const buckets = [
-          { key: digest("rate", ip), max: 5 },
-          { key: digest("rate", "all"), max: 60 },
+          { key: digest(scope, ip), max: 5 },
+          { key: digest(scope, "all"), max: rateScope === "feedback" ? 60 : 20 },
         ];
         for (const { key, max } of buckets) {
           await sql.write(`INSERT INTO feedback_rate_windows (bucket_key, window_start)

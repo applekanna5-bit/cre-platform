@@ -1,7 +1,6 @@
-import nodemailer from "nodemailer";
 import { feedbackRuntime } from "../src/feedback/runtime";
 import { notificationStore, runNotifications } from "../src/feedback/outbox";
-import { hostingerNotice } from "../src/feedback/smtp";
+import { hostingerNotice, hostingerTransport } from "../src/feedback/smtp";
 
 async function run() {
   const runtime = feedbackRuntime();
@@ -13,12 +12,7 @@ async function run() {
     console.error("The staging feedback worker reached its deadline.");
     process.exit(1);
   }, 100_000);
-  const transport = nodemailer.createTransport({
-    host: "smtp.hostinger.com", port: 465, secure: true,
-    auth: { user: "feedback@thecreledger.com", pass: password },
-    tls: { rejectUnauthorized: true }, connectionTimeout: 7000, greetingTimeout: 7000, socketTimeout: 8000,
-    disableFileAccess: true, disableUrlAccess: true,
-  });
+  const transport = hostingerTransport(password);
   try {
     await runNotifications(notificationStore(runtime.db), hostingerNotice(message => transport.sendMail(message), recipient), runtime.config.origin);
   } finally {

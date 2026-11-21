@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { OwnerSignIn, OwnerSignOut } from "@/feedback/owner-sign-in";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Container } from "@/components/ui/primitives";
@@ -15,15 +15,15 @@ export const metadata = { title: "Owner feedback", referrer: "no-referrer", robo
 const path = "/owner/feedback";
 const articlePaths = catalog.articles.filter(isPublicArticle).map(articleRoute);
 
-function services() {
+async function services() {
   const runtime = feedbackRuntime();
-  const auth = ownerAuthentication();
+  const auth = await ownerAuthentication();
   if (!auth || !runtime) notFound();
   return {
     auth, origin: runtime.config.origin,
     owner: ownerFeedback(runtime.db, {
       readVerifiedSession: auth.readSession,
-      issuer: auth.issuer, subject: runtime.config.ownerSubject, origin: runtime.config.origin,
+      issuer: auth.issuer, subject: auth.ownerId, origin: runtime.config.origin,
       publishedArticlePaths: new Set(articlePaths),
     }),
   };
@@ -42,7 +42,7 @@ async function actionRequest(origin: string) {
 
 async function search(form: FormData) {
   "use server";
-  const { owner, origin } = services();
+  const { owner, origin } = await services();
   const request = await actionRequest(origin);
   const filters = new URLSearchParams();
   for (const key of ["q", "category", "status", "offset"]) {
@@ -60,7 +60,7 @@ async function search(form: FormData) {
 
 async function update(form: FormData) {
   "use server";
-  const { owner, origin } = services();
+  const { owner, origin } = await services();
   const request = await actionRequest(origin);
   const id = String(form.get("id") ?? "");
   try {
@@ -73,7 +73,7 @@ async function update(form: FormData) {
 }
 
 export default async function OwnerFeedbackPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const { owner, origin } = services();
+  const { owner, origin } = await services();
   const params = await searchParams;
   const filters = new URLSearchParams();
   for (const key of ["q", "category", "status", "offset"]) {
@@ -88,13 +88,13 @@ export default async function OwnerFeedbackPage({ searchParams }: { searchParams
   } catch (error) {
     if (error instanceof OwnerRequestError && error.status === 403) {
       return <Container width="reading" className="py-10"><h1>Feedback owner access</h1>
-        <Link href="/auth/login" prefetch={false}>Sign in as owner</Link></Container>;
+        <OwnerSignIn /></Container>;
     }
     if (error instanceof OwnerRequestError && (error.status === 400 || error.status === 404)) notFound();
     return <Container width="reading" className="py-10"><p>Owner feedback is temporarily unavailable.</p></Container>;
   }
   return <Container width="content" className="py-10">
-    <Link href="/auth/logout" prefetch={false}>Sign out</Link>
+    <OwnerSignOut />
     <OwnerDashboard submissions={submissions} detail={detail} search={search} update={update}
       filters={{ q: filters.get("q") ?? undefined, category: filters.get("category") ?? undefined,
         status: filters.get("status") ?? undefined, offset: Number(filters.get("offset") ?? 0) }}

@@ -1,5 +1,15 @@
 import "server-only";
+import nodemailer from "nodemailer";
 import type { SendNotice } from "./outbox";
+
+export function hostingerTransport(password: string) {
+  return nodemailer.createTransport({
+    host: "smtp.hostinger.com", port: 465, secure: true,
+    auth: { user: "feedback@thecreledger.com", pass: password },
+    tls: { rejectUnauthorized: true }, connectionTimeout: 7000, greetingTimeout: 7000, socketTimeout: 8000,
+    disableFileAccess: true, disableUrlAccess: true,
+  });
+}
 
 type SendMail = (message: { from: string; to: string; subject: string; text: string; messageId: string }) =>
   Promise<{ accepted: unknown[]; rejected: unknown[] }>;

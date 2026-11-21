@@ -114,7 +114,7 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
   });
   it.each(["/content/underwriting/how-to-analyze-cre-operating-expenses",
     "/content/underwriting/capital-expenditures-vs-operating-expenses", "/content/underwriting/noi-development-fixture",
-    "/editorial", "/editorial/review", "/api/private", "/api/feedback", "/admin/feedback", "/owner/feedback", "/auth/login", "/auth/callback", "/design-preview/living-ledger", "/design-preview/living-ledger-cinematic", "/unknown"])("fails closed for %s without credentials or with navigation tricks", async route => {
+    "/editorial", "/editorial/review", "/api/private", "/api/feedback", "/admin/feedback", "/owner/feedback", "/api/owner-auth/sign-in/email", "/api/owner-auth/sign-up/email", "/auth/callback", "/design-preview/living-ledger", "/design-preview/living-ledger-cinematic", "/unknown"])("fails closed for %s without credentials or with navigation tricks", async route => {
     for (const headers of [{}, { rsc: "1" }, { "next-router-prefetch": "1" }, { authorization: "Basic invalid" }]) {
       const r = await get(route + "?preview=true", headers as Record<string, string>);
       expect(r.status).toBe(404); expect(r.headers.get("x-robots-tag")).toBe("noindex, nofollow");

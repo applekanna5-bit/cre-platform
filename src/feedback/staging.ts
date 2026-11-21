@@ -9,18 +9,14 @@ export function feedbackStaging(env: Record<string, string | undefined>) {
 
   const addressHeader = env.FEEDBACK_CLIENT_IP_HEADER;
   const hmacKey = env.FEEDBACK_HMAC_KEY;
-  const secret = env.AUTH0_SECRET;
+  const secret = env.FEEDBACK_AUTH_SECRET;
   if (!addressHeader || !/^[a-z0-9-]+$/.test(addressHeader) ||
       !hmacKey || !/^[0-9a-f]{64}$/i.test(hmacKey) ||
       !secret || !/^[0-9a-f]{64}$/i.test(secret) || secret.toLowerCase() === hmacKey.toLowerCase() ||
-      !env.FEEDBACK_DB_PASSWORD || !env.AUTH0_CLIENT_ID || !env.AUTH0_CLIENT_SECRET ||
-      !env.AUTH0_DOMAIN || !/^[a-z0-9][a-z0-9.-]*\.auth0\.com$/i.test(env.AUTH0_DOMAIN) ||
-      !env.FEEDBACK_OWNER_SUBJECT) return null;
+      !env.FEEDBACK_DB_PASSWORD) return null;
 
   return {
     origin: stagingOrigin, addressHeader, hmacKey, secret, password: env.FEEDBACK_DB_PASSWORD,
-    domain: env.AUTH0_DOMAIN, clientId: env.AUTH0_CLIENT_ID, clientSecret: env.AUTH0_CLIENT_SECRET,
-    ownerSubject: env.FEEDBACK_OWNER_SUBJECT,
   };
 }
 

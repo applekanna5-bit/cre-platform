@@ -47,7 +47,7 @@ export function ownerFeedback(db: Database, options: OwnerOptions) {
       const offset = Number(filters.get("offset") ?? "0");
       if (query.length > 120 || (filters.get("status") && !status) || (filters.get("category") && !category) ||
         !Number.isInteger(offset) || offset < 0 || offset > 10_000) throw new OwnerRequestError(400);
-      return db.rows<Summary>(`SELECT id, category, specialization, status, created_at FROM feedback_submissions
+      return db.rows<Summary>(`SELECT id, category, specialization, status, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at FROM feedback_submissions
         WHERE (? IS NULL OR status = ?) AND (? IS NULL OR category = ?)
         AND (? = '' OR LOCATE(?, message) > 0 OR LOCATE(?, source_url) > 0 OR id = ?)
         ORDER BY created_at DESC, id DESC LIMIT 50 OFFSET ?`,
@@ -58,15 +58,15 @@ export function ownerFeedback(db: Database, options: OwnerOptions) {
       if (!uuid.test(id)) throw new OwnerRequestError(400);
       return db.transaction(async sql => {
         const [submission] = await sql.rows<Detail["submission"]>(
-          `SELECT id, category, specialization, status, created_at, message, source_url, contact_name, contact_email
+          `SELECT id, category, specialization, status, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at, message, source_url, contact_name, contact_email
            FROM feedback_submissions WHERE id = ?`, [id]);
         if (!submission) throw new OwnerRequestError(404);
         const history = await sql.rows<Detail["history"][number]>(
-          "SELECT status, actor, created_at FROM feedback_status_history WHERE submission_id = ? ORDER BY id", [id]);
+          "SELECT status, actor, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at FROM feedback_status_history WHERE submission_id = ? ORDER BY id", [id]);
         const notes = await sql.rows<Detail["notes"][number]>(
-          "SELECT note, created_at FROM feedback_owner_notes WHERE submission_id = ? ORDER BY id", [id]);
+          "SELECT note, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at FROM feedback_owner_notes WHERE submission_id = ? ORDER BY id", [id]);
         const corrections = await sql.rows<Detail["corrections"][number]>(
-          "SELECT article_path, created_at FROM feedback_corrections WHERE submission_id = ? ORDER BY id", [id]);
+          "SELECT article_path, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at FROM feedback_corrections WHERE submission_id = ? ORDER BY id", [id]);
         return { submission, history, notes, corrections };
       });
     },

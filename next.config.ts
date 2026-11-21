@@ -21,8 +21,6 @@ export default function nextConfig(phase: string): NextConfig {
   if (phase === PHASE_PRODUCTION_SERVER) checkBuildContext(root, "start", context, delivery);
   return {
     ...(simulation ? { distDir: ".next-test-only-date" } : { output: "standalone" as const }),
-    // The SDK resolves Node crypto dynamically. Keep that import under Node’s module loader.
-    serverExternalPackages: ["@auth0/nextjs-auth0"],
     headers: async () => indexingHeaders(context.policy),
   };
 }
