@@ -25,9 +25,11 @@
     "occ-cre-lending-2022",
     "fhfa-enterprise-role",
     "fannie-dus-role",
+    "fannie-pre-review",
     "freddie-optigo-role",
     "hud-multifamily-role",
-    "sec-cmbs-servicing-form"
+    "sec-cmbs-servicing-form",
+    "sec-cmbs-primary-servicing-agreement"
   ],
   "updateSensitivity": "U2",
   "sourceClasses": [

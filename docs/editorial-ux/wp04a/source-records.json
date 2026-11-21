@@ -37,15 +37,15 @@
   },
   {
     "id": "hud-multifamily-role",
-    "title": "Descriptions of Multifamily Programs",
+    "title": "Office of Multifamily Housing Production",
     "publisher": "U.S. Department of Housing and Urban Development",
-    "url": "https://www.hud.gov/program_offices/housing/mfh/progdesc",
+    "url": "https://www.hud.gov/hud-partners/multifamily-production",
     "type": "government",
     "authority": "authoritative",
     "accessedDate": "2026-11-22",
     "updateSensitivity": "U3",
     "synthetic": false,
-    "notes": "Supports the distinction between FHA mortgage insurance and direct origination by approved lenders. No specific product eligibility asserted."
+    "notes": "HUD identifies its oversight of FHA multifamily insurance origination and directs readers to MAP-approved lenders. No specific product eligibility is asserted."
   },
   {
     "id": "sec-cmbs-servicing-form",
@@ -57,7 +57,7 @@
     "accessedDate": "2026-11-22",
     "updateSensitivity": "U2",
     "synthetic": false,
-    "notes": "Filed form with party and series placeholders. Article II addresses loan conveyance and certificate issuance. Article III, especially sections 3.01 and 3.02, illustrates servicer duties and delegation. It is neither an executed agreement for the fictional loan nor an SEC rule."
+    "notes": "Filed form with party and series placeholders. Article II addresses loan conveyance and certificate issuance. Article III, including sections 3.01, 3.02, 3.19 and 3.20, illustrates loan administration, transfer and controls on delegation. It is neither an executed agreement for the fictional loan nor an SEC rule."
   },
   {
     "id": "interagency-cre-workouts-2023",
@@ -73,16 +73,80 @@
     "notes": "Final policy statement, 88 FR 43115. Scope is institutions supervised by the issuing agencies. No specific remedy, borrower right or CMBS authority inferred."
   },
   {
-    "id": "fannie-dus-term-sheet",
-    "title": "DUS Mortgage Loans Term Sheet",
+    "id": "fannie-supplemental-sizing",
+    "title": "Multifamily Selling and Servicing Guide, Chapter 13, Supplemental Mortgage Loans",
     "publisher": "Fannie Mae Multifamily",
-    "url": "https://multifamily.fanniemae.com/financing-options/dus-mortgage-loans-term-sheet",
+    "url": "https://mfguide.fanniemae.com/fnmf-pdf/download/9876",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "effectiveDate": "2026-06-02",
+    "accessedDate": "2026-11-22",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "Sections 1302.03B–C in this June 2, 2026 chapter cover amortizing debt service assumptions and combined sizing for the described supplemental loans. This matches the April 30 standalone Section 1302.03C excerpt on combined sizing. Verify the live Guide and loan documents before applying."
+  },
+  {
+    "id": "freddie-supplemental-checklist",
+    "title": "Uniform Supplemental Financing Checklist",
+    "publisher": "Freddie Mac Multifamily",
+    "url": "https://mf.freddiemac.com/docs/uniform_supplemental_financing_checklist.pdf",
     "type": "official-primary",
     "authority": "authoritative",
     "accessedDate": "2026-11-22",
     "updateSensitivity": "U3",
     "synthetic": false,
-    "notes": "Supports the existence of supplemental financing in the described channel. The overview does not determine eligibility or governing consent terms."
+    "notes": "Form dated November 2024. Part III records combined ratios and references the limits in the senior loan documents and reported values in the supplemental commitment. The form alone does not establish current eligibility."
+  },
+  {
+    "id": "sec-cmbs-primary-servicing-agreement",
+    "title": "BANK5 2026-5YR24 Primary Servicing Agreement, Exhibit 4.21",
+    "publisher": "Midland Loan Services and Trimont LLC, filed on SEC EDGAR",
+    "url": "https://www.sec.gov/Archives/edgar/data/2153909/000153949726002683/exh4_21-midlandpsa.htm",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "effectiveDate": "2026-08-01",
+    "accessedDate": "2026-11-22",
+    "updateSensitivity": "U2",
+    "synthetic": false,
+    "notes": "Agreement dated as of August 1, 2026. Section 3.01(b) and (c)(14), (25)–(27) support continuing payment processing, consent routing and limits on delegation for this transaction."
+  },
+  {
+    "id": "fannie-pre-review",
+    "title": "Multifamily Selling and Servicing Guide, Section 203, Pre-Review Mortgage Loans",
+    "publisher": "Fannie Mae Multifamily",
+    "url": "https://mfguide.fanniemae.com/fnmf-pdf/download/10261",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "effectiveDate": "2026-06-02",
+    "accessedDate": "2026-11-22",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "Part I, Chapter 2, Section 203 concerns Pre-Review and loans that are not fully delegated. Supports the distinction between delegated and escalated decisions for this program."
+  },
+  {
+    "id": "sec-publicly-traded-reits",
+    "title": "Investor Bulletin: Publicly Traded REITs",
+    "publisher": "U.S. Securities and Exchange Commission, Office of Investor Education and Advocacy",
+    "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-65",
+    "type": "government",
+    "authority": "authoritative",
+    "publicationDate": "2016-08-30",
+    "accessedDate": "2026-11-22",
+    "updateSensitivity": "U2",
+    "synthetic": false,
+    "notes": "Supports the introductory distinction between holding shares in a REIT and directly holding its underlying assets. No REIT tax or distribution rule is inferred."
+  },
+  {
+    "id": "freddie-mhc-guide-22",
+    "title": "Multifamily Seller/Servicer Guide, Chapter 22, Originating a Manufactured Housing Community Mortgage",
+    "publisher": "Freddie Mac Multifamily",
+    "url": "https://mf.freddiemac.com/docs/chapters/mf_guide_ch_22.pdf",
+    "type": "official-primary",
+    "authority": "authoritative",
+    "accessedDate": "2026-11-22",
+    "updateSensitivity": "U3",
+    "synthetic": false,
+    "notes": "Chapter definitions distinguish rental sites, homes owned by the borrower and homes owned by residents. Cited only to support the different ownership and income structures, without eligibility criteria."
   },
   {
     "id": "occ-refinance-risk-2024",
@@ -107,6 +171,6 @@
     "accessedDate": "2026-11-22",
     "updateSensitivity": "U3",
     "synthetic": false,
-    "notes": "PDF carries Guide Bulletin Update 02/24/26. Confirm the current official Guide and applicable loan documents before relying on procedures or authority. No specific deadline or threshold is asserted."
+    "notes": "Guide index linked the edition marked Guide Bulletin Update 10/20/26. Sections 41.1–41.4 distinguish property assumptions, borrower-interest transfers and consent paths. Section 41.1 discusses ownership transfers alongside supplemental originations. No specific deadline or threshold is asserted."
   }
 ]
