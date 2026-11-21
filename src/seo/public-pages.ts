@@ -4,6 +4,8 @@ import { isPublicArticle } from "../content/catalog";
 import { publicArticles } from "../content/publication";
 import type { resolveSeoContext } from "./context";
 
+export const publicPagePaths: readonly string[] = ["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", "/feedback"];
+
 export type SeoContext = ReturnType<typeof resolveSeoContext>;
 export interface SeoDelivery {
   readonly accessMode?: string;
@@ -38,7 +40,7 @@ export function publicSeoPages(catalog: Pick<ContentCatalog, "articles">, contex
   if (!context.policy.indexingAllowed) return [];
   // The canonical predicate excludes local discovery's approved-preview exception.
   const articles = publicArticles({ articles: catalog.articles.filter(isPublicArticle) });
-  return ["/", "/library", "/about", "/editorial-standards", ...articles.map(article => article.href)].map(route => ({ url: canonicalUrl(context, route)! }));
+  return [...publicPagePaths, ...articles.map(article => article.href)].map(route => ({ url: canonicalUrl(context, route)! }));
 }
 export function seoRobots(context: SeoContext, delivery: SeoDelivery): MetadataRoute.Robots {
   assertSeoDeliveryContext(context, delivery);

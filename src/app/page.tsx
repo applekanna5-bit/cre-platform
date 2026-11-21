@@ -1,33 +1,63 @@
+import Image from "next/image";
+import Link from "next/link";
 import { pageMetadata } from "@/seo/metadata";
-import { primaryNavigation } from "@/config/navigation";
-import { Container, Eyebrow, Section } from "@/components/ui/primitives";
-import { CinematicLedgerPrototype } from "@/components/design-preview/living-ledger-cinematic/prototype";
-import { catalog } from "@/content/.generated";
-import { publicArticles } from "@/content/publication";
+import { Container, Section } from "@/components/ui/primitives";
+import { ArticleList } from "@/components/content/article-list";
+import { lifecycle, recommendedReading, specializations } from "@/config/learning";
+import { HomepageUnderwriting } from "@/components/home/homepage-underwriting";
+import { PropertyVisual } from "@/components/design-preview/living-ledger/property-visual";
+import architecture from "@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp";
+import styles from "@/components/design-preview/living-ledger-cinematic/cinematic.module.css";
 
 export const metadata = pageMetadata("home");
 
 export default function Home() {
-  const articles = publicArticles(catalog);
   return <>
-    <CinematicLedgerPrototype presentation="public" />
-    <Section aria-labelledby="cre-areas-title" className="border-t border-border">
-      <Container>
-        <Eyebrow>Knowledge directory</Eyebrow>
-        <h2 id="cre-areas-title" className="mt-3 font-editorial text-2xl">Explore CRE areas</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {primaryNavigation.filter(item => item.id !== "library").map(item => {
-            const count = articles.filter(article => article.domain === item.id).length;
-            return <section key={item.id} aria-labelledby={item.id}>
-              <h3 id={item.id} tabIndex={-1} className="font-editorial text-xl">{item.label}</h3>
-              <p className="mt-2 max-w-[48ch] text-sm text-muted">{item.summary}</p>
-              {item.id === "learn" ? <a href="#learning-progression-title" className="inline-flex min-h-11 items-center text-sm text-accent underline underline-offset-4">Start with the published underwriting reading journey</a>
-                : item.id === "tools" ? <><a href="#assumption-monthlyRent" className="inline-flex min-h-11 items-center text-sm text-accent underline underline-offset-4">Explore the fictional property laboratory</a><p className="text-sm text-muted">Additional tools and calculators are not yet available.</p></>
-                : count > 0 ? <a href={`#knowledge-${item.id}`} className="inline-flex min-h-11 items-center text-sm text-accent underline underline-offset-4">{count} published {count === 1 ? "article" : "articles"} in the research library</a>
-                : <p className="mt-2 text-sm text-muted">Research in this area is not yet published.</p>}
-            </section>;
-          })}
+    <section className={styles.hero} aria-labelledby="home-title">
+      <div className={styles.photography}>
+        <Image src={architecture} alt="" sizes="100vw" unoptimized placeholder="blur" loading="eager" fetchPriority="high" className={styles.image} />
+      </div>
+      <div className={styles.heroInner}>
+        <div className={styles.copy}>
+          <h1 id="home-title">Commercial Real Estate, Explained from Origination to Resolution.</h1>
+          <p className={styles.deck}>Practical CRE knowledge, underwriting insights, and property financial analysis.</p>
+          <div className={styles.actions}>
+            <a href="#underwriting-preview" className={styles.primary}>Try the underwriting model</a>
+            <Link href="/loan-lifecycle" className={styles.secondary}>Explore the loan lifecycle</Link>
+          </div>
         </div>
+      </div>
+    </section>
+    <HomepageUnderwriting photography={<PropertyVisual loading="lazy" />}>
+      <Section aria-labelledby="lifecycle-title" className="border-t border-border">
+        <Container>
+          <h2 id="lifecycle-title" className="font-editorial text-3xl">CRE Loan Lifecycle</h2>
+          <ol className="mt-6 grid list-decimal gap-x-10 gap-y-3 pl-6 sm:grid-cols-2 lg:grid-cols-3">
+            {lifecycle.map(stage => <li key={stage.id}><Link className="inline-flex min-h-11 items-center underline underline-offset-4" href={`/loan-lifecycle#${stage.id}`}>{stage.title}</Link></li>)}
+          </ol>
+        </Container>
+      </Section>
+      <Section aria-labelledby="specializations-title" className="border-t border-border bg-surface">
+        <Container>
+          <h2 id="specializations-title" className="font-editorial text-3xl">Professional Specializations</h2>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {specializations.map(topic => <li key={topic.id}><Link className="inline-flex min-h-11 items-center underline underline-offset-4" href={`/specializations#${topic.id}`}>{topic.title}</Link></li>)}
+          </ul>
+        </Container>
+      </Section>
+      <Section aria-labelledby="featured-title" className="border-t border-border">
+        <Container>
+          <h2 id="featured-title" className="mb-6 font-editorial text-3xl">Featured Articles and Practical Examples</h2>
+          <ArticleList articles={recommendedReading(["CRE-007", "CRE-015", "CRE-018", "CRE-025"])} />
+          <Link className="mt-6 inline-flex min-h-11 items-center underline underline-offset-4" href="/library">Browse the library</Link>
+        </Container>
+      </Section>
+    </HomepageUnderwriting>
+    <Section aria-labelledby="feedback-title" className="border-t border-border bg-surface">
+      <Container>
+        <h2 id="feedback-title" className="font-editorial text-3xl">Professional Feedback</h2>
+        <p className="mt-3 text-muted">Have a correction or a topic you would like covered? Find out how feedback will be handled.</p>
+        <Link className="mt-3 inline-flex min-h-11 items-center underline underline-offset-4" href="/feedback">Professional feedback information</Link>
       </Container>
     </Section>
   </>;

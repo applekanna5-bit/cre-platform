@@ -84,18 +84,18 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
     }
     expect(titles.size).toBe(8); expect(descriptions.size).toBe(8);
   });
-  it("advertises exactly twelve canonical sitemap URLs and public robots", async () => {
+  it("advertises exactly fifteen canonical sitemap URLs and public robots", async () => {
     const robots = await get("/robots.txt"); expect(robots.status).toBe(200);
     const text = await robots.text(); expect(text).toContain("Allow: /"); expect(text).toContain("Sitemap: " + canonicalOrigin + "/sitemap.xml");
     expect(text).not.toContain("Disallow: /");
     const sitemap = await get("/sitemap.xml"); expect(sitemap.status).toBe(200);
     expect(sitemap.headers.get("content-type")).toContain("xml");
     const xml = await sitemap.text(), urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]).sort();
-    expect(urls).toEqual(["/", "/library", "/about", "/editorial-standards", ...productionArticlePaths].map(p => canonicalOrigin + p).sort());
+    expect(urls).toEqual(["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", "/feedback", ...productionArticlePaths].map(p => canonicalOrigin + p).sort());
     expect(xml).not.toMatch(/<lastmod>|<priority>|<changefreq>|CRE-012|CRE-013|search|TEST-ONLY:/);
   });
-  it("keeps home and Library indexable, and search noindex without canonical/schema", async () => {
-    for (const route of ["/", "/library"]) {
+  it("keeps public site pages indexable, and search noindex without canonical/schema", async () => {
+    for (const route of ["/", "/library", "/loan-lifecycle", "/specializations", "/feedback"]) {
       const r = await get(route); expect(r.status).toBe(200); expect(r.headers.get("x-robots-tag")).toBeNull();
       const html = await r.text(); expect(html).toContain('rel="canonical" href="' + canonicalOrigin + route + '"');
       if (route === "/library") expect([...new Set([...html.matchAll(/href="(\/content\/[^"]+)"/g)].map(m => m[1]))].sort()).toEqual(productionArticlePaths);
@@ -107,7 +107,7 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
   });
   it.each(["/content/underwriting/how-to-analyze-cre-operating-expenses",
     "/content/underwriting/capital-expenditures-vs-operating-expenses", "/content/underwriting/noi-development-fixture",
-    "/editorial", "/editorial/review", "/api/private", "/design-preview/living-ledger", "/design-preview/living-ledger-cinematic", "/unknown"])("fails closed for %s without credentials or with navigation tricks", async route => {
+    "/editorial", "/editorial/review", "/api/private", "/api/feedback", "/admin/feedback", "/design-preview/living-ledger", "/design-preview/living-ledger-cinematic", "/unknown"])("fails closed for %s without credentials or with navigation tricks", async route => {
     for (const headers of [{}, { rsc: "1" }, { "next-router-prefetch": "1" }, { authorization: "Basic invalid" }]) {
       const r = await get(route + "?preview=true", headers as Record<string, string>);
       expect(r.status).toBe(404); expect(r.headers.get("x-robots-tag")).toBe("noindex, nofollow");

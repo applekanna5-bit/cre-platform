@@ -5,8 +5,8 @@ import { NavigationList } from "@/components/navigation/navigation-list";
 import styles from "./mobile-learning-navigation.module.css";
 
 const navigationDomains: Partial<Record<(typeof primaryNavigation)[number]["id"], ArticleDomain>> = {
-  learn: "learn", underwriting: "underwriting", "property-types": "property-types",
-  financing: "financing", modeling: "modeling", resources: "resources",
+  underwriting: "underwriting", "property-types": "property-types",
+  "financing-markets": "financing",
 };
 
 /** Public links return to the homepage; the local study retains its own anchors. */
@@ -32,7 +32,7 @@ export function MobileLearningNavigation({ catalog, preview = false }: { catalog
     </ul>
     {future.length > 0 && <details className={styles.future}>
       <summary>Explore more CRE areas <span>{future.length} category overviews</span></summary>
-      <p>These links open category overviews. Explore the fictional laboratory under Tools; research in these areas is still to come.</p>
+      <p>These links open category overviews.</p>
       <NavigationList items={future.map(entry => entry.item)} />
     </details>}
   </div>;

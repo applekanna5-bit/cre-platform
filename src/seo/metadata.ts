@@ -8,7 +8,7 @@ import { fixturesEnabled, editorialPreviewEnabled, testOnlyDatePreviewEnabled } 
 export const siteName = "The CRE Ledger";
 export const siteDescription = "Commercial real estate underwriting, financial modeling, lending, valuation and investment analysis.";
 type SeoContext = ReturnType<typeof resolveSeoContext>;
-type Page = "layout" | "home" | "library" | "search" | "about" | "editorial-standards";
+type Page = "layout" | "home" | "library" | "search" | "about" | "editorial-standards" | "loan-lifecycle" | "specializations" | "feedback";
 
 export function currentContext(): SeoContext {
   const context = resolveSeoContext({
@@ -61,6 +61,9 @@ export function pageMetadata(page: Page, context: SeoContext = currentContext())
       "Independent education in commercial real estate underwriting, property financial analysis and the reasoning behind the numbers.", { path: "/about" });
     case "editorial-standards": return constructMetadata(context, "Editorial Standards",
       "The CRE Ledger’s standards for sources, financial calculations, illustrative examples, editorial responsibility and substantive corrections.", { path: "/editorial-standards" });
+    case "loan-lifecycle": return constructMetadata(context, "CRE Loan Lifecycle", "Follow commercial real estate financing from origination through servicing and resolution.", { path: "/loan-lifecycle" });
+    case "specializations": return constructMetadata(context, "Professional Specializations", "Explore underwriting, property types, financing, and servicing.", { path: "/specializations" });
+    case "feedback": return constructMetadata(context, "Professional Feedback", "Find out how The CRE Ledger will handle corrections, suggestions, and professional feedback.", { path: "/feedback" });
     case "layout": return constructMetadata(context, siteName, siteDescription);
     case "home": return constructMetadata(context, siteName, siteDescription, { path: "/" });
     case "library": return constructMetadata(context, "Research Library",

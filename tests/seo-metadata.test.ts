@@ -36,7 +36,7 @@ describe("publication-safe page metadata", () => {
   it("keeps layout URL-free and gives each indexable page its own absolute canonical", () => {
     expect(pageMetadata("layout", production).alternates).toBeUndefined();
     expect(pageMetadata("layout", production).openGraph).not.toHaveProperty("url");
-    for (const [page, route] of [["home", "/"], ["library", "/library"]] as const) {
+    for (const [page, route] of [["home", "/"], ["library", "/library"], ["loan-lifecycle", "/loan-lifecycle"], ["specializations", "/specializations"], ["feedback", "/feedback"]] as const) {
       const metadata = pageMetadata(page, production);
       expect(metadata.alternates).toEqual({ canonical: origin + route });
       expect(metadata.openGraph).toHaveProperty("url", origin + route);

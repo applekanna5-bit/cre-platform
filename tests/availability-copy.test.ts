@@ -1,58 +1,37 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
-import Home from "@/app/page";
+import { describe, expect, it } from "vitest";
+import LoanLifecyclePage from "@/app/loan-lifecycle/page";
+import SpecializationsPage from "@/app/specializations/page";
+import FeedbackPage from "@/app/feedback/page";
 import { SiteFooter } from "@/components/site-footer";
-import { primaryNavigation } from "@/config/navigation";
 import { catalog } from "@/content/.generated";
 import { publicArticles } from "@/content/publication";
 
-
-vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp", () => ({ default: {
-  src: "/_next/static/media/living-ledger-multifamily.webp", width: 1536, height: 1024,
-  blurDataURL: "data:image/webp;base64,UklGRg==",
-} }));
-
 describe("published underwriting availability", () => {
-  it("reports actual published research and meaningful legacy destinations without inventing availability", () => {
-    const html = renderToStaticMarkup(createElement(Home));
+  it("keeps all eight articles accessible from the lifecycle and specializations", () => {
     const articles = publicArticles(catalog);
-    expect(articles).toHaveLength(8);
     expect(articles.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "phase2a-gpr-egi"]);
-    expect(new Set(articles.map(article => article.domain))).toEqual(new Set(["underwriting"]));
-    expect(html).toContain(`${articles.length} published articles`);
-    expect(html).toContain('href="/library"');
-    const ids = [...html.matchAll(/ id="([^"]+)"/g)].map(match => match[1]);
-    for (const item of primaryNavigation.filter(item => item.id !== "library")) {
-      expect(ids.filter(id => id === item.id)).toHaveLength(1);
-      const section = html.match(new RegExp(`<section[^>]*aria-labelledby="${item.id}"[^>]*>[\\s\\S]*?</section>`))?.[0];
-      expect(section).toBeDefined();
-      expect(section).not.toMatch(/hidden|sr-only/);
-      if (item.id === "underwriting") {
-        expect(section).toContain(`${articles.length} published articles in the research library`);
-        expect(section).toContain('href="#knowledge-underwriting"');
-      } else if (item.id === "learn") {
-        expect(section).toContain("published underwriting reading journey");
-      } else if (item.id === "tools") {
-        expect(section).toContain('href="#assumption-monthlyRent"');
-        expect(section).toContain("Additional tools and calculators are not yet available.");
-      } else {
-        expect(section).toContain("Research in this area is not yet published.");
-        expect(section).not.toMatch(/\d+ published articles/);
-      }
+    const lifecycle = renderToStaticMarkup(createElement(LoanLifecyclePage));
+    const specializations = renderToStaticMarkup(createElement(SpecializationsPage));
+    for (const html of [lifecycle, specializations]) {
+      for (const article of articles) expect(html).toContain(`href="${article.href}"`);
+      const hrefs = [...html.matchAll(/href="(\/content\/[^"]+)"/g)].map(match => match[1]);
+      expect(hrefs.every(href => articles.some(article => article.href === href))).toBe(true);
     }
-    const destinations = new Set(articles.map(article => article.href));
-    for (const link of html.matchAll(/href="(\/content\/[^"]+)"/g)) expect(destinations.has(link[1])).toBe(true);
-    expect(html).not.toContain("noi-development-fixture");
-    expect(html).not.toContain("Development fixture");
-    expect(html).not.toContain("Guides and tools are coming soon.");
+    expect(lifecycle.match(/<h2\b/g)).toHaveLength(7);
+    expect(lifecycle.match(/<strong>Planned\.<\/strong>/g)).toHaveLength(7);
+    expect(lifecycle).not.toMatch(/secondary markets|securitization/i);
+    expect(specializations).toContain("secondary markets, and securitization");
   });
 
-  it("describes available research in the footer and retains planned destinations", () => {
-    const html = renderToStaticMarkup(createElement(SiteFooter));
-    expect(html).toContain("8 published articles available in the library. Explore the fictional property laboratory; additional tools and calculators are not yet available.");
-    expect(html).not.toContain("Guides and tools coming soon.");
-    expect(html).toContain('href="/library"');
-    expect(html.match(/Coming soon/g)).toHaveLength(2);
+  it("links to feedback and states that submissions are unavailable", () => {
+    const footer = renderToStaticMarkup(createElement(SiteFooter));
+    expect(footer).toContain("8 published articles available in the library.");
+    expect(footer).toContain('href="/feedback"');
+    const feedback = renderToStaticMarkup(createElement(FeedbackPage));
+    expect(feedback).toContain("Feedback submissions are currently unavailable.");
+    expect(feedback).toContain("Never share confidential borrower, client, employer, or transaction information.");
+    expect(feedback).not.toMatch(/<(form|input|textarea|select)\b/);
   });
 });
