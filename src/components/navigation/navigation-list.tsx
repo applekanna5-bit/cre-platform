@@ -3,16 +3,18 @@ import type { NavigationItem } from "@/config/navigation";
 export function NavigationList({
   items,
   horizontal = false,
+  current,
 }: {
   items: readonly NavigationItem[];
   horizontal?: boolean;
+  current?: { id: string; type: "page" | "location" };
 }) {
   return (
     <ul className={horizontal ? "flex flex-wrap items-center gap-x-2 xl:gap-x-5" : "grid gap-1"}>
       {items.map((item) => (
         <li key={item.id}>
           {item.kind === "link" ? (
-            <a href={item.href} className={`flex min-h-11 items-center rounded-control px-3 py-2 text-sm underline-offset-8 decoration-copper hover:underline hover:text-accent ${horizontal && item.id === "library" ? "font-semibold text-foreground underline" : "font-medium text-muted"}`}>
+            <a href={item.href} aria-current={current?.id === item.id ? current.type : undefined} className={`flex min-h-11 items-center rounded-control px-3 py-2 text-sm underline-offset-8 decoration-copper hover:underline hover:text-accent ${current?.id === item.id ? "font-semibold text-foreground underline" : "font-medium text-muted"}`}>
               {item.label}
             </a>
           ) : (

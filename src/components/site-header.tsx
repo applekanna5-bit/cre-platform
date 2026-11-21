@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { primaryNavigation } from "@/config/navigation";
 import { Container } from "@/components/ui/primitives";
+import { PrimaryNavigation } from "@/components/navigation/primary-navigation";
 import { NavigationList } from "@/components/navigation/navigation-list";
 import { MobileNavigation } from "@/components/navigation/mobile-navigation";
 import styles from "./site-header.module.css";
@@ -21,11 +22,11 @@ export function SiteHeader() {
         </div>
         <SearchForm id="header-query" label="Site-wide research search" compact />
         <nav aria-label="Primary" className={`hidden lg:block ${styles.navigation}`}>
-          <NavigationList items={primaryNavigation} horizontal />
+          <PrimaryNavigation horizontal />
         </nav>
         {process.env.NODE_ENV === "development"
-          ? <PreviewMobileNavigation standard={<NavigationList items={primaryNavigation} />} cinematic={<MobileLearningNavigation catalog={catalog} preview />} publicNavigation={<NavigationList items={primaryNavigation} />} />
-          : <MobileNavigation><NavigationList items={primaryNavigation} /></MobileNavigation>}
+          ? <PreviewMobileNavigation standard={<NavigationList items={primaryNavigation} />} cinematic={<MobileLearningNavigation catalog={catalog} preview />} publicNavigation={<PrimaryNavigation />} />
+          : <MobileNavigation><PrimaryNavigation /></MobileNavigation>}
       </Container>
     </header>
   );

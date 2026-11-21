@@ -31,6 +31,7 @@
 .studyTag, .planned { display: inline-block; border: 1px solid var(--color-border); padding: .375rem .625rem; font-size: .8125rem; color: var(--color-copper-text); background: var(--color-elevated); }
 .labGrid { display: grid; grid-template-columns: minmax(0, 1fr); border: 1px solid var(--color-border-strong); background: var(--color-elevated); }
 .mobileReadout { position: sticky; top: .5rem; z-index: 10; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-bottom: 1rem; border-top: 2px solid var(--color-copper); padding: .75rem 1rem; background: var(--color-foreground); color: var(--color-analytical-muted); font-size: .8125rem; }
+.completeLab .mobileReadout { position: static; }
 .mobileReadout strong { display: block; margin-top: .125rem; color: var(--color-on-analytical); font-size: 1.125rem; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .lab :is(input, button, summary) { scroll-margin-top: 6rem; }
 .controls { padding: 1.25rem; border-bottom: 1px solid var(--color-border); }

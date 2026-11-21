@@ -19,7 +19,7 @@ export function HomepageUnderwriting({ children }: { children: ReactNode }) {
       <Container id="tools" tabIndex={-1} aria-labelledby="underwriting-preview-title" className="grid gap-6 sm:grid-cols-2">
         <div>
           <h2 id="underwriting-preview-title" className="font-editorial text-3xl">Multifamily Underwriting Preview</h2>
-          <p className="mt-2 text-muted">Change the monthly rent for a fictional 100-unit property to see how income and value respond.</p>
+          <p className="mt-2 text-muted">Monthly rent drives projected rental income for this fictional 100-unit property. The model deducts vacancy and operating expenses to estimate net operating income (NOI), then divides NOI by the assumed capitalization rate to estimate value. You can change those assumptions in the complete model.</p>
           <div className="mt-4 flex flex-wrap items-end gap-4">
             <div>
               <label className="block font-semibold" htmlFor="preview-rent">Monthly rent per unit (USD)</label>
@@ -35,9 +35,9 @@ export function HomepageUnderwriting({ children }: { children: ReactNode }) {
           {errors.monthlyRent && <p id="preview-rent-error" className="mt-2 text-warning">{errors.monthlyRent}</p>}
         </div>
         <div className="rounded-panel border border-border bg-surface p-5">
-          <dl className="grid grid-cols-2 gap-4">
-            <div><dt id="preview-noi-label">Annual NOI</dt><dd><output aria-labelledby="preview-noi-label" aria-live="off" className="font-editorial text-2xl">{result ? usd.format(result.noi) : "—"}</output></dd></div>
-            <div><dt id="preview-value-label">Illustrative property value</dt><dd><output id="preview-value" aria-labelledby="preview-value-label" aria-live="off" className="font-editorial text-2xl">{result ? usd.format(result.propertyValue) : "—"}</output></dd></div>
+          <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,7.5rem),1fr))] gap-4">
+            <div><dt id="preview-noi-label">Annual NOI</dt><dd><output aria-labelledby="preview-noi-label" aria-live="off" className="break-words font-editorial text-2xl">{result ? usd.format(result.noi) : "—"}</output></dd></div>
+            <div><dt id="preview-value-label">Illustrative property value</dt><dd><output id="preview-value" aria-labelledby="preview-value-label" aria-live="off" className="break-words font-editorial text-2xl">{result ? usd.format(result.propertyValue) : "—"}</output></dd></div>
           </dl>
           {hasOtherErrors && <p className="mt-3 text-muted">Check the assumptions in the complete model.</p>}
           <a href="#property-lab" className="mt-3 inline-flex min-h-11 items-center text-accent underline underline-offset-4">Open the complete model</a>

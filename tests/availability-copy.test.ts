@@ -27,7 +27,10 @@ describe("published underwriting availability", () => {
       expect(hrefs.every(href => articles.some(article => article.href === href))).toBe(true);
     }
     expect(lifecycle.match(/<h2\b/g)).toHaveLength(7);
-    expect(lifecycle.match(/<strong>Planned\.<\/strong>/g)).toHaveLength(7);
+    expect(lifecycle.match(/>Planned topics<\/span>/g)).toHaveLength(7);
+    for (const stage of stages) {
+      expect(lifecycle.includes(`aria-labelledby="${stage.id}-reading"`)).toBe(stage.articles.length > 0);
+    }
     expect(stages.map(stage => stage.title)).toEqual([
       "CRE Fundamentals and Property Types", "Loan Request and Preliminary Screening",
       "Rent Roll, T-12 and Financial Analysis", "Underwriting, NOI and Loan Sizing",

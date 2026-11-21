@@ -67,7 +67,10 @@ export function UnderwritingModel({ draft, setDraft, photography, compactMobile 
       <div>{!complete && <p className={styles.eyebrow}>01 / Illustrative Underwriting Model</p>}<h2 id="lab-title">{complete ? "Complete Multifamily Underwriting Model" : "One property. Four assumptions."}</h2><p>A fictional 100-unit multifamily property. Change an assumption and follow its effect.</p></div>
       {!complete && <span className={styles.studyTag}>Fictional / Educational only</span>}
     </div>
-    <div className={styles.mobileReadout} aria-hidden="true"><span>Annual NOI<strong>{result ? compactMoney(result.noi) : "—"}</strong></span><span>Illustrative value<strong>{result ? compactMoney(result.propertyValue) : "—"}</strong></span></div>
+    <div className={styles.mobileReadout} aria-hidden="true">
+      <span>Annual NOI<strong>{result ? (complete ? money(result.noi) : compactMoney(result.noi)) : "—"}</strong></span>
+      <span>Illustrative value<strong>{result ? (complete ? money(result.propertyValue) : compactMoney(result.propertyValue)) : "—"}</strong></span>
+    </div>
     {compactMobile && <a href="#assumption-monthlyRent" className={styles.adjustShortcut}>Adjust assumptions <span aria-hidden="true">↓</span></a>}
     {!complete && <VisualComposition photography={photography} compactMobile={compactMobile} diagram={building} />}
     <div className={styles.labGrid}>
@@ -147,8 +150,8 @@ export function UnderwritingModel({ draft, setDraft, photography, compactMobile 
         return <li key={input.key}><h4>{input.label}</h4><p>{driverLessons[input.key]}</p><p className={styles.driverChange} id={`driver-${input.key}`}>{driver ? driver.difference === 0 ? "Unchanged from baseline." : `${input.unit === "USD" ? signedMoney(driver.difference) + " / unit / month" : signedPercent(driver.difference) + " percentage points"} vs. baseline. Isolated value effect: ${signedMoney(driver.isolatedValueChange)}.` : "Enter valid assumptions to compare."}</p></li>;
       })}</ul>
     </section>
-    <details className={styles.formulas} open>
-      <summary>Open the ledger <span>Formulas &amp; current assumptions</span></summary>
+    <details className={styles.formulas} open={!complete}>
+      <summary>{complete ? "Formulas and assumptions" : <>Open the ledger <span>Formulas &amp; current assumptions</span></>}</summary>
       <p>Fixed baseline: $1,500 monthly rent per unit, 5% vacancy, 40% operating expenses, and 5.5% cap rate. Value change = current value − baseline value. Percentage change = value change ÷ baseline value × 100.</p>
       <ol>
         <li><strong>Gross potential rental income</strong><span>Units × monthly rent × 12</span><code>{values && result ? `100 × ${money(values.monthlyRent)} × 12 = ${money(result.grossPotentialRent)}` : "Awaiting valid assumptions"}</code></li>

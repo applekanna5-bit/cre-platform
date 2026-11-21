@@ -20,7 +20,7 @@ export default function Home() {
 
   return <>
     <div className="border-b border-border bg-elevated">
-      <Container className="grid gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,3fr)_minmax(16rem,1fr)] lg:items-end lg:gap-14 lg:py-20">
+      <Container className="grid gap-8 py-12 sm:py-16 lg:grid-cols-[minmax(0,1.65fr)_minmax(16rem,1fr)] lg:items-center lg:gap-12 lg:py-20">
         <section aria-labelledby="home-title">
           <h1 id="home-title" className="max-w-[19ch] font-editorial text-display font-normal text-balance">
             Commercial Real Estate, Explained from Origination to Resolution.
@@ -31,10 +31,10 @@ export default function Home() {
             <Link href="/loan-lifecycle" className={`inline-flex min-h-11 items-center text-sm font-semibold ${readingLink}`}>Explore the loan lifecycle</Link>
           </div>
         </section>
-        <section id="learn" tabIndex={-1} aria-labelledby="start-reading" className="border-t-2 border-copper pt-5">
+        <section id="learn" tabIndex={-1} aria-labelledby="start-reading" className="max-w-md border-t-2 border-copper pt-4">
           <h2 id="start-reading" tabIndex={-1} className="font-editorial text-3xl">Start Here</h2>
           <p className="mt-3 max-w-[44ch] text-muted">Start with the property’s income. This guide explains how potential rent changes after vacancy and other losses, before operating expenses enter the analysis.</p>
-          {beginner && <Link href={beginner.href} className={`mt-3 inline-block py-2 font-semibold ${readingLink}`}>Read the gross-to-effective-income guide</Link>}
+          {beginner && <Link href={beginner.href} className={`mt-3 inline-block py-2 font-semibold ${readingLink}`}>Read how vacancy and losses affect income</Link>}
         </section>
       </Container>
     </div>
@@ -42,13 +42,14 @@ export default function Home() {
     <Section aria-labelledby="lifecycle-title">
       <Container>
         <h2 id="lifecycle-title" className="font-editorial text-3xl sm:text-4xl">CRE Loan Lifecycle</h2>
-        <p className="mt-3 max-w-[63ch] text-muted">Find the question each stage helps answer. The path can vary with the loan purpose and the documents that govern it.</p>
+        <p className="mt-3 max-w-[63ch] text-muted">Follow a loan from the initial request to servicing. The steps can vary with the loan’s purpose and the documents that govern it.</p>
         <ol className="mt-7 grid gap-x-12 lg:grid-cols-2">
           {lifecycle.map((stage, index) => <li key={stage.id} className="grid grid-cols-[2ch_minmax(0,1fr)] gap-4 border-t border-border py-4">
             <span className="pt-2 text-sm font-semibold tabular-nums text-copper-text" aria-hidden="true">{index + 1}</span>
             <div>
               <h3 className="font-editorial text-xl"><Link className={`inline-flex min-h-11 items-center ${readingLink}`} href={`/loan-lifecycle#${stage.id}`}>{stage.title}</Link></h3>
               <p className="max-w-[53ch] text-muted">{stage.description}</p>
+              {recommendedReading(stage.articles).length > 0 && <p className="mt-2 text-sm font-medium text-muted">Published reading available</p>}
             </div>
           </li>)}
         </ol>

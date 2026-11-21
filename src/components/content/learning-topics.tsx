@@ -23,10 +23,13 @@ export function LearningTopics({ title, description, topics, children }: {
       return <section key={topic.id} aria-labelledby={topic.id} className="border-t border-border py-8">
         <h2 id={topic.id} tabIndex={-1} className="scroll-mt-24 font-editorial text-2xl">{topic.title}</h2>
         <p className="mt-2 max-w-[68ch] text-muted">{topic.description}</p>
-        {articles.length > 0 && <ol aria-label="Suggested reading" className="mt-4 list-decimal space-y-3 pl-6">
+        {articles.length > 0 && <>
+          <p id={`${topic.id}-reading`} className="mt-4 text-sm font-medium text-muted">Published reading</p>
+          <ol aria-labelledby={`${topic.id}-reading`} className="mt-2 list-decimal space-y-3 pl-6">
           {articles.map(article => <li key={article.id}><Link className="text-accent underline underline-offset-4" href={article.href}>{article.title}</Link></li>)}
-        </ol>}
-        <p className="mt-4 text-muted"><strong>Planned.</strong> {topic.planned}</p>
+          </ol>
+        </>}
+        <p className="mt-4 text-muted"><span className="text-sm font-medium">Planned topics</span> · {topic.planned}</p>
       </section>;
     })}
   </Container>;

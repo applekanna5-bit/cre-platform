@@ -33,6 +33,14 @@ describe("WP02 homepage", () => {
     expect(html).not.toContain("1.43×");
   });
 
+  it("identifies the two lifecycle stages with published reading", () => {
+    const rows = [...html.matchAll(/<li\b[^>]*>[\s\S]*?<\/li>/g)];
+    const withReading = rows.filter(([row]) => row.includes("Published reading available"));
+    expect(withReading).toHaveLength(2);
+    expect(withReading[0][0]).toContain("Rent Roll, T-12 and Financial Analysis");
+    expect(withReading[1][0]).toContain("Underwriting, NOI and Loan Sizing");
+  });
+
   it("links featured articles only through their published canonical paths", () => {
     const allowed = new Set(publicArticles(catalog).map(article => article.href));
     const links = [...html.matchAll(/href="(\/content\/[^"]+)"/g)].map(match => match[1]);

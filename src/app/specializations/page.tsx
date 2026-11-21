@@ -5,5 +5,5 @@ import { pageMetadata } from "@/seo/metadata";
 export const metadata = pageMetadata("specializations");
 
 export default function SpecializationsPage() {
-  return <LearningTopics title="Professional Specializations" description="Find published reading by area of practice." topics={specializations} />;
+  return <LearningTopics title="Professional Specializations" description="Browse the available guides and see what’s planned." topics={specializations} />;
 }
