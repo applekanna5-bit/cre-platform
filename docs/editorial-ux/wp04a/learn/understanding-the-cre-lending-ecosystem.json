@@ -1,0 +1,53 @@
+{
+  "id": "WP04A-02",
+  "title": "Understanding the CRE Lending Ecosystem",
+  "slug": "understanding-the-cre-lending-ecosystem",
+  "description": "Identify who arranges, funds, owns, and services a U.S. commercial mortgage, including agency and private channels.",
+  "domain": "learn",
+  "contentType": "guide",
+  "difficulty": "foundational",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [],
+  "loanProducts": [],
+  "topics": [
+    "loan-participants",
+    "agency-lending",
+    "secondary-market",
+    "servicing"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "fhfa-enterprise-role",
+    "fannie-dus-role",
+    "freddie-optigo-role",
+    "hud-multifamily-role",
+    "sec-cmbs-servicing-form"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-01"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-03"
+      }
+    }
+  ],
+  "developmentFixture": false
+}
