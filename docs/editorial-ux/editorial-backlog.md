@@ -1,0 +1,58 @@
+# Editorial backlog
+
+The eight existing articles are the starting collection. Keep their MDX, metadata sidecars, reviewed claims, cases, source records and canonical paths intact. Their placements and entry points are recorded in the [content blueprint](content-blueprint.md#published-teaching-sequence). The briefs below are proposed, with no URLs or publication dates assigned. A later brief may become a section or an example when that answers the reader’s question adequately.
+
+## P0 — Complete the first reading path
+
+| Brief and owner | Reader and lifecycle position | Learning objective and practical use | Logical next reading |
+| --- | --- | --- | --- |
+| How an income-producing property supports a loan · Foundations | New analyst or owner · 1 | Trace lease or operating income through expenses to funds available for debt service. Orient the reader before they open a property file. | Existing GPI/EGI guide, then loan screening |
+| What to ask before underwriting a loan request · Origination | Junior originator or analyst · 2 | Build an original intake example covering purpose, sources and uses, property, sponsor, reporting dates and missing evidence. Explain when to advance or ask for more. | T-12 and rent roll, then loan-purpose comparison |
+| Which property expenses should carry forward? · Financial analysis | Analyst reading a T-12 · 3 | Test a recurring cost, contract renewal and nonrecurring repair against dated evidence. Make the expense decision reusable across cases without copying a private worksheet. | Capital expenditures and reserves, then existing NOI |
+| Capital expenditures and reserves in cash flow · Financial analysis with underwriting | Analyst reconciling two cash-flow definitions · 3 → 4 | Separate operating expense, capital cost and reserve assumptions and identify where each enters one expressly defined model. Prevent double counting. | Existing NOI and DSCR guides |
+| Loan sizing across coverage, leverage and debt yield · Underwriting | Analyst who understands NOI and DSCR · 4 | Compare independently stated sizing constraints under fictional pricing and amortization. Explain which constraint binds and why a change in assumptions changes the result. | Credit decision brief |
+
+## P1 — Close the largest lifecycle gaps
+
+| Brief and owner | Reader and lifecycle position | Learning objective and practical use | Logical next reading |
+| --- | --- | --- | --- |
+| Acquisition, refinance, supplemental and bridge requests · Origination | Originator or borrower comparing transactions · 2 | Compare purpose, evidence, timing, maturity and exit; develop four concise fictional scenarios. Treat supplemental availability and bridge terms as product-dependent. | Loan sizing or agency lender fit |
+| What credit review must resolve · Credit | Analyst preparing a decision · 5 | Connect property, market and sponsor evidence to a short original recommendation, exceptions, mitigants and open conditions. Show why the record matters after approval. | Third-party diligence, then closing |
+| Reading third-party reports · Credit | Credit or closing analyst · 5 | Compare appraisal, environmental and property-condition questions and scope limits; decide when a finding needs a follow-up, condition or specialist. | Credit decision brief or closing conditions |
+| From approval to funding and boarding · Closing | Junior closer or servicer · 6 | Trace a fictional approval condition through evidence, closing and boarding. Distinguish funding evidence from the servicing instructions that must survive closing. | Servicing roles and boarding |
+| Who services the loan? · Servicing | New servicer or originator making a handoff · 7 | Explain primary, subservicing, master and special servicing roles through one explicitly scoped agreement. Use the roles to direct a request. | Covenant monitoring or CMBS documents |
+| Monitoring, asset management and early warning · Servicing | Portfolio or asset analyst · 7 | Read a fictional reporting package for covenants, reserve needs and operating deterioration. Identify escalation questions without confusing owner-side and lender-side responsibilities. | Default and workout evaluation |
+| Assumptions and transfers after closing · Servicing with credit | Servicer or borrower preparing a consent request · 7 → 5–6 | Compare a proposed transfer, assumption and ordinary loan sale. Trace diligence, approval and closing steps only where the selected documents support them. | Servicing roles or secondary-market loan sales |
+| Default, workout and loan resolution · Servicing with legal review | Analyst assessing a distressed loan · 7 | Compare monitoring, accommodation, modification and resolution alternatives using fictional facts. Show which documents, decision makers and jurisdiction govern available options. | Transaction-specific CMBS servicing or credit review |
+
+## P2 — Grow tracks with source review
+
+| Brief and owner | Reader and lifecycle position | Learning objective and practical use | Logical next reading |
+| --- | --- | --- | --- |
+| Where Fannie Mae and Freddie Mac fit · Financing & Markets | Originator new to agency lending · 2 and 6–7 | Compare institutional roles and identify which public guide governs a question. Distinguish broadly applicable concepts from a specific program and version. | One approved guide-based underwriting comparison |
+| Comparing agency underwriting inputs · Financing & Markets with underwriting | Analyst who can read NOI and DSCR · 3–5 | Trace reserve and cash-flow conventions using currently verified public guide sections for the selected products. Identify where public evidence is insufficient to answer. | Existing NOI and DSCR guides, then agency servicing |
+| Conventional multifamily and manufactured housing communities · Property Types | Analyst moving between residential assets · 1 and 3–4 | Compare apartment leases, site rent and home ownership assumptions; use evidence to decide which schedules and operating costs matter. | Loan request screen or student housing |
+| Affordable housing income evidence · Property Types with program reviewer | Analyst new to restricted rents · 1 and 3–4 | Identify which specific restrictions govern the fictional example, how they affect income evidence and which documents need verification. | Existing revenue analysis or relevant verified agency brief |
+| Student housing and senior housing operating models · Property Types | Analyst comparing residential alternatives · 1 and 3–4 | Compare selected leasing and service models, timing and revenue assumptions, with clear limits on each example. Split into separate guides if each comparison requires a different decision. | Property-specific monitoring or underwriting |
+| Retail, office and industrial leases · Property Types | Multifamily analyst reviewing commercial leases · 1 and 3–4 | Compare the effect of lease term, tenant concentration, rollover and recovery of expenses on an original underwriting exercise. Use a separate guide only when the decision warrants it. | Credit due diligence or reserve analysis |
+| Hospitality and other operating assets · Property Types | Analyst reviewing operating income rather than a conventional apartment rent roll · 1 and 3–4 | Explain which operating evidence and business inputs matter for a carefully defined hospitality example. Add other property types only when evidence supports a distinct lesson. | Expense analysis or asset monitoring |
+| Whole-loan sales and securitization · Financing & Markets | Credit or servicing analyst new to secondary markets · connected track after 6 | Distinguish transfer of a funded loan from security issuance and from a borrower’s transfer request. Explain what documentation and servicing context the analyst should locate. | CMBS pooling, tranches and ratings |
+| CMBS pooling, tranches and ratings · Financing & Markets | Reader familiar with loan sales · connected track after 6 | Read a public deal filing and use an original hypothetical cash-flow example to distinguish pool composition, priority of payments, losses and roles of rating agencies. Separate ratings from contractual priority. | Reading a pooling and servicing agreement |
+| Reading a pooling and servicing agreement · Servicing with financing and legal review | Servicer trying to identify authority · 7 and connected CMBS track | Locate responsibility, transfer and decision provisions in one identified agreement. Show why a role observed in one transaction may differ elsewhere. | Default and workout evaluation |
+
+## Sources and release gates
+
+The source leads below identify research entry points, with no program thresholds, eligibility rules or legal interpretations approved by this specification. Every proposed program-specific, contractual or regulatory claim remains **unverified for editorial review** until the reviewer records the exact source provision, edition or effective date, access and review dates, applicability and any material exception.
+
+- For agency claims, start with the current official public guides and dated communications for each enterprise. Use the FHFA for institutional context. If controlling guidance is restricted, narrow the claim or defer it. [Fannie Mae guide access](https://multifamily.fanniemae.com/applications-technology/dus-navigate) · [Freddie Mac Guide and Forms](https://mf.freddiemac.com/lenders/guide) · [FHFA institutional overview](https://www.fhfa.gov/about)
+- For bank credit and workouts, consult OCC materials in their supervisory scope and identify any separate jurisdictional or transaction-specific authority. For affordable housing, start with the actual program and governing restriction, then verify the issuing agency and relevant primary law. [OCC CRE lending and workouts](https://occ.gov/topics/supervision-and-examination/credit/commercial-credit/commercial-real-estate.html) · [HUD program directory](https://www.hud.gov/hudprograms)
+- For CMBS, retain the actual filed prospectus and pooling or servicing agreement with filing date, exhibit and deal scope. Use regulator material for disclosure questions and published rating-agency criteria for any methodology attributed to that agency. Keep deal examples clearly identified. [SEC asset-backed securities guidance](https://www.sec.gov/rules-regulations/staff-guidance/corporation-finance-interpretations-cfis/asset-backed-securities) · [Illustrative SEC filing with a pooling and servicing agreement](https://www.sec.gov/Archives/edgar/data/2047317/000153949725000089/n4701-x23_8k.htm)
+
+Commission in sequence where concepts build on each other. Release a brief only when an assigned reader, decision, independent example and relevant next reading are clear. Label fictional facts, time periods, units and analytical conventions. Have a separate reviewer verify calculations and scope before publication. Use repository contracts and publication controls for future articles. [Editorial standard](../editorial-standard.md) · [Source policy](../source-policy.md)
+
+## Decisions for editorial review
+
+- Approve the beginner entry guide and the suggested ordering within Stage 3. The eight reviewed articles stay intact whichever ordering is selected.
+- Assign stage and track reviewers. Decide which P1 and P2 briefs need a specialist versus a standard editorial and source review.
+- Choose the first agency program and CMBS filing for review, and specify the jurisdiction and limits of the first workout example.
+- Confirm whether property comparisons should begin as combined guides or separate deep dives, based on the available evidence and the distinct decisions they teach.
