@@ -3,9 +3,9 @@ import { publicArticles } from "@/content/publication";
 import { isPublicArticle } from "@/content/catalog";
 
 export const lifecycle = [
-  { id: "fundamentals", title: "CRE Fundamentals", articles: ["CRE-018"], planned: "Property cash flow and the roles of borrowers and lenders." },
-  { id: "origination", title: "Origination & Screening", articles: ["CRE-007"], planned: "Borrower screening and initial loan terms." },
-  { id: "financial-analysis", title: "Financial Analysis", articles: ["CRE-006", "CRE-007", "CRE-008", "CRE-011", "phase2a-gpr-egi", "CRE-015"], planned: "Capital spending and replacement reserves." },
+  { id: "fundamentals", title: "CRE Fundamentals", articles: [], planned: "Property cash flow and the roles of borrowers and lenders." },
+  { id: "origination", title: "Origination & Screening", articles: [], planned: "Borrower screening and initial loan terms." },
+  { id: "financial-analysis", title: "Financial Analysis", articles: ["CRE-006", "CRE-007", "CRE-008", "CRE-011", "phase2a-gpr-egi"], planned: "Capital spending and replacement reserves." },
   { id: "loan-sizing", title: "Underwriting & Loan Sizing", articles: ["CRE-015", "CRE-018", "CRE-025"], planned: "Loan sizing across coverage and leverage constraints." },
   { id: "credit-review", title: "Credit Review & Approval", articles: [], planned: "Credit memos, policy exceptions, and approval conditions." },
   { id: "closing", title: "Closing & Funding", articles: [], planned: "Closing diligence, loan documents, and funding conditions." },

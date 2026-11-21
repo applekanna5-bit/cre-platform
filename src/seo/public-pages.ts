@@ -4,7 +4,7 @@ import { isPublicArticle } from "../content/catalog";
 import { publicArticles } from "../content/publication";
 import type { resolveSeoContext } from "./context";
 
-export const publicPagePaths: readonly string[] = ["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", "/feedback"];
+export const publicPagePaths: readonly string[] = ["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations"];
 
 export type SeoContext = ReturnType<typeof resolveSeoContext>;
 export interface SeoDelivery {

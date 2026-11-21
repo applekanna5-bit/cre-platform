@@ -103,7 +103,7 @@ describe("Milestone 4D publication-safe learning discovery", () => {
     const html = render(catalog.articles);
     expect(html).toContain("Source documents &amp; financial evidence");
     expect(html).toContain("Revenue, expenses, NOI &amp; value");
-    expect(html).toContain("The fictional property laboratory");
+    expect(html).toContain("The fictional underwriting model");
     expect(html).toContain("In practice");
     expect(html).toContain("Read next");
     const rent = catalog.articles.find(article => article.id === "CRE-008")!;
@@ -111,7 +111,7 @@ describe("Milestone 4D publication-safe learning discovery", () => {
     const card = html.match(new RegExp(`<article\\b[^>]*>[\\s\\S]*?${rent.title}[\\s\\S]*?</article>`))?.[0];
     expect(card).toContain(`href="/content/underwriting/${revenue.slug}"`);
     expect(card).toContain("Assess supportable revenue");
-    expect(html).toContain("Apply this reading in the fictional laboratory");
+    expect(html).toContain("Apply this reading in the underwriting model");
   });
 
   it("does not expose private deep-dive targets from an otherwise published article", () => {

@@ -19,12 +19,12 @@ describe("owner-authorized eight-only indexed simulation foundation", () => {
     { SITE_INDEXING_ENABLED: "false" }, { PREVIEW_ACCESS_MODE: "private" }, { CRE_TEST_ONLY_PUBLICATION_DATE: "" }])("rejects unsafe indexed runtime %#", change => {
       expect(() => validateRuntime(snapshot, { ...env, ...change })).toThrow();
   });
-  it("projects exactly eight genuine article schemas and fifteen sitemap URLs; visible breadcrumb agrees", async () => {
+  it("projects exactly eight genuine article schemas and fourteen sitemap URLs; visible breadcrumb agrees", async () => {
     const { catalog } = await discoverContent("content");
     const eligible = catalog.articles.filter(isPublicArticle);
     expect(eligible).toHaveLength(8);
     expect(catalog.articles).toHaveLength(8);
-    expect(publicSeoPages(catalog, context, delivery)).toHaveLength(15);
+    expect(publicSeoPages(catalog, context, delivery)).toHaveLength(14);
     for (const a of catalog.articles) {
       const schema = articleStructuredData(a, context, delivery), crumbs = breadcrumbStructuredData(a, context, delivery);
       if (!isPublicArticle(a)) { expect(schema).toBeNull(); expect(crumbs).toBeNull(); continue; }

@@ -64,6 +64,7 @@ export function proxy(request: NextRequest) {
       const infrastructure = pathname.startsWith("/_next/static/") ||
         ["/icon.svg", "/robots.txt", "/sitemap.xml"].includes(pathname);
       if (pathname === "/search") response.headers.set("X-Robots-Tag", "noindex, follow");
+      else if (pathname === "/feedback") response.headers.set("X-Robots-Tag", "noindex, nofollow");
       else if (!publicPage && !infrastructure) return new NextResponse("Not found.", {
         status: 404, headers: { "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "private, no-store" },
       });

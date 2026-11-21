@@ -8,7 +8,7 @@ import { calculateIllustration, INPUTS, parseDraft } from "@/components/design-p
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 const rent = INPUTS[0];
 
-export function HomepageUnderwriting({ children, photography }: { children: ReactNode; photography: ReactNode }) {
+export function HomepageUnderwriting({ children }: { children: ReactNode }) {
   const [draft, setDraft] = useState(initialDraft);
   const { values, errors } = parseDraft(draft);
   const result = values ? calculateIllustration(values) : null;
@@ -45,6 +45,8 @@ export function HomepageUnderwriting({ children, photography }: { children: Reac
       </Container>
     </Section>
     {children}
-    <UnderwritingModel draft={draft} setDraft={setDraft} photography={photography} complete />
+    <Container className="pb-10 sm:pb-14">
+      <UnderwritingModel draft={draft} setDraft={setDraft} complete />
+    </Container>
   </>;
 }

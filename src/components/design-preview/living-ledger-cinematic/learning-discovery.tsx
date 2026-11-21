@@ -24,7 +24,7 @@ const practiceTopics = [
 ] as const;
 
 const connections = [
-  { concept: "Rent", id: "CRE-008", note: "Compare the laboratory’s single rent assumption with contract and market rent evidence." },
+  { concept: "Rent", id: "CRE-008", note: "Compare the model’s single rent assumption with contract and market rent evidence." },
   { concept: "Vacancy", id: "CRE-011", note: "Put the model’s vacancy allowance in the wider context of revenue losses and supportable income." },
   { concept: "Expenses", id: "CRE-006", note: "Move from a single expense ratio to reading the property’s operating statement." },
   { concept: "NOI", id: "CRE-015", note: "Explore the judgment behind sustainable income and normalized operating expenses." },
@@ -62,7 +62,7 @@ export function LearningDiscovery({ catalog }: { catalog: Pick<ContentCatalog, "
       <div className={styles.sectionHeading}>
         <p className={styles.eyebrow}>02 / CRE knowledge explorer</p>
         <h2 id="pathway-title" tabIndex={-1}>Build Your CRE Underwriting Knowledge</h2>
-        <p>Continue from the property laboratory into published research. Explore the subjects with material available today.</p>
+        <p>Continue from the underwriting model into published research. Explore the subjects with material available today.</p>
       </div>
       {groups.length > 0 ? <>
         <ul aria-label="Published knowledge categories" className={styles.categories}>
@@ -94,12 +94,12 @@ export function LearningDiscovery({ catalog }: { catalog: Pick<ContentCatalog, "
                 <div className={styles.nextRead}>{next ? <>
                   <span>Read next</span><a href={next.href}>{next.title}</a>
                   {next.needsReview && <span className={styles.review}>Awaiting review</span>}
-                </> : <a href="#assumption-monthlyRent">Apply this reading in the fictional laboratory <span aria-hidden="true">↑</span></a>}</div>
+                </> : <a href="#assumption-monthlyRent">Apply this reading in the underwriting model <span aria-hidden="true">↑</span></a>}</div>
               </article>
             </li>; })}
           </ul>
         </section>)}
-      </> : <p className={styles.empty}>Published research will appear here when available. The fictional property laboratory remains available above.</p>}
+      </> : <p className={styles.empty}>Published research will appear here when available. The fictional underwriting model remains available above.</p>}
     </section>
 
     {discover.length > 0 && understand.length > 0 && <section aria-labelledby="learning-progression-title" className={styles.section}>
@@ -111,7 +111,7 @@ export function LearningDiscovery({ catalog }: { catalog: Pick<ContentCatalog, "
       <ol className={styles.progression}>
         <li><div className={styles.stageHeading}><span className={styles.step} aria-hidden="true">01</span><h3>Discover</h3></div><p className={styles.stageLabel}>Source documents &amp; financial evidence</p><p>Read the rent roll and T-12 to understand the evidence behind property performance.</p><ResearchLinks articles={discover} /></li>
         <li><div className={styles.stageHeading}><span className={styles.step} aria-hidden="true">02</span><h3>Understand</h3></div><p className={styles.stageLabel}>Revenue, expenses, NOI &amp; value</p><p>Follow how underwriters interpret reported income, assess expenses, and connect NOI to valuation.</p><ResearchLinks articles={understand} /></li>
-        <li className={styles.applyStage}><div className={styles.stageHeading}><span className={styles.step} aria-hidden="true">03</span><h3>Apply</h3></div><p className={styles.stageLabel}>The fictional property laboratory</p><p>Change an assumption in the 100-unit example. Follow its effect on income and value, then compare with the baseline.</p><a className={styles.returnLink} href="#assumption-monthlyRent">Adjust the laboratory assumptions <span aria-hidden="true">↑</span></a></li>
+        <li className={styles.applyStage}><div className={styles.stageHeading}><span className={styles.step} aria-hidden="true">03</span><h3>Apply</h3></div><p className={styles.stageLabel}>The fictional underwriting model</p><p>Change an assumption in the 100-unit example. Follow its effect on income and value, then compare with the baseline.</p><a className={styles.returnLink} href="#assumption-monthlyRent">Adjust the model assumptions <span aria-hidden="true">↑</span></a></li>
       </ol>
     </section>}
 
@@ -119,7 +119,7 @@ export function LearningDiscovery({ catalog }: { catalog: Pick<ContentCatalog, "
       <div className={styles.sectionHeading}>
         <p className={styles.eyebrow}>04 / From the model to the evidence</p>
         <h2 id="connected-research-title">Take the next question into the research.</h2>
-        <p>The laboratory simplifies the mechanics. These articles explore the analysis behind them; their worked examples are separate from this fictional property.</p>
+        <p>The model simplifies the mechanics. These articles explore the analysis behind them; their worked examples are separate from this fictional property.</p>
       </div>
       <dl className={styles.connections}>{connected.map(connection => <div key={connection.concept}>
         <dt>{connection.concept}</dt>

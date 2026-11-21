@@ -5,7 +5,6 @@ import { Container, Section } from "@/components/ui/primitives";
 import { ArticleList } from "@/components/content/article-list";
 import { lifecycle, recommendedReading, specializations } from "@/config/learning";
 import { HomepageUnderwriting } from "@/components/home/homepage-underwriting";
-import { PropertyVisual } from "@/components/design-preview/living-ledger/property-visual";
 import architecture from "@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp";
 import styles from "@/components/design-preview/living-ledger-cinematic/cinematic.module.css";
 
@@ -28,7 +27,7 @@ export default function Home() {
         </div>
       </div>
     </section>
-    <HomepageUnderwriting photography={<PropertyVisual loading="lazy" />}>
+    <HomepageUnderwriting>
       <Section aria-labelledby="lifecycle-title" className="border-t border-border">
         <Container>
           <h2 id="lifecycle-title" className="font-editorial text-3xl">CRE Loan Lifecycle</h2>
@@ -56,7 +55,7 @@ export default function Home() {
     <Section aria-labelledby="feedback-title" className="border-t border-border bg-surface">
       <Container>
         <h2 id="feedback-title" className="font-editorial text-3xl">Professional Feedback</h2>
-        <p className="mt-3 text-muted">Have a correction or a topic you would like covered? Find out how feedback will be handled.</p>
+        <p className="mt-3 text-muted">Feedback submissions are currently unavailable.</p>
         <Link className="mt-3 inline-flex min-h-11 items-center underline underline-offset-4" href="/feedback">Professional feedback information</Link>
       </Container>
     </Section>

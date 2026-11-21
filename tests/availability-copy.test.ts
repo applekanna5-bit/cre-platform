@@ -6,9 +6,17 @@ import SpecializationsPage from "@/app/specializations/page";
 import FeedbackPage from "@/app/feedback/page";
 import { SiteFooter } from "@/components/site-footer";
 import { catalog } from "@/content/.generated";
+import { lifecycle as stages } from "@/config/learning";
 import { publicArticles } from "@/content/publication";
 
 describe("published underwriting availability", () => {
+  it("assigns each published article to its principal lifecycle stage", () => {
+    expect(stages.map(stage => stage.articles)).toEqual([
+      [], [], ["CRE-006", "CRE-007", "CRE-008", "CRE-011", "phase2a-gpr-egi"],
+      ["CRE-015", "CRE-018", "CRE-025"], [], [], [],
+    ]);
+  });
+
   it("keeps all eight articles accessible from the lifecycle and specializations", () => {
     const articles = publicArticles(catalog);
     expect(articles.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "phase2a-gpr-egi"]);

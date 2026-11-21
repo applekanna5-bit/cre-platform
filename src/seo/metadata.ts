@@ -63,7 +63,7 @@ export function pageMetadata(page: Page, context: SeoContext = currentContext())
       "The CRE Ledger’s standards for sources, financial calculations, illustrative examples, editorial responsibility and substantive corrections.", { path: "/editorial-standards" });
     case "loan-lifecycle": return constructMetadata(context, "CRE Loan Lifecycle", "Follow commercial real estate financing from origination through servicing and resolution.", { path: "/loan-lifecycle" });
     case "specializations": return constructMetadata(context, "Professional Specializations", "Explore underwriting, property types, financing, and servicing.", { path: "/specializations" });
-    case "feedback": return constructMetadata(context, "Professional Feedback", "Find out how The CRE Ledger will handle corrections, suggestions, and professional feedback.", { path: "/feedback" });
+    case "feedback": return constructMetadata(context, "Professional Feedback", "Feedback submissions are currently unavailable. Learn how corrections and suggestions will be handled.", { privatePage: true });
     case "layout": return constructMetadata(context, siteName, siteDescription);
     case "home": return constructMetadata(context, siteName, siteDescription, { path: "/" });
     case "library": return constructMetadata(context, "Research Library",

@@ -19,11 +19,11 @@ describe("local SEO discovery foundation (explicit nondeployable object contexts
     expect(seoRobots(context, delivery)).toEqual({ rules: { userAgent: "*", allow: "/" } });
     expect(canonicalUrl(context, "/library")).toBeUndefined();
   });
-  it("projects exactly the eight public articles, and seven public site pages", () => {
-    const expected = ["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", "/feedback", ...catalog.articles.filter(isPublicArticle).map(articleRoute)].map(p => origin + p).sort();
+  it("projects exactly the eight public articles, and six indexable site pages", () => {
+    const expected = ["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", ...catalog.articles.filter(isPublicArticle).map(articleRoute)].map(p => origin + p).sort();
     const pages = publicSeoPages(catalog, indexed, delivery);
     expect(pages.map(p => p.url).sort()).toEqual(expected);
-    expect(pages).toHaveLength(15);
+    expect(pages).toHaveLength(14);
     expect(pages.every(p => Object.keys(p).join() === "url")).toBe(true);
     expect(new Set(pages.map(p => p.url)).size).toBe(pages.length);
     for (const a of catalog.articles.filter(a => !isPublicArticle(a))) expect(pages.map(p => p.url)).not.toContain(origin + articleRoute(a));
