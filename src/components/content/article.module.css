@@ -1,17 +1,19 @@
 .page { padding-block: 1.75rem 4.5rem; }
-.layout { display: grid; gap: 3rem; max-width: 48rem; margin-inline: auto; }
+.layout, .breadcrumb { max-width: 48rem; margin-inline: auto; }
+.layout { display: grid; gap: 3rem; }
+.breadcrumb { margin-bottom: 1.25rem; color: var(--color-muted); font-size: .875rem; }
 .article { min-width: 0; }
 .fixture { margin-bottom: 1.75rem; border-block: 1px solid var(--color-border); border-left: 3px solid var(--color-copper); padding: .75rem 1rem; color: var(--color-copper-text); font-size: .8125rem; font-weight: 600; }
 .articleHeader { border-bottom: 1px solid var(--color-border-strong); padding-bottom: 2rem; }
-.title { margin-top: 1rem; max-width: 23ch; font-family: var(--font-editorial); font-size: clamp(2.125rem, 3.6vw, 3.25rem); line-height: 1.13; letter-spacing: -.035em; text-wrap: balance; }
+.title { margin-top: 1rem; max-width: 23ch; font-family: var(--font-editorial); font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.13; letter-spacing: -.035em; text-wrap: balance; }
 .deck { max-width: 60ch; margin-top: 1.25rem; color: var(--color-muted); font-size: 1.125rem; line-height: 1.75; }
-.body { min-width: 0; font-size: 1.0625rem; }
-.body > p { max-width: 44rem; margin-block: 1.5rem; line-height: 1.85; }
+.body { min-width: 0; font-size: 1.0625rem; line-height: 1.75; overflow-wrap: anywhere; }
+.body > p { max-width: 68ch; margin-block: 1.25rem; }
 .body > p:first-child { margin-top: 2rem; }
-.body h2 { margin-block: 3rem 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border); font-family: var(--font-editorial); font-size: 1.875rem; line-height: 1.25; letter-spacing: -.02em; }
+.body h2 { margin-block: 2.75rem 1rem; font-family: var(--font-editorial); font-size: clamp(1.5rem, 3vw, 1.875rem); line-height: 1.25; letter-spacing: -.02em; }
 .body h4, .body h5, .body h6 { margin-block: 1.5rem .75rem; font-weight: 600; }
 .body > h3 { margin-block: 2rem 1rem; font-family: var(--font-editorial); font-size: 1.5rem; line-height: 1.35; }
-.body > ul, .body > ol { max-width: 44rem; margin-block: 1.25rem; padding-left: 1.5rem; }
+.body > ul, .body > ol { max-width: 68ch; margin-block: 1.25rem; padding-left: 1.5rem; }
 .body > ul { list-style: disc; }
 .body > ol { list-style: decimal; }
 .body li + li { margin-top: .5rem; }
@@ -22,7 +24,7 @@
 .body code { font-size: .9em; }
 .body :target, .article > section :target { scroll-margin-top: 2rem; }
 .formula { margin-block: 2rem; padding: 1.5rem 0; border-block: 1px solid var(--color-border-strong); font-variant-numeric: tabular-nums; }
-.formula > p:first-of-type { font-size: 1.5rem; color: var(--color-accent); }
+.formula > p:first-of-type { font-size: clamp(1.125rem, 3vw, 1.5rem); color: var(--color-accent); }
 .formula dl > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1rem; padding-top: .75rem; border-top: 1px solid var(--color-border); }
 .calculation { margin-block: 2rem; padding: 1.5rem; background: var(--color-elevated); border-top: 2px solid var(--color-accent); font-variant-numeric: tabular-nums; }
 .calculation > p:nth-of-type(2) { color: var(--color-accent); font-size: 1.25rem; }
@@ -36,22 +38,18 @@
 .financialTable table { overflow-wrap: normal; word-break: normal; }
 .financialTable th, .financialTable td { min-width: 7rem; }
 .financialTable th:first-child { min-width: 10rem; }
-.financialTable td { white-space: nowrap; }
 .financialTable tr[data-total="true"] th, .financialTable tr[data-total="true"] td { font-weight: 700; }
-.context { min-width: 0; border-top: 2px solid var(--color-accent); padding-top: 1.5rem; align-self: start; }
+.context { display: none; min-width: 0; align-self: start; }
+.inlineOutline { border-bottom: 1px solid var(--color-border); }
+.inlineOutline summary { min-height: 2.75rem; padding-block: .625rem; cursor: pointer; font-weight: 600; color: var(--color-accent); }
+.inlineOutline nav { padding-bottom: .75rem; }
+.articleReturn { margin-top: 2rem; border-top: 1px solid var(--color-border); padding-top: .75rem; display: flex; flex-wrap: wrap; gap: 0 1.5rem; font-size: .875rem; }
+.articleReturn a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: underline; text-underline-offset: .2em; color: var(--color-accent); }
 .railLabel { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--color-accent); }
 .outline { margin-top: 1rem; border-left: 1px solid var(--color-border); }
 .outline a { display: flex; align-items: center; min-height: 2.75rem; padding: .5rem 0 .5rem 1rem; border-left: 2px solid transparent; margin-left: -1px; color: var(--color-muted); font-size: .875rem; line-height: 1.5; text-decoration: underline; text-decoration-color: var(--color-border); text-underline-offset: .2em; }
 .outline a:hover, .outline a:focus-visible { color: var(--color-accent); border-left-color: var(--color-copper); text-decoration-color: currentColor; }
 .outlineNested a { padding-left: 1.75rem; font-size: .8125rem; }
-.railRelationships { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
-.railRelationships li > p:first-child { font-size: .6875rem; letter-spacing: .08em; }
-.railRelationships a { font-size: .875rem; }
-.backToTop { position: fixed; z-index: 40; right: calc(1rem + env(safe-area-inset-right, 0px)); bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); display: grid; width: 3.25rem; height: 3.25rem; place-items: center; border: 1px solid transparent; border-radius: 50%; background: var(--color-analytical); color: var(--color-on-analytical); box-shadow: 0 4px 14px rgb(13 27 42 / 22%); touch-action: manipulation; transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
-.backToTopHidden { visibility: hidden; opacity: 0; pointer-events: none; }
-.backToTop:hover { transform: translateY(-2px); border-color: var(--color-copper); background: var(--color-accent-strong); }
-.backToTop:focus-visible { border-color: var(--color-copper); box-shadow: 0 0 0 4px rgb(173 113 74 / 30%), 0 4px 14px rgb(13 27 42 / 22%); }
-.backToTop svg { width: 1.25rem; height: 1.25rem; }
 @media (min-width: 64rem) {
   .page { padding-block: 2rem 6rem; }
 }
@@ -62,24 +60,25 @@
 /* Keep enlarged text in a reading column instead of squeezing it beside the rail. */
 .page { container-type: inline-size; }
 @container (min-width: 70rem) {
+  .breadcrumb { max-width: none; }
+  .inlineOutline { display: none; }
   .layout { max-width: none; grid-template-columns: minmax(0, 47.5rem) 16.25rem; justify-content: space-between; gap: clamp(2.5rem, 3.3vw, 3rem); }
-  .article { max-width: 47.5rem; }
-  .context { border-top: 0; border-left: 1px solid var(--color-border); padding: .25rem 0 0 1.5rem; }
+  .article { grid-area: 1 / 1; max-width: 47.5rem; }
+  .context { display: block; grid-area: 1 / 2; border-left: 1px solid var(--color-border); padding: .25rem 0 0 1.5rem; }
   /* The site header scrolls normally; the rail sticks only after it has cleared. */
   @media (min-height: 40rem) {
     .context { position: sticky; top: 1.5rem; max-height: calc(100dvh - 3rem); overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; scroll-padding-block: .5rem; padding-right: .25rem; padding-bottom: .25rem; }
   }
 }
-@media (max-width: 63.999rem) {
-  /* Reserve a clear lane for the 44px control without covering article text. */
-  .page { padding-inline-end: calc(4rem + env(safe-area-inset-right, 0px)); }
-  .backToTop { width: 2.75rem; height: 2.75rem; right: calc(.5rem + env(safe-area-inset-right, 0px)); bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+
+@media (max-width: 39.999rem) {
+  .breadcrumb li:has([aria-current="page"]) { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .articleHeader { padding-bottom: 1.25rem; }
+  .financialTable th, .financialTable td { padding-inline: .75rem; }
+  .body h2 { margin-block-start: 2.25rem; }
 }
 @media (max-width: 30rem) {
   .fixture { padding-inline: .5rem; }
   .formula dl > div { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
   .calculation { padding: 1.25rem 1rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .backToTop { transition: none; }
 }

@@ -48,9 +48,9 @@ export function CaseStudy({ record }: { record: EducationalCase }) {
 }
 export function FinancialTable({ data }: { data: FinancialTableData }) {
   return <div className={styles.financialTable}>
-    <p id={`table-help-${data.id}`} className="mb-2 text-xs text-muted">On narrow screens, scroll the table horizontally. Keyboard users can focus the table region and use arrow keys.</p>
+    <p id={`table-help-${data.id}`} className="mb-2 text-xs text-muted">On narrow screens, swipe to see more columns or focus the table and use the arrow keys.</p>
     <div role="region" aria-labelledby={`table-${data.id}`} aria-describedby={`table-help-${data.id}`} tabIndex={0} className="max-w-full overflow-x-auto border-y border-border-strong bg-elevated">
-      <table className="w-full min-w-[30rem] border-collapse text-sm">
+      <table className="w-full border-collapse text-sm">
         <caption id={`table-${data.id}`} className="px-4 py-4 text-left font-semibold">{data.caption}</caption>
         <thead className="bg-accent text-on-accent"><tr>{data.columns.map(col => <th key={col.key} scope="col" className={`px-4 py-3 font-semibold ${col.numeric ? "text-right" : "text-left"}`}>{col.label}</th>)}</tr></thead>
         <tbody>{data.rows.map((row, index) => <tr key={`${row.label}-${index}`} data-total={row.total || undefined} className={row.total ? "border-t-2 border-accent bg-surface font-semibold" : "border-t border-border"}>
@@ -83,14 +83,13 @@ export function Sources({ sources }: { sources: readonly ContentSource[] }) {
     </li>)}</ol>
   </section>;
 }
-const purposeLabels = { prerequisite: "Prerequisite", "deep-dive": "Deep Dive", application: "Application", tool: "Tool" } as const;
-export function RelationshipNavigation({ relationships, compact = false }: { relationships: readonly ResolvedRelationship[]; compact?: boolean }) {
+const purposeLabels = { prerequisite: "Background reading", "deep-dive": "Read next", application: "Application", tool: "Tool" } as const;
+export function RelationshipNavigation({ relationships }: { relationships: readonly ResolvedRelationship[] }) {
   if (!relationships.length) return null;
-  const id = compact ? "context-relationships" : "article-relationships";
-  return <nav aria-labelledby={id} className={compact ? styles.railRelationships : styles.relationships}>
-    <h2 id={id} tabIndex={-1} className={compact ? styles.railLabel : "font-editorial text-2xl"}>{compact ? "Related content" : "Connect the concepts"}</h2>
+  return <nav aria-labelledby="article-relationships" className="mt-10 border-t border-border-strong pt-6">
+    <h2 id="article-relationships" tabIndex={-1} className="font-editorial text-2xl">Related reading</h2>
     <ul className="mt-4 divide-y divide-border">{relationships.map(relation => <li key={`${relation.purpose}:${relation.target.kind}:${relation.target.id}`} className="py-4">
-      <p className="text-xs font-semibold uppercase tracking-wider text-steel">{purposeLabels[relation.purpose]} · {relation.target.kind.replaceAll("-", " ")}</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-steel">{purposeLabels[relation.purpose]}</p>
       {relation.href ? <a href={relation.href} className="inline-block min-h-11 py-2 font-semibold text-accent underline underline-offset-4 hover:text-steel">{relation.label}</a> : <p className="mt-2 text-sm">{relation.label} <span className="text-muted">— Not available</span></p>}
     </li>)}</ul>
   </nav>;
