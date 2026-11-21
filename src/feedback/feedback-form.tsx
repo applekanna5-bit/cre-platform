@@ -59,15 +59,16 @@ export function FeedbackForm({ submit }: {
   const id = (key: string) => `${prefix}-${key}`;
   const errors = result?.kind === "invalid" ? result.errors : {};
   const attrs = (key: keyof Feedback) => ({
+    className: "mt-1 block w-full rounded-control border border-border-strong bg-elevated px-3 py-2 text-base min-h-11",
     id: id(key), name: key, "aria-invalid": !!errors[key],
     "aria-describedby": errors[key] ? id(`${key}-error`) : undefined,
   });
-  const error = (key: keyof Feedback) => errors[key] && <p id={id(`${key}-error`)}>{errors[key]}</p>;
+  const error = (key: keyof Feedback) => errors[key] && <p className="mt-1 text-warning" id={id(`${key}-error`)}>{errors[key]}</p>;
 
-  return <form method="post" onSubmit={handleSubmit} aria-describedby={id("privacy")}>
+  return <form className="space-y-4" method="post" onSubmit={handleSubmit} aria-describedby={id("privacy")}>
     <p id={id("privacy")}>Never share confidential borrower, client, employer, or transaction information. Name and email are optional. The site owner reviews submissions and may use your email to follow up. A published correction will describe the change without identifying you.</p>
     <p role="status" aria-atomic="true">{busy ? "Saving feedback…" : result && messages[result.kind]}</p>
-    <fieldset disabled={busy}>
+    <fieldset className="space-y-4" disabled={busy}>
       <legend>Feedback</legend>
       <div><label htmlFor={id("category")}>Feedback category (required)</label>
         <select {...attrs("category")} required><option value="">Select a category</option>
@@ -86,7 +87,7 @@ export function FeedbackForm({ submit }: {
         <label htmlFor={id(field.name)}>{field.label} (optional)</label>
         <input {...attrs(field.name)} type={field.type} maxLength={field.limit} autoComplete={field.autoComplete} />{error(field.name)}
       </div>)}
-      <button type="submit">Send feedback</button>
+      <button type="submit" className="min-h-11 rounded-control bg-accent px-4 py-2 font-semibold text-on-accent">Send feedback</button>
     </fieldset>
   </form>;
 }

@@ -52,7 +52,7 @@ export function notificationStore(db: Database) {
 type Notice = { subject: string; text: string; messageId: string };
 export type SendNotice = (notice: Notice) => Promise<Delivery>;
 
-export async function runNotifications(store: ReturnType<typeof notificationStore>, send: SendNotice) {
+export async function runNotifications(store: ReturnType<typeof notificationStore>, send: SendNotice, dashboardOrigin?: string) {
   await store.expire();
   for (let count = 0; count < 5; count++) {
     const job = await store.claim();
@@ -61,7 +61,9 @@ export async function runNotifications(store: ReturnType<typeof notificationStor
     try {
       outcome = await send({
         subject: "New feedback for The CRE Ledger",
-        text: `Open the private feedback dashboard. Reference: ${job.submissionId}`,
+        text: dashboardOrigin
+          ? `Reference: ${job.submissionId}\n${new URL("/owner/feedback?id=" + job.submissionId, dashboardOrigin).href}`
+          : `Open the private feedback dashboard. Reference: ${job.submissionId}`,
         messageId: `<feedback-${job.submissionId}@thecreledger.com>`,
       });
     } catch {
