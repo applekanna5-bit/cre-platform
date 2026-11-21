@@ -19,9 +19,11 @@
     "test:release": "node scripts/release-package.mts test"
   },
   "dependencies": {
+    "mysql2": "^3.24.6",
     "next": "16.4.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^3.1.1",
