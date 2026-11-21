@@ -1,0 +1,75 @@
+{
+  "id": "WP04B-02",
+  "title": "Manufactured Housing Communities: Site Rent, Home Ownership and Infrastructure",
+  "slug": "manufactured-housing-communities",
+  "description": "Separate site rent from home rent, check the title and infrastructure, and model the income that supports a community mortgage.",
+  "domain": "property-types",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [
+    "manufactured-housing-community"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "site-rent",
+    "home-ownership",
+    "utility-reimbursements",
+    "collateral"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "wp04b-freddie-mhc",
+    "wp04b-epa-water",
+    "wp04b-epa-wastewater",
+    "wp04b-cfpb-home-title",
+    "wp04b-fannie-mhc"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-007"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-006"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-018"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-025"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

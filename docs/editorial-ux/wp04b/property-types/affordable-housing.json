@@ -1,0 +1,77 @@
+{
+  "id": "WP04B-03",
+  "title": "Affordable Housing: Underwriting Restricted Rents and Layered Financing",
+  "slug": "affordable-housing",
+  "description": "Trace restricted rent, rental assistance and compliance through property cash flow, valuation and senior and subordinate financing.",
+  "domain": "property-types",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [
+    "affordable-housing",
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "lihtc",
+    "rent-restrictions",
+    "rental-assistance",
+    "subordinate-debt"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "wp04b-section-42",
+    "wp04b-lihtc-monitoring",
+    "wp04b-hud-pbv",
+    "wp04b-freddie-affordable",
+    "wp04b-fannie-affordable",
+    "wp04b-hud-fha"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "phase2a-gpr-egi"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-011"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-018"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-025"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

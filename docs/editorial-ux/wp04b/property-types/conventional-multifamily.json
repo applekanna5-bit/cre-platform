@@ -1,0 +1,87 @@
+{
+  "id": "WP04B-01",
+  "title": "Conventional Multifamily: Reading the Leases and the Operating Statement",
+  "slug": "conventional-multifamily",
+  "description": "Use lease and operating evidence to evaluate apartment revenue, stabilized expenses, valuation and debt service capacity.",
+  "domain": "property-types",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [
+    "multifamily"
+  ],
+  "loanProducts": [],
+  "topics": [
+    "unit-mix",
+    "economic-occupancy",
+    "expense-normalization",
+    "multifamily-underwriting"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "wp04b-fannie-dus",
+    "wp04b-freddie-optigo"
+  ],
+  "updateSensitivity": "U2",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "CRE-007"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-008"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-006"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "phase2a-gpr-egi"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-015"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-018"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "CRE-025"
+      }
+    }
+  ],
+  "developmentFixture": false
+}
