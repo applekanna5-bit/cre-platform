@@ -1,0 +1,69 @@
+{
+  "id": "WP04C-02",
+  "title": "Borrower, Sponsor and Guarantor Analysis",
+  "slug": "borrower-sponsor-and-guarantor-analysis",
+  "description": "Evaluate who controls the borrower, who can fund a shortfall and how recourse and guaranties allocate liability.",
+  "domain": "financing",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [],
+  "loanProducts": [],
+  "topics": [
+    "sponsor-liquidity",
+    "recourse",
+    "guaranties"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "wp04c-fannie-forms"
+  ],
+  "updateSensitivity": "U3",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-02"
+      }
+    },
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-04"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-025"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-01"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-04"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

@@ -1,0 +1,72 @@
+{
+  "id": "WP04C-03",
+  "title": "Third-Party Reports and Due Diligence",
+  "slug": "third-party-reports-and-due-diligence",
+  "description": "Reconcile valuation, environmental, engineering, insurance, title and survey findings with the proposed collateral and loan terms.",
+  "domain": "financing",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [],
+  "loanProducts": [],
+  "topics": [
+    "collateral-diligence",
+    "appraisal-review",
+    "environmental-review",
+    "title-and-survey"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "wp04c-epa-aai-rule",
+    "wp04c-epa-aai",
+    "wp04c-fannie-survey"
+  ],
+  "updateSensitivity": "U3",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-018"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "WP04B-02"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "WP04B-03"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-01"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-04"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

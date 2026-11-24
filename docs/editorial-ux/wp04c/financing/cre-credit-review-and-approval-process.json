@@ -1,0 +1,84 @@
+{
+  "id": "WP04C-01",
+  "title": "CRE Credit Review and Approval Process",
+  "slug": "cre-credit-review-and-approval-process",
+  "description": "Trace how underwriting becomes an authorized credit decision and a set of enforceable closing instructions.",
+  "domain": "financing",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [],
+  "loanProducts": [],
+  "topics": [
+    "credit-approval",
+    "credit-memorandum",
+    "policy-exceptions"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "wp04c-fannie-authority",
+    "wp04c-bbcms-psa"
+  ],
+  "updateSensitivity": "U3",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-03"
+      }
+    },
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-05"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-018"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-025"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-02"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-03"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-04"
+      }
+    }
+  ],
+  "developmentFixture": false
+}

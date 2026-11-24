@@ -1,0 +1,78 @@
+{
+  "id": "WP04C-04",
+  "title": "Commercial Mortgage Loan Closing and Funding",
+  "slug": "commercial-mortgage-loan-closing-and-funding",
+  "description": "Clear closing conditions, reconcile settlement funds and distinguish borrower funding from subsequent investor delivery.",
+  "domain": "financing",
+  "contentType": "guide",
+  "difficulty": "intermediate",
+  "status": "draft",
+  "author": {
+    "name": "The CRE Ledger Editorial Team"
+  },
+  "propertyTypes": [],
+  "loanProducts": [],
+  "topics": [
+    "loan-documents",
+    "settlement",
+    "funding-authorization"
+  ],
+  "relatedGlossaryTerms": [],
+  "relatedCalculators": [],
+  "relatedContent": [],
+  "sourceIds": [
+    "occ-cre-lending-2022",
+    "wp04c-fannie-delivery",
+    "wp04c-freddie-delivery",
+    "wp04c-bbcms-psa"
+  ],
+  "updateSensitivity": "U3",
+  "sourceClasses": [
+    "B"
+  ],
+  "relationships": [
+    {
+      "purpose": "prerequisite",
+      "target": {
+        "kind": "article",
+        "id": "WP04A-04"
+      }
+    },
+    {
+      "purpose": "deep-dive",
+      "target": {
+        "kind": "article",
+        "id": "CRE-025"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-01"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-02"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-03"
+      }
+    },
+    {
+      "purpose": "application",
+      "target": {
+        "kind": "article",
+        "id": "WP04C-05"
+      }
+    }
+  ],
+  "developmentFixture": false
+}
