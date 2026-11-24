@@ -6,14 +6,20 @@ export function articleRoute(article: Pick<ArticleMetadata, "domain" | "slug">):
 export function isPublicArticle(article: ArticleMetadata): boolean {
   return !article.developmentFixture && (article.status === "published" || (article.status === "needs-review" && !!article.publishedDate));
 }
+export function isCommunityReview(article: ArticleMetadata): boolean {
+  return !article.developmentFixture && article.status === "community-review";
+}
+export function isPubliclyReadable(article: ArticleMetadata): boolean {
+  return isPublicArticle(article) || isCommunityReview(article);
+}
 export function isEditorialPreview(article: ArticleMetadata, editorialPreview = false): boolean {
   return editorialPreview && !article.developmentFixture && article.status === "approved";
 }
 export function isRenderable(article: ArticleMetadata, fixtures = false, editorialPreview = false): boolean {
-  return isPublicArticle(article) || (fixtures && article.developmentFixture && article.status === "draft") || isEditorialPreview(article, editorialPreview);
+  return isPubliclyReadable(article) || (fixtures && article.developmentFixture && article.status === "draft") || isEditorialPreview(article, editorialPreview);
 }
 export function isEditoriallyProtected(status: ArticleMetadata["status"]): boolean {
-  return ["ready", "approved", "published", "needs-review", "archived"].includes(status);
+  return ["ready", "approved", "published", "community-review", "needs-review", "archived"].includes(status);
 }
 /** M1B untyped relationships retain a documented default purpose. */
 export function relationshipsFor(article: ArticleMetadata): ContentRelationship[] {

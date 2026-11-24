@@ -20,6 +20,7 @@ export type EditorialStatus =
   | "ready"
   | "approved"
   | "published"
+  | "community-review"
   | "needs-review"
   | "archived";
 

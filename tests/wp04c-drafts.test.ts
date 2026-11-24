@@ -31,23 +31,23 @@ async function readDrafts(folder: string) {
 
 describe("WP04C lifecycle drafts", () => {
   it("compiles each guide, resolves packet reading and preserves public delivery", async () => {
-    const [base, learn, origination, property, drafts, sourceA, sourceB, sourceC] = await Promise.all([
+    const [base, prior, drafts, sourceB, sourceC] = await Promise.all([
       discoverContent("content"),
-      readDrafts(join(editorial, "wp04a", "learn")),
-      readDrafts(join(editorial, "wp04a", "financing")),
+
+
       readDrafts(join(editorial, "wp04b", "property-types")),
       readDrafts(join(packet, domain)),
-      readJson(join(editorial, "wp04a", "source-records.json")),
+
       readJson(join(editorial, "wp04b", "source-records.json")),
       readJson(join(packet, "source-records.json")),
     ]);
-    const prior = [...learn, ...origination, ...property];
-    expect(prior).toHaveLength(8);
+
+    expect(prior).toHaveLength(3);
     expect(drafts.map(({ metadata }) => metadata.id).sort()).toEqual([
       "WP04C-01", "WP04C-02", "WP04C-03", "WP04C-04", "WP04C-05",
     ]);
     const sources = new Map(base.catalog.sources.map(source => [source.id, source]));
-    for (const source of [...parseSources(sourceA), ...parseSources(sourceB), ...parseSources(sourceC)]) {
+    for (const source of [...parseSources(sourceB), ...parseSources(sourceC)]) {
       expect(sources.has(source.id), source.id).toBe(false);
       sources.set(source.id, source);
     }
@@ -76,7 +76,7 @@ describe("WP04C lifecycle drafts", () => {
     }
     const mode = { fixturesEnabled: false, editorialPreviewEnabled: false };
     const publicCatalog = projectDeliveryCatalog(base.catalog, mode);
-    expect(publicCatalog.articles).toHaveLength(8);
+    expect(publicCatalog.articles).toHaveLength(13);
     expect(projectDeliveryCatalog(catalog, mode)).toEqual(publicCatalog);
   });
 

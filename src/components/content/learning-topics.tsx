@@ -24,9 +24,9 @@ export function LearningTopics({ title, description, topics, children }: {
         <h2 id={topic.id} tabIndex={-1} className="scroll-mt-24 font-editorial text-2xl">{topic.title}</h2>
         <p className="mt-2 max-w-[68ch] text-muted">{topic.description}</p>
         {articles.length > 0 && <>
-          <p id={`${topic.id}-reading`} className="mt-4 text-sm font-medium text-muted">Published reading</p>
+          <p id={`${topic.id}-reading`} className="mt-4 text-sm font-medium text-muted">{articles.some(article => article.communityReview) ? "Available reading" : "Published reading"}</p>
           <ol aria-labelledby={`${topic.id}-reading`} className="mt-2 list-decimal space-y-3 pl-6">
-          {articles.map(article => <li key={article.id}><Link className="text-accent underline underline-offset-4" href={article.href}>{article.title}</Link></li>)}
+          {articles.map(article => <li key={article.id}><Link className="text-accent underline underline-offset-4" href={article.href}>{article.title}</Link>{article.communityReview && <span className="ml-2 text-xs text-muted">Community Review Edition</span>}</li>)}
           </ol>
         </>}
         <p className="mt-4 text-muted"><span className="text-sm font-medium">Planned topics</span> · {topic.planned}</p>

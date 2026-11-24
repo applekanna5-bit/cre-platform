@@ -90,7 +90,7 @@ describe("prepared-root package copy", () => {
       source: { head: "fixture", branch: "fixture", inventory: "", files: { "input": "fixture" } }, snapshot, articlePaths: productionArticlePaths,
       files: Object.fromEntries(artifactFiles(f.destination).map(p => [p, sha256(readFileSync(path.join(f.destination, p)))])) };
     const bytes = JSON.stringify(manifest); write("release-manifest.json", bytes); const digest = sha256(bytes);
-    expect(verifyRelease(f.destination, digest).articlePaths).toHaveLength(8);
+    expect(verifyRelease(f.destination, digest).articlePaths).toHaveLength(productionArticlePaths.length);
     write(".release/guard.js", "tampered"); expect(() => verifyRelease(f.destination, digest)).toThrow("digest");
     write(".release/guard.js", "guard-original"); rmSync(path.join(f.destination, ".next/static/app.css"));
     expect(() => verifyRelease(f.destination, digest)).toThrow("inventory");

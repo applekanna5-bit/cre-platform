@@ -16,5 +16,5 @@ export async function assertPublicSource(root: string): Promise<void> {
   }
   await walk(path.join(root, "content"));
   const ordered = (value: Record<string, string>) => JSON.stringify(Object.entries(value).sort(([a], [b]) => a.localeCompare(b)));
-  if (ordered(actual) !== ordered(expected)) throw new Error("Public source inventory differs from the reviewed eight-article contract");
+  if (ordered(actual) !== ordered(expected)) throw new Error("Public source inventory differs from the reviewed public-source contract");
 }

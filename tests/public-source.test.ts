@@ -7,17 +7,17 @@ import { assertPublicSource } from "../scripts/public-source.mts";
 import { generateContent } from "../scripts/content.mts";
 import { discoverContent } from "@/content/discovery";
 import { compileArticle } from "@/content/compile";
-import { isPublicArticle } from "@/content/catalog";
+import { isPubliclyReadable } from "@/content/catalog";
 import { parseArticleMetadata } from "@/content/validation";
 import { projectDeliveryCatalog } from "@/content/delivery";
 
 const discovered = await discoverContent(path.resolve("content"));
 describe("reviewed public-source build boundary", () => {
-  it("accepts only the exact eight published article pairs and public supporting records", async () => {
+  it("accepts only the thirteen release article pairs and public supporting records", async () => {
     await expect(assertPublicSource(process.cwd())).resolves.toBeUndefined();
-    expect(discovered.documents).toHaveLength(8);
-    expect(discovered.catalog.articles.every(isPublicArticle)).toBe(true);
-    expect(discovered.catalog.sources).toHaveLength(6);
+    expect(discovered.documents).toHaveLength(13);
+    expect(discovered.catalog.articles.every(isPubliclyReadable)).toBe(true);
+    expect(discovered.catalog.sources).toHaveLength(20);
     expect(discovered.catalog.knowledge).toHaveLength(0);
     expect(discovered.catalog.cases).toHaveLength(1);
     expect(projectDeliveryCatalog(discovered.catalog, { fixturesEnabled: false, editorialPreviewEnabled: false })).toEqual(discovered.catalog);

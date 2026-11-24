@@ -38,7 +38,7 @@ describe("WP04B property types drafts", () => {
     const mode = { fixturesEnabled: false, editorialPreviewEnabled: false };
     const publicCatalog = projectDeliveryCatalog(base.catalog, mode);
     const publicPaths = publicCatalog.articles.map(articleRoute);
-    expect(publicPaths).toHaveLength(8);
+    expect(publicPaths).toHaveLength(13);
 
     for (const { metadata, body } of drafts) {
       const article = catalog.articles.find(item => item.id === metadata.id)!;

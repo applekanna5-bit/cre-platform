@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import LibraryPage from "@/app/library/page";
 import SpecializationsPage from "@/app/specializations/page";
 import { catalog } from "@/content/.generated";
-import { publicArticles } from "@/content/publication";
+import { readableArticles } from "@/content/publication";
 import { ArticleList } from "@/components/content/article-list";
 
 vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifamily.webp", () => ({ default: {
@@ -14,8 +14,8 @@ vi.mock("@/components/design-preview/living-ledger/assets/living-ledger-multifam
 
 describe("Phase 2 public research discovery", () => {
   it("links every public article from the library and specializations, excluding nonpublic articles", () => {
-    const articles = publicArticles(catalog);
-    expect(articles).toHaveLength(8);
+    const articles = readableArticles(catalog);
+    expect(articles).toHaveLength(13);
     for (const Page of [LibraryPage, SpecializationsPage]) {
       const html = renderToStaticMarkup(createElement(Page));
       for (const article of articles) expect(html).toContain(`href="${article.href}"`);
@@ -30,7 +30,7 @@ describe("Phase 2 public research discovery", () => {
 
   it("supports an empty library and visibly identifies articles awaiting review", () => {
     expect(renderToStaticMarkup(createElement(ArticleList, { articles: [] }))).toContain("Published research will appear here");
-    const html = renderToStaticMarkup(createElement(ArticleList, { articles: [{ ...publicArticles(catalog)[0], needsReview: true }] }));
+    const html = renderToStaticMarkup(createElement(ArticleList, { articles: [{ ...readableArticles(catalog).find(article => article.publishedDate)!, needsReview: true }] }));
     expect(html).toContain("Awaiting review");
     expect(html).toContain('dateTime="');
   });

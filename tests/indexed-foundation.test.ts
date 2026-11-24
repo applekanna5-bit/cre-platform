@@ -23,7 +23,7 @@ describe("owner-authorized eight-only indexed simulation foundation", () => {
     const { catalog } = await discoverContent("content");
     const eligible = catalog.articles.filter(isPublicArticle);
     expect(eligible).toHaveLength(8);
-    expect(catalog.articles).toHaveLength(8);
+    expect(catalog.articles).toHaveLength(13);
     expect(publicSeoPages(catalog, context, delivery)).toHaveLength(14);
     for (const a of catalog.articles) {
       const schema = articleStructuredData(a, context, delivery), crumbs = breadcrumbStructuredData(a, context, delivery);

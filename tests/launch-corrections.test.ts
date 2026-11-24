@@ -51,15 +51,16 @@ describe("M3.34 approved launch corrections", () => {
     for (const [file, sha] of Object.entries(unchanged)) expect(hash(await readFile(file)), file).toBe(sha);
   });
   it("changes only the two approved source-note sentences, retaining every provenance field and source ID", async () => {
-    let restored = await readFile("content/data/sources.json", "utf8");
+    const sources = await readFile("content/data/sources.json", "utf8");
+    let restored = sources.replace(/,\n\s*\{\n\s*"id"\s*:\s*"fhfa-enterprise-role"[\s\S]*$/, "\n]\n");
     expect(restored).not.toContain(instruction);
     for (const note of retainedNotes) {
       expect(restored.split(note)).toHaveLength(2);
       restored = restored.replace(note, `${note} ${instruction}`);
     }
     expect(hash(restored)).toBe(original.sources);
-    expect(catalog.sources).toHaveLength(6);
-    expect(catalog.sources.map(s => s.id)).toEqual(["occ-cre-lending-2022", "fannie-income-analysis-203", "fannie-underwritten-ncf-203-01", "fannie-lease-audit-401", "freddie-appraisal-checklist-2026", "boe-income-stream-lesson7"]);
+    expect(catalog.sources).toHaveLength(20);
+    expect(catalog.sources.slice(0, 6).map(s => s.id)).toEqual(["occ-cre-lending-2022", "fannie-income-analysis-203", "fannie-underwritten-ncf-203-01", "fannie-lease-audit-401", "freddie-appraisal-checklist-2026", "boe-income-stream-lesson7"]);
   });
   it.each(["rent-roll-analysis", "contract-rent-vs-market-rent"])("renders clean reader notes and original citation identities for %s", slug => {
     const article = catalog.articles.find(a => a.slug === slug)!;
@@ -106,15 +107,16 @@ describe("M3.34 approved launch corrections", () => {
       "contract-rent-vs-market-rent": [legacy, "Lanka Sudhakar"],
       "capitalization-rate-property-valuation": [current, current], "debt-service-coverage-ratio-cre-underwriting": [current, current], "gross-potential-income-effective-gross-income": [current, current],
     };
-    expect(catalog.articles).toHaveLength(8);
-    for (const article of catalog.articles) expect([article.author.name, article.reviewer?.name], article.slug).toEqual(expected[article.slug]);
+    const published = catalog.articles.filter(article => article.status === "published");
+    expect(published).toHaveLength(8);
+    for (const article of published) expect([article.author.name, article.reviewer?.name], article.slug).toEqual(expected[article.slug]);
   });
-  it("retains the exact 19-file inventory and validates the approved candidate bytes", async () => {
+  it("retains the original inventory and validates the expanded release bytes", async () => {
     const manifest = JSON.parse(await readFile("scripts/public-content.json", "utf8"));
-    expect(Object.keys(manifest).sort()).toEqual([...Object.keys(unchanged), "content/data/sources.json", "content/underwriting/cre-revenue-underwriting.mdx", "content/underwriting/cre-revenue-underwriting.json"].sort());
+    expect(Object.keys(manifest).filter(file => !/^content\/(learn|financing)\//.test(file)).sort()).toEqual([...Object.keys(unchanged), "content/data/sources.json", "content/underwriting/cre-revenue-underwriting.mdx", "content/underwriting/cre-revenue-underwriting.json"].sort());
     for (const [file, sha] of Object.entries(unchanged)) expect(manifest[file]).toBe(sha);
     await expect(assertPublicSource(process.cwd())).resolves.toBeUndefined();
-    expect(catalog.articles.every(a => a.status === "published")).toBe(true);
+    expect(catalog.articles.filter(a => a.status === "published")).toHaveLength(8);
     expect(catalog.cases).toHaveLength(1); expect(catalog.knowledge).toHaveLength(0);
   });
   it.each(["added", "missing", "changed"])("still rejects %s unapproved protected source changes", async mutation => {

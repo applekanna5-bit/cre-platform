@@ -46,7 +46,7 @@ export function parseArticleMetadata(value: unknown, path = "article"): ArticleI
   choice(item.domain, ["learn", "underwriting", "property-types", "financing", "agency", "modeling", "resources", "insights"], `${path}.domain`);
   choice(item.contentType, ["concept", "guide", "reference", "analysis", "resource"], `${path}.contentType`);
   choice(item.difficulty, ["foundational", "intermediate", "advanced"], `${path}.difficulty`);
-  choice(item.status, ["research", "brief", "draft", "editorial-review", "technical-review", "source-verification", "ready", "approved", "published", "needs-review", "archived"], `${path}.status`);
+  choice(item.status, ["research", "brief", "draft", "editorial-review", "technical-review", "source-verification", "ready", "approved", "published", "community-review", "needs-review", "archived"], `${path}.status`);
   contributor(item.author, `${path}.author`);
   if (item.reviewer !== undefined) contributor(item.reviewer, `${path}.reviewer`);
   for (const field of ["publishedDate", "lastReviewedDate", "updatedDate"]) if (item[field] !== undefined) date(item[field], `${path}.${field}`);
@@ -67,6 +67,9 @@ export function parseArticleMetadata(value: unknown, path = "article"): ArticleI
   if (["ready", "approved", "published"].includes(item.status as string) || (item.status === "needs-review" && item.publishedDate)) {
     if (!item.reviewer || !item.lastReviewedDate) fail(path, "approval/publication requires a reviewer and review date");
     if (!(item.sourceIds as unknown[]).length) fail(path, "approval/publication requires sources");
+  }
+  if (item.status === "community-review" && (item.reviewer || item.lastReviewedDate || item.publishedDate)) {
+    fail(path, "Community Review must not carry approval or publication metadata");
   }
   if (item.status === "published" && !item.publishedDate) fail(path, "published content requires publishedDate");
   if (item.publishedDate && !["published", "needs-review", "archived"].includes(item.status as string)) fail(path, "publishedDate is only valid for published, needs-review, or archived content");

@@ -75,7 +75,7 @@ const sections: readonly TrustSection[] = [
     title: "Published versus unpublished content",
     paragraphs: [
       "Drafts and unpublished editorial material are separate from the public library. Editorial approval alone does not make an article public. A previously published article awaiting review may remain available with a visible notice.",
-      "Private editorial records and unpublished material are not part of the public educational offering. Publication status should remain distinct from research, drafting and review activity.",
+      "Private editorial records remain outside the library. Selected Community Review Editions are available for professional feedback, with independent practitioner approval pending. They are clearly labeled and excluded from search-engine indexing.",
     ],
   },
 ];

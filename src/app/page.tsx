@@ -49,7 +49,7 @@ export default function Home() {
             <div>
               <h3 className="font-editorial text-xl"><Link className={`inline-flex min-h-11 items-center ${readingLink}`} href={`/loan-lifecycle#${stage.id}`}>{stage.title}</Link></h3>
               <p className="max-w-[53ch] text-muted">{stage.description}</p>
-              {recommendedReading(stage.articles).length > 0 && <p className="mt-2 text-sm font-medium text-muted">Published reading available</p>}
+              {recommendedReading(stage.articles).length > 0 && <p className="mt-2 text-sm font-medium text-muted">Reading available</p>}
             </div>
           </li>)}
         </ol>

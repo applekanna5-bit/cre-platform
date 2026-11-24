@@ -1,5 +1,5 @@
 import { testOnlyDate } from "./test-only-date.ts";
-import { articleRoute, isPublicArticle } from "./catalog.ts";
+import { articleRoute, isCommunityReview, isPublicArticle, isPubliclyReadable } from "./catalog.ts";
 import type { ArticleMetadata, ContentCatalog } from "./contracts.ts";
 
 /** JSON-safe allowlist for public discovery, not an article-rendering catalog. */
@@ -16,14 +16,23 @@ export interface PublicArticle {
   readonly publishedDate?: ArticleMetadata["publishedDate"];
   readonly updatedDate?: ArticleMetadata["updatedDate"];
   readonly needsReview: boolean;
+  readonly communityReview?: true;
 }
 
 /** Consume validated server-side articles; never enable preview/fixture discovery. */
 export function publicArticles(catalog: Pick<ContentCatalog, "articles">): readonly PublicArticle[] {
+  return projectArticles(catalog.articles.filter(isPublicArticle));
+}
+
+export function readableArticles(catalog: Pick<ContentCatalog, "articles">): readonly PublicArticle[] {
+  return projectArticles(catalog.articles.filter(isPubliclyReadable));
+}
+
+function projectArticles(articles: readonly ArticleMetadata[]): readonly PublicArticle[] {
   const ids = new Set<string>();
   const routes = new Set<string>();
   testOnlyDate(process.env, process.cwd());
-  return catalog.articles.filter(isPublicArticle).map((article): PublicArticle => {
+  return articles.map((article): PublicArticle => {
     const href = articleRoute(article);
     const identity = article.id.toLowerCase();
     if (ids.has(identity)) throw new Error(`Duplicate public article ID: ${article.id}`);
@@ -43,6 +52,7 @@ export function publicArticles(catalog: Pick<ContentCatalog, "articles">): reado
       ...(article.publishedDate ? { publishedDate: article.publishedDate } : {}),
       ...(article.updatedDate ? { updatedDate: article.updatedDate } : {}),
       needsReview: article.status === "needs-review",
+      ...(isCommunityReview(article) ? { communityReview: true } : {}),
     };
   }).sort((a, b) => a.href < b.href ? -1 : a.href > b.href ? 1 : 0);
 }

@@ -1,0 +1,87 @@
+{
+    "id":  "WP04A-05",
+    "title":  "CRE Loan Request and Preliminary Screening",
+    "slug":  "cre-loan-request-preliminary-screening",
+    "description":  "Use a fictional acquisition request to check lender fit, evidence, equity, leverage, and initial debt service capacity.",
+    "domain":  "financing",
+    "contentType":  "guide",
+    "difficulty":  "intermediate",
+    "status":  "community-review",
+    "author":  {
+                   "name":  "The CRE Ledger Editorial Team"
+               },
+    "propertyTypes":  [
+                          "multifamily"
+                      ],
+    "loanProducts":  [
+                         "acquisition"
+                     ],
+    "topics":  [
+                   "origination",
+                   "preliminary-screening",
+                   "sources-and-uses",
+                   "sponsor",
+                   "debt-service-coverage"
+               ],
+    "relatedGlossaryTerms":  [
+
+                             ],
+    "relatedCalculators":  [
+
+                           ],
+    "relatedContent":  [
+
+                       ],
+    "sourceIds":  [
+                      "occ-cre-lending-2022"
+                  ],
+    "updateSensitivity":  "U2",
+    "sourceClasses":  [
+                          "B"
+                      ],
+    "relationships":  [
+                          {
+                              "purpose":  "prerequisite",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-04"
+                                         }
+                          },
+                          {
+                              "purpose":  "application",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-006"
+                                         }
+                          },
+                          {
+                              "purpose":  "application",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-007"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-008"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-011"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-025"
+                                         }
+                          }
+                      ],
+    "developmentFixture":  false
+}

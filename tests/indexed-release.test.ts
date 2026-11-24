@@ -59,7 +59,7 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
   it("serves eight public articles with unique exact metadata, canonical and genuine Article/Breadcrumb JSON-LD", async () => {
     const { catalog } = await discoverContent("content");
     const approved = catalog.articles.filter(isPublicArticle);
-    expect(approved.map(articleRoute).sort()).toEqual(productionArticlePaths);
+    expect(approved.map(articleRoute).sort()).toEqual(productionArticlePaths.filter(route => route.startsWith("/content/underwriting/")));
     const titles = new Set(), descriptions = new Set();
     for (const article of approved) {
       const route = articleRoute(article), response = await get(route);
@@ -91,7 +91,7 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
     const sitemap = await get("/sitemap.xml"); expect(sitemap.status).toBe(200);
     expect(sitemap.headers.get("content-type")).toContain("xml");
     const xml = await sitemap.text(), urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]).sort();
-    expect(urls).toEqual(["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", ...productionArticlePaths].map(p => canonicalOrigin + p).sort());
+    expect(urls).toEqual(["/", "/library", "/about", "/editorial-standards", "/loan-lifecycle", "/specializations", ...productionArticlePaths.filter(p => p.startsWith("/content/underwriting/"))].map(p => canonicalOrigin + p).sort());
     expect(xml).not.toMatch(/<lastmod>|<priority>|<changefreq>|CRE-012|CRE-013|search|TEST-ONLY:/);
   });
   it("keeps home and Library indexable, and search noindex without canonical/schema", async () => {
@@ -128,7 +128,7 @@ describe.skipIf(process.env.CRE_INDEXED_TEST !== "1")("local eight-article index
     if (m.version !== 2) return;
     expect(m.localOnly).toBe(false);
     expect(m.profile).toBe("production-candidate");
-    expect(m.contentBodies).toHaveLength(8);
+    expect(m.contentBodies).toHaveLength(productionArticlePaths.length);
     expect(m.inputTreeSha256).toMatch(/^[a-f0-9]{64}$/);
     expect(Object.keys(m.source.files).join("\n")).not.toMatch(/tests\/|cre-operating-expenses|capital-expenditures-vs-operating-expenses|CRE-013-editorial-record|test-only-date-preview/);
     const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));

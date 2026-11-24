@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/seo/metadata";
 import Link from "next/link";
 import { catalog } from "@/content/.generated";
-import { publicArticles } from "@/content/publication";
+import { readableArticles } from "@/content/publication";
 import { ArticleList } from "@/components/content/article-list";
 import { Container, Eyebrow, Section } from "@/components/ui/primitives";
 import { SearchForm } from "@/components/search/search-form";
@@ -9,7 +9,7 @@ import { SearchForm } from "@/components/search/search-form";
 export const metadata = pageMetadata("library");
 
 export default function LibraryPage() {
-  const articles = publicArticles(catalog);
+  const articles = readableArticles(catalog);
   return <Container>
     <Section aria-labelledby="library-title" className="border-b-2 border-copper">
       <Link href="/" className="mb-6 inline-flex min-h-11 items-center text-sm text-muted underline underline-offset-4">Home</Link>
@@ -20,7 +20,7 @@ export default function LibraryPage() {
       <SearchForm id="library-query" />
     </Section>
     <Section aria-labelledby="research-heading">
-      <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3"><h2 id="research-heading" className="font-editorial text-3xl">Published research</h2><p className="text-sm text-muted">{articles.length} {articles.length === 1 ? "article" : "articles"}</p></div>
+      <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3"><h2 id="research-heading" className="font-editorial text-3xl">Research and guides</h2><p className="text-sm text-muted">{articles.length} {articles.length === 1 ? "article" : "articles"}</p></div>
       <ArticleList articles={articles} />
     </Section>
   </Container>;

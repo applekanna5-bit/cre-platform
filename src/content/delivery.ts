@@ -1,10 +1,10 @@
 import type { ContentCatalog } from "./contracts.ts";
-import { isPublicArticle, relationshipsFor } from "./catalog.ts";
+import { isPubliclyReadable, relationshipsFor } from "./catalog.ts";
 
 /** Project delivery data only; protected on-disk editorial/source records stay intact. */
 export function projectDeliveryCatalog(catalog: ContentCatalog, mode: { fixturesEnabled: boolean; editorialPreviewEnabled: boolean }): ContentCatalog {
   if (mode.fixturesEnabled || mode.editorialPreviewEnabled) return catalog;
-  const articles = catalog.articles.filter(isPublicArticle);
+  const articles = catalog.articles.filter(isPubliclyReadable);
   const ids = new Set(articles.map(a => a.id));
   const knowledge = catalog.knowledge.filter(k => !k.synthetic);
   const cases = catalog.cases.filter(c => !c.synthetic);

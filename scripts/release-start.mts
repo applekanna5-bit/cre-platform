@@ -11,7 +11,13 @@ export const productionArticlePaths = [
   "cre-revenue-underwriting", "debt-service-coverage-ratio-cre-underwriting",
   "gross-potential-income-effective-gross-income", "net-operating-income-underwritten-noi",
   "rent-roll-analysis", "t12-operating-statement",
-].map(slug => "/content/underwriting/" + slug).sort();
+].map(slug => "/content/underwriting/" + slug).concat([
+  "/content/learn/what-is-commercial-real-estate",
+  "/content/learn/understanding-the-cre-lending-ecosystem",
+  "/content/learn/commercial-mortgage-loan-lifecycle",
+  "/content/financing/commercial-real-estate-loan-types-and-transactions",
+  "/content/financing/cre-loan-request-preliminary-screening",
+]).sort();
 export const sha256 = (value: string | Buffer) => createHash("sha256").update(value).digest("hex");
 export interface ReleaseManifest {
   version: 1 | 2;
@@ -48,7 +54,7 @@ export function requireLocalSnapshot(snapshot: string) {
       value.delivery?.testOnlyDatePreviewEnabled !== false || value.delivery?.testOnlyPublicationDatePresent !== false ||
       value.delivery?.accessMode !== (indexed ? "public" : "private") || value.delivery?.nodeEnvironment !== "production" ||
       value.context?.policy?.indexingAllowed !== indexed ||
-      value.context?.policy?.robotsHeader !== (indexed ? null : "noindex, nofollow")) throw new Error("Only clean eight-article release contexts are authorized");
+      value.context?.policy?.robotsHeader !== (indexed ? null : "noindex, nofollow")) throw new Error("Only clean public-source release contexts are authorized");
   const context = resolveSeoContext({
     SITE_ENV: value.context.site.environment,
     SITE_INDEXING_ENABLED: String(indexed),
@@ -73,8 +79,8 @@ export function verifyRelease(root: string, expectedDigest?: string): ReleaseMan
       !manifest.source?.head || !Object.keys(manifest.source.files).length) throw new Error("Unsupported release identity or runtime");
   const context = requireLocalSnapshot(manifest.snapshot);
   if (production && (!context.policy.indexingAllowed || !/^[a-f0-9]{64}$/.test(manifest.inputTreeSha256 ?? "") ||
-      !manifest.contentBodies || manifest.contentBodies.length !== 8 ||
-      new Set(manifest.contentBodies.map(b => b.id)).size !== 8 ||
+      !manifest.contentBodies || manifest.contentBodies.length !== productionArticlePaths.length ||
+      new Set(manifest.contentBodies.map(b => b.id)).size !== productionArticlePaths.length ||
       JSON.stringify(manifest.contentBodies.map(b => b.route).sort()) !== JSON.stringify(productionArticlePaths) ||
       manifest.contentBodies.some(b => !/^[a-f0-9]{64}$/.test(b.sha256))))
     throw new Error("Production content attestation mismatch");

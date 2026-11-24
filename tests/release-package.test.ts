@@ -45,7 +45,7 @@ function fixture() {
 describe("local package identity and startup contract", () => {
   it("accepts a consistent package and rejects mutated/missing assets", () => {
     const f = fixture(), digest = f.save();
-    expect(verifyRelease(f.root, digest).articlePaths).toHaveLength(8);
+    expect(verifyRelease(f.root, digest).articlePaths).toHaveLength(productionArticlePaths.length);
     f.write(".next/static/test.css", "corrupt");
     expect(() => verifyRelease(f.root, digest)).toThrow("digest");
     f.write(".next/static/test.css", "body{}");
@@ -73,7 +73,7 @@ describe("local package identity and startup contract", () => {
     const f = fixture(), digest = f.save();
     const cache = ".next/server/route-cache/APP_PAGE/" + "a".repeat(64) + "/$/index";
     f.write(cache + ".html", "runtime-cache");
-    expect(verifyRelease(f.root, digest).articlePaths).toHaveLength(8);
+    expect(verifyRelease(f.root, digest).articlePaths).toHaveLength(productionArticlePaths.length);
     f.write(cache + ".js", "unapproved-code");
     expect(() => verifyRelease(f.root, digest)).toThrow("inventory");
     rmSync(path.join(f.root, cache + ".js"));
@@ -109,10 +109,10 @@ describe("local package identity and startup contract", () => {
   });
 });
 describe("public-source export boundary", () => {
-  it("contains exactly eight articles and rejects date-preview mode in every phase", async () => {
+  it("contains exactly the allowed article routes and rejects date-preview mode in every phase", async () => {
     const { catalog } = await discoverContent("content");
-    expect(catalog.articles).toHaveLength(8);
-    expect(catalog.articles.every(isPublicArticle)).toBe(true);
+    expect(catalog.articles).toHaveLength(productionArticlePaths.length);
+    expect(catalog.articles.filter(isPublicArticle)).toHaveLength(8);
     expect(publicArticles(catalog)).toHaveLength(8);
     for (const phase of ["phase-development-server", "phase-production-build", "phase-production-server"]) {
       expect(() => assertTestOnlyMode({ CRE_TEST_ONLY_PUBLICATION_DATE: "" }, process.cwd(), false, phase)).toThrow();

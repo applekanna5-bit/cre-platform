@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ArticleMetadata } from "../content/contracts";
-import { articleRoute, isPublicArticle } from "../content/catalog";
+import { articleRoute, isCommunityReview, isPublicArticle } from "../content/catalog";
 import { resolveSeoContext } from "./context";
 import { assertSeoDeliveryContext, canonicalUrl, seoDelivery } from "./public-pages";
 import { fixturesEnabled, editorialPreviewEnabled, testOnlyDatePreviewEnabled } from "../content/.generated";
@@ -31,13 +31,14 @@ function formattedTitle(title: string): string {
 function constructMetadata(context: SeoContext, title: string, description: string, options: {
   path?: string;
   search?: boolean;
+  communityReview?: boolean;
   privatePage?: boolean;
   article?: boolean;
 } = {}): Metadata {
   const allowed = context.policy.indexingAllowed && !options.privatePage;
   const follow = allowed;
-  const index = allowed && !options.search;
-  const canonical = index && options.path && context.policy.publicOrigin
+  const index = allowed && !options.search && !options.communityReview;
+  const canonical = (index || (allowed && options.communityReview)) && options.path && context.policy.publicOrigin
     ? canonicalUrl(context, options.path) : undefined;
   const fullTitle = formattedTitle(title);
   return {
@@ -73,6 +74,11 @@ export function pageMetadata(page: Page, context: SeoContext = currentContext())
 }
 
 export function articleMetadata(article: ArticleMetadata, context: SeoContext = currentContext()): Metadata {
+  if (isCommunityReview(article)) {
+    return constructMetadata(context, article.title + " — Community Review Edition",
+      "Community Review Edition. Independent practitioner approval is pending. " + article.description,
+      { path: articleRoute(article), communityReview: true });
+  }
   if (!isPublicArticle(article)) {
     return constructMetadata(context, "Content preview", "This content is not published.", { privatePage: true });
   }

@@ -1,0 +1,73 @@
+{
+    "id":  "WP04A-04",
+    "title":  "Commercial Real Estate Loan Types and Transactions",
+    "slug":  "commercial-real-estate-loan-types-and-transactions",
+    "description":  "Compare acquisition, refinance, supplemental, bridge, and construction financing with assumptions and transfers of existing loans.",
+    "domain":  "financing",
+    "contentType":  "guide",
+    "difficulty":  "foundational",
+    "status":  "community-review",
+    "author":  {
+                   "name":  "The CRE Ledger Editorial Team"
+               },
+    "propertyTypes":  [
+
+                      ],
+    "loanProducts":  [
+                         "acquisition",
+                         "refinance",
+                         "supplemental",
+                         "bridge",
+                         "construction",
+                         "permanent"
+                     ],
+    "topics":  [
+                   "loan-purpose",
+                   "takeout",
+                   "existing-loan-transfers"
+               ],
+    "relatedGlossaryTerms":  [
+
+                             ],
+    "relatedCalculators":  [
+
+                           ],
+    "relatedContent":  [
+
+                       ],
+    "sourceIds":  [
+                      "fannie-supplemental-sizing",
+                      "freddie-supplemental-checklist",
+                      "occ-cre-lending-2022",
+                      "occ-refinance-risk-2024",
+                      "freddie-transfer-guide-41"
+                  ],
+    "updateSensitivity":  "U2",
+    "sourceClasses":  [
+                          "B"
+                      ],
+    "relationships":  [
+                          {
+                              "purpose":  "prerequisite",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-03"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-05"
+                                         }
+                          },
+                          {
+                              "purpose":  "application",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-025"
+                                         }
+                          }
+                      ],
+    "developmentFixture":  false
+}

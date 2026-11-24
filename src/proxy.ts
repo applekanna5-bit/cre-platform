@@ -1,4 +1,4 @@
-import { articleRoute, isPublicArticle } from "./content/catalog";
+import { articleRoute, isCommunityReview, isPubliclyReadable } from "./content/catalog";
 import { assertSeoDeliveryContext, publicPagePaths, seoDelivery } from "./seo/public-pages";
 import { resolveSeoContext } from "./seo/context";
 import { assertTestOnlyMode } from "./content/test-only-date";
@@ -59,11 +59,11 @@ export function proxy(request: NextRequest) {
     }
     if (process.env.SITE_INDEXING_ENABLED === "true") {
       const pathname = request.nextUrl.pathname;
-      const publicPage = publicPagePaths.includes(pathname) ||
-        catalog.articles.some(article => isPublicArticle(article) && articleRoute(article) === pathname);
+      const article = catalog.articles.find(item => articleRoute(item) === pathname);
+      const publicPage = publicPagePaths.includes(pathname) || (article && isPubliclyReadable(article));
       const infrastructure = pathname.startsWith("/_next/static/") ||
         ["/icon.svg", "/robots.txt", "/sitemap.xml"].includes(pathname);
-      if (pathname === "/search") response.headers.set("X-Robots-Tag", "noindex, follow");
+      if (pathname === "/search" || (article && isCommunityReview(article))) response.headers.set("X-Robots-Tag", "noindex, follow");
       else if (!publicPage && !infrastructure) return new NextResponse("Not found.", {
         status: 404, headers: { "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "private, no-store" },
       });

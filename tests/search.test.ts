@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { searchDocuments as index } from "@/content/.generated/search";
 import { discoverContent } from "@/content/discovery";
 import { compileArticle } from "@/content/compile";
-import { publicArticles } from "@/content/publication";
+import { readableArticles } from "@/content/publication";
 import { articleSearchProjection, type ArticleSearchText } from "@/search/projection";
 import { normalizeSearch, searchDocuments, searchQuery, type SearchDocument } from "@/search/engine";
 import SearchPage from "@/app/search/page";
@@ -18,12 +18,12 @@ const doc = (id: string, fields: Partial<SearchDocument> = {}): SearchDocument =
 const ids = (query: unknown) => searchDocuments(index, query).map(item => item.id);
 
 describe("publication-only search projection", () => {
-  it("contains exactly the eight public articles even in fixture compilation mode", async () => {
-    expect(index.map(item => item.id)).toEqual(publicArticles(catalog).map(item => item.id));
-    expect(index).toHaveLength(8);
+  it("contains exactly the thirteen readable articles even in fixture compilation mode", async () => {
+    expect(index.map(item => item.id)).toEqual(readableArticles(catalog).map(item => item.id));
+    expect(index).toHaveLength(13);
     const generated = await readFile("src/content/.generated/search.ts", "utf8");
     expect(generated).not.toMatch(/fixture-noi-bridge|sourceIds|sourceClasses|"reviewer"|"loaders"|"sources"|caseId|tableId/);
-    for (const privateArticle of catalog.articles.filter(item => !publicArticles(catalog).some(publicItem => publicItem.id === item.id))) {
+    for (const privateArticle of catalog.articles.filter(item => !readableArticles(catalog).some(publicItem => publicItem.id === item.id))) {
       expect(generated).not.toContain(privateArticle.title);
       expect(generated).not.toContain(privateArticle.slug);
     }
@@ -141,7 +141,7 @@ describe("server GET search route", () => {
     expect(await render("---")).toContain("Enter a concept or phrase");
     const html = await render('<script>alert("x")</script>');
     expect(html).toContain("0 results");
-    expect(html).toContain("No published research matches");
+    expect(html).toContain("No research matches");
     expect(html).not.toContain("<script>");
     expect(html).toContain("&lt;script&gt;");
   });

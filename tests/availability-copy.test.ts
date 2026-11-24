@@ -6,19 +6,19 @@ import SpecializationsPage from "@/app/specializations/page";
 import { SiteFooter } from "@/components/site-footer";
 import { catalog } from "@/content/.generated";
 import { lifecycle as stages } from "@/config/learning";
-import { publicArticles } from "@/content/publication";
+import { readableArticles } from "@/content/publication";
 
 describe("published underwriting availability", () => {
   it("assigns each published article to its principal lifecycle stage", () => {
     expect(stages.map(stage => stage.articles)).toEqual([
-      [], [], ["CRE-006", "CRE-007", "CRE-008", "phase2a-gpr-egi", "CRE-011"],
+      ["WP04A-01", "WP04A-02", "WP04A-03"], ["WP04A-04", "WP04A-05"], ["CRE-006", "CRE-007", "CRE-008", "phase2a-gpr-egi", "CRE-011"],
       ["CRE-015", "CRE-018", "CRE-025"], [], [], [],
     ]);
   });
 
-  it("keeps all eight articles accessible from the lifecycle and specializations", () => {
-    const articles = publicArticles(catalog);
-    expect(articles.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "phase2a-gpr-egi"]);
+  it("keeps published and review articles accessible from the lifecycle and specializations", () => {
+    const articles = readableArticles(catalog);
+    expect(articles.map(article => article.id).sort()).toEqual(["CRE-006", "CRE-007", "CRE-008", "CRE-011", "CRE-015", "CRE-018", "CRE-025", "WP04A-01", "WP04A-02", "WP04A-03", "WP04A-04", "WP04A-05", "phase2a-gpr-egi"]);
     const lifecycle = renderToStaticMarkup(createElement(LoanLifecyclePage));
     const specializations = renderToStaticMarkup(createElement(SpecializationsPage));
     for (const html of [lifecycle, specializations]) {

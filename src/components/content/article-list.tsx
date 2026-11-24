@@ -18,6 +18,7 @@ export function ArticleList({ articles }: { articles: readonly PublicArticle[] }
       <div className="mt-auto flex flex-wrap gap-x-4 gap-y-2 pt-5 text-xs text-muted">
         <span>{difficultyNames[article.difficulty]}</span>
         {article.publishedDate && <span>Published <time dateTime={article.publishedDate}>{article.publishedDate}</time></span>}
+        {article.communityReview && <span className="font-semibold">Community Review Edition</span>}
         {article.needsReview && <span className="font-semibold text-warning">Awaiting review</span>}
       </div>
     </li>)}

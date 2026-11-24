@@ -74,7 +74,7 @@ describe.skipIf(process.env.CRE_STANDALONE_TEST !== "1")("assembled standalone p
       rmSync(temp, { recursive: true, force: true });
     }
   }, 45000);
-  it("serves exactly eight article routes with noindex and no canonical/schema leakage", async () => {
+  it("serves exactly the allowed article routes with noindex and no canonical/schema leakage", async () => {
     const manifest = verifyRelease(root, digest);
     expect(manifest.articlePaths).toEqual(productionArticlePaths);
     for (const route of ["/", "/library", "/search", "/search?q=operating", ...productionArticlePaths]) {

@@ -1,0 +1,73 @@
+{
+    "id":  "WP04A-01",
+    "title":  "What Is Commercial Real Estate?",
+    "slug":  "what-is-commercial-real-estate",
+    "description":  "Follow how commercial property earns income and how debt, equity, and operating risks shape the value it can support.",
+    "domain":  "learn",
+    "contentType":  "guide",
+    "difficulty":  "foundational",
+    "status":  "community-review",
+    "author":  {
+                   "name":  "The CRE Ledger Editorial Team"
+               },
+    "propertyTypes":  [
+
+                      ],
+    "loanProducts":  [
+
+                     ],
+    "topics":  [
+                   "property-income",
+                   "ownership",
+                   "debt-and-equity"
+               ],
+    "relatedGlossaryTerms":  [
+
+                             ],
+    "relatedCalculators":  [
+
+                           ],
+    "relatedContent":  [
+
+                       ],
+    "sourceIds":  [
+                      "occ-cre-lending-2022",
+                      "freddie-mhc-guide-22",
+                      "sec-publicly-traded-reits"
+                  ],
+    "updateSensitivity":  "U2",
+    "sourceClasses":  [
+                          "B"
+                      ],
+    "relationships":  [
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-02"
+                                         }
+                          },
+                          {
+                              "purpose":  "application",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "phase2a-gpr-egi"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-015"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-018"
+                                         }
+                          }
+                      ],
+    "developmentFixture":  false
+}

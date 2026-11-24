@@ -35,10 +35,10 @@ describe("WP02 homepage", () => {
 
   it("identifies the two lifecycle stages with published reading", () => {
     const rows = [...html.matchAll(/<li\b[^>]*>[\s\S]*?<\/li>/g)];
-    const withReading = rows.filter(([row]) => row.includes("Published reading available"));
-    expect(withReading).toHaveLength(2);
-    expect(withReading[0][0]).toContain("Rent Roll, T-12 and Financial Analysis");
-    expect(withReading[1][0]).toContain("Underwriting, NOI and Loan Sizing");
+    const withReading = rows.filter(([row]) => row.includes("Reading available"));
+    expect(withReading).toHaveLength(4);
+    expect(withReading[2][0]).toContain("Rent Roll, T-12 and Financial Analysis");
+    expect(withReading[3][0]).toContain("Underwriting, NOI and Loan Sizing");
   });
 
   it("links featured articles only through their published canonical paths", () => {

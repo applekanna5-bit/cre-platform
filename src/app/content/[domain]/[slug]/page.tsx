@@ -4,7 +4,7 @@ import { articleMetadata } from "@/seo/metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { articleHeadings, catalog, embeddedCases, editorialPreviewEnabled, fixturesEnabled, loaders } from "@/content/.generated";
-import { isPublicArticle, isRenderable } from "@/content/catalog";
+import { isPubliclyReadable, isRenderable } from "@/content/catalog";
 import { ArticleTemplate } from "@/components/content/article-template";
 import { articleComponents } from "@/components/content/mdx-components";
 
@@ -30,5 +30,5 @@ export default async function ContentPage({ params }: PageProps<"/content/[domai
   return <>
     {articleSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeStructuredData(articleSchema) }} />}
     {breadcrumbSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeStructuredData(breadcrumbSchema) }} />}
-    <ArticleTemplate breadcrumbs={isPublicArticle(article) ? articleBreadcrumbs(article) : undefined} headings={articleHeadings[article.id]} article={article} catalog={catalog} embeddedCases={embeddedCases[article.id]} fixtures={fixturesEnabled} editorialPreview={editorialPreviewEnabled}><Body components={articleComponents(article, catalog)} /></ArticleTemplate></>;
+    <ArticleTemplate breadcrumbs={isPubliclyReadable(article) ? articleBreadcrumbs(article) : undefined} headings={articleHeadings[article.id]} article={article} catalog={catalog} embeddedCases={embeddedCases[article.id]} fixtures={fixturesEnabled} editorialPreview={editorialPreviewEnabled}><Body components={articleComponents(article, catalog)} /></ArticleTemplate></>;
 }

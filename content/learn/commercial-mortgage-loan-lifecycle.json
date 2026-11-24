@@ -1,0 +1,81 @@
+{
+    "id":  "WP04A-03",
+    "title":  "The Commercial Mortgage Loan Lifecycle",
+    "slug":  "commercial-mortgage-loan-lifecycle",
+    "description":  "Trace a U.S. commercial mortgage from the first request to funding, servicing, and resolution.",
+    "domain":  "learn",
+    "contentType":  "guide",
+    "difficulty":  "foundational",
+    "status":  "community-review",
+    "author":  {
+                   "name":  "The CRE Ledger Editorial Team"
+               },
+    "propertyTypes":  [
+
+                      ],
+    "loanProducts":  [
+
+                     ],
+    "topics":  [
+                   "loan-lifecycle",
+                   "credit-review",
+                   "closing",
+                   "servicing"
+               ],
+    "relatedGlossaryTerms":  [
+
+                             ],
+    "relatedCalculators":  [
+
+                           ],
+    "relatedContent":  [
+
+                       ],
+    "sourceIds":  [
+                      "occ-cre-lending-2022",
+                      "sec-cmbs-servicing-form",
+                      "interagency-cre-workouts-2023"
+                  ],
+    "updateSensitivity":  "U2",
+    "sourceClasses":  [
+                          "B"
+                      ],
+    "relationships":  [
+                          {
+                              "purpose":  "prerequisite",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-02"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-04"
+                                         }
+                          },
+                          {
+                              "purpose":  "deep-dive",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "WP04A-05"
+                                         }
+                          },
+                          {
+                              "purpose":  "application",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-006"
+                                         }
+                          },
+                          {
+                              "purpose":  "application",
+                              "target":  {
+                                             "kind":  "article",
+                                             "id":  "CRE-007"
+                                         }
+                          }
+                      ],
+    "developmentFixture":  false
+}

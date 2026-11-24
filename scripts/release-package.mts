@@ -8,7 +8,7 @@ import { createHash } from "node:crypto";
 import type { ReleaseManifest } from "./release-start.mts";
 import { discoverContent } from "../src/content/discovery.ts";
 import { projectDeliveryCatalog } from "../src/content/delivery.ts";
-import { isPublicArticle } from "../src/content/catalog.ts";
+import { isPubliclyReadable } from "../src/content/catalog.ts";
 import { copyPackageContents } from "./release-copy.mts";
 
 const root = realpathSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."));
@@ -87,7 +87,7 @@ async function assemble(destination: string) {
   const end = generated.indexOf(";\nexport const fixturesEnabled", begin);
   if (begin < 0 || end < 0 || JSON.stringify(JSON.parse(generated.slice(begin + prefix.length, end))) !== JSON.stringify(projected))
     throw new Error("Generated delivery catalog differs from clean public projection");
-  const routes = catalog.articles.filter(isPublicArticle).map(a => "/content/" + a.domain + "/" + a.slug).sort();
+  const routes = catalog.articles.filter(isPubliclyReadable).map(a => "/content/" + a.domain + "/" + a.slug).sort();
   if (JSON.stringify(routes) !== JSON.stringify(api.productionArticlePaths) ||
       context.context.site.environment !== (buildEnv.SITE_ENV ?? "development") ||
       context.context.site.productionOrigin !== (buildEnv.SITE_PRODUCTION_ORIGIN ?? null))
@@ -112,10 +112,10 @@ async function assemble(destination: string) {
   }
   const allSource = Object.fromEntries(sourcePaths.map(p => [p, api.sha256(readFileSync(path.join(root, p)))]));
   const production = process.env.CRE_RELEASE_PROFILE === "production-candidate";
-  const privateInputs = new Set(documents.filter(d => !catalog.articles.some(a => a.id === d.metadata.id && isPublicArticle(a)))
+  const privateInputs = new Set(documents.filter(d => !catalog.articles.some(a => a.id === d.metadata.id && isPubliclyReadable(a)))
     .flatMap(d => [path.relative(root, d.file).replaceAll("\\", "/"), path.relative(root, d.file).replaceAll("\\", "/").replace(/\.mdx$/, ".json")]));
   const publicSource = Object.fromEntries(Object.entries(allSource).filter(([p]) => !privateInputs.has(p) &&
-    !p.startsWith("tests/") && p !== "docs/editorial/CRE-013-editorial-record.md" && p !== "scripts/test-only-date-preview.mts"));
+    !p.startsWith("tests/") && !p.startsWith("docs/editorial-ux/wp04") && p !== "docs/editorial/CRE-013-editorial-record.md" && p !== "scripts/test-only-date-preview.mts"));
   if (production) {
     const denied = ["how-to-analyze-cre-operating-expenses", "capital-expenditures-vs-operating-expenses",
       "fixture-noi-bridge", "fixture-methodology", "fixture-noi", "fixture-loan-sizing", "noi-development-fixture",
@@ -132,7 +132,7 @@ async function assemble(destination: string) {
       contentBodies: projected.articles.map(a => { const doc = documents.find(d => d.metadata.id === a.id)!;
         return { id: a.id, route: "/content/" + a.domain + "/" + a.slug, sha256: api.sha256(readFileSync(doc.file)) }; }) } : {}), buildId, platform: process.platform, architecture: process.arch, node: process.version,
     source: { head: git("rev-parse", "HEAD"), branch: git("branch", "--show-current"),
-      inventory: production ? "Reviewed eight-article public-source export" : git("status", "--porcelain=v1", "--untracked-files=all"),
+      inventory: production ? "Eight published articles and five Community Review Editions" : git("status", "--porcelain=v1", "--untracked-files=all"),
       files: production ? publicSource : allSource },
     snapshot, articlePaths: routes,
     files: Object.fromEntries(api.artifactFiles(destination).map(p => [p, api.sha256(readFileSync(path.join(destination, p)))])),
